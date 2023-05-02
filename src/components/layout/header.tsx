@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import styled from "styled-components";
 import { useWindowStore } from "../../store/window";
 import { useLoginStore } from "@store/login";
@@ -11,20 +11,23 @@ import {
   Avatar,
   Button,
   Switch,
+  FormControlLabel,
   styled as muiStyled,
+  Typography,
 } from "@mui/material";
 import { Person, Logout, ExitToApp } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { requestLogout, testApi } from "@api/sign";
+import { useWidgetStore } from "@store/widget";
 
 export default function Header() {
   const navigate = useNavigate();
+  const { showWidget, setShowWidget } = useWidgetStore();
+  const { currentWindows, toggleShowWindow } = useWindowStore();
   const { isLogin, setLogin } = useLoginStore();
   const { i18n } = useTranslation();
-  const { currentWindows, toggleShowWindow } = useWindowStore();
 
-  const [site, setSite] = useState<string>("A 현장");
-  const [onWidget, setonWidget] = useState(false);
+  const [site, setSite] = useState<string>();
 
   const onSiteChange = (e: SelectChangeEvent) => {
     setSite(e.target.value as string);
@@ -39,110 +42,75 @@ export default function Header() {
     navigate("/signin");
   };
 
-  const onTestApi = () => {
-    testApi();
+  const onChangeWidgetShow = (e: ChangeEvent<HTMLInputElement>) => {
+    setShowWidget(e.target.checked);
   };
 
   return (
     <header.wrap>
-      <div.user>
-        <ul.nav>
-          {currentWindows.map((window, i) => (
-            <li onClick={() => toggleShowWindow(window.uuid)} key={i}>
-              <Chip
-                avatar={<Avatar>{window.name.slice(0, 1)}</Avatar>}
-                label={window.name}
-                variant="filled"
-                color={window.isShow ? "primary" : "default"}
-                style={{ cursor: "pointer" }}
-              />
-            </li>
-          ))}
-        </ul.nav>
+      <div.head>
+        <div className="title">
+          <Typography color={"white"} variant="body1">
+            서울민정공사현장
+          </Typography>
+        </div>
 
-        <>
-          <Select
-            value={site}
-            onChange={onSiteChange}
-            sx={{ width: 300, backgroundColor: "white", borderRadius: 10 }}
-            size="small"
+        <div className="btn">
+          <div
+            onClick={() => navigate("/mypage")}
+            style={{ cursor: "pointer" }}
           >
-            <MenuItem value={"A 현장"}>A 현장</MenuItem>
-            <MenuItem value={"B 현장"}>B 현장</MenuItem>
-          </Select>
-        </>
+            <Person sx={{ width: 30, height: 30 }} style={{ color: "white" }} />
+          </div>
 
-        <div onClick={() => navigate("/mypage")} style={{ cursor: "pointer" }}>
-          <Person sx={{ width: 30, height: 30 }} style={{ color: "white" }} />
+          <div onClick={onLogout} style={{ cursor: "pointer" }}>
+            <ExitToApp
+              sx={{ width: 30, height: 30 }}
+              style={{ color: "white" }}
+            />
+          </div>
         </div>
+      </div.head>
 
-        <div onClick={onLogout} style={{ cursor: "pointer" }}>
-          <ExitToApp
-            sx={{ width: 30, height: 30 }}
-            style={{ color: "white" }}
-          />
-        </div>
-      </div.user>
+      <div.select>
+        <Select
+          value={site}
+          defaultValue="none"
+          onChange={onSiteChange}
+          sx={{
+            width: 300,
+            border: "1px white solid",
+            color: "white",
+            ".MuiSelect-icon": { color: "white" },
+          }}
+          size="small"
+          placeholder="현장명을 입력하세요."
+        >
+          <MenuItem value={"none"} disabled>
+            현장명을 입력하세요.
+          </MenuItem>
+          <MenuItem value={"A 현장"}>A 현장</MenuItem>
+          <MenuItem value={"B 현장"}>B 현장</MenuItem>
+        </Select>
+      </div.select>
 
       <div.switch>
-        {/* <MaterialUISwitch
-          value={onWidget}
-          onChange={(e) => setonWidget(e.target.checked)}
-        /> */}
-        <Switch
-          value={onWidget}
-          onChange={(e) => setonWidget(e.target.checked)}
-          size="medium"
+        <FormControlLabel
+          control={
+            <Switch
+              value={showWidget}
+              onChange={onChangeWidgetShow}
+              size="medium"
+            />
+          }
+          label={
+            <Typography color={"white"}>{showWidget ? "on" : "off"}</Typography>
+          }
         />
       </div.switch>
     </header.wrap>
   );
 }
-
-const MaterialUISwitch = styled(Switch)(({ theme }) => ({
-  width: 62,
-  height: 34,
-  padding: 7,
-  "& .MuiSwitch-switchBase": {
-    padding: 0,
-    transform: "translateX(6px)",
-    "&.Mui-checked": {
-      color: "#fff",
-      transform: "translateX(22px)",
-
-      "& .MuiSwitch-thumb:before": {
-        content: "'off'",
-      },
-
-      "& + .MuiSwitch-track": {
-        opacity: 1,
-        backgroundColor: "#8796A5",
-      },
-    },
-  },
-
-  "& .MuiSwitch-thumb": {
-    backgroundColor: "#003892",
-    width: 32,
-    height: 32,
-
-    "&:before": {
-      content: "'on'",
-      position: "absolute",
-      width: "100%",
-      height: "100%",
-      left: 0,
-      top: 0,
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "center",
-    },
-  },
-  "& .MuiSwitch-track": {
-    opacity: 1,
-    backgroundColor: "#4474c1",
-    borderRadius: 20 / 2,
-  },
-}));
 
 const header = {
   wrap: styled.header`
@@ -151,26 +119,36 @@ const header = {
     top: 50px;
     display: flex;
     flex-direction: column;
-    gap: 50px;
+
+    gap: 30px;
   `,
 };
 
 const div = {
-  user: styled.div`
+  head: styled.div`
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    height: inherit;
-    gap: 10px;
+    width: 100%;
 
-    div {
+    .title {
+      width: 200px;
+      padding: 5px 10px;
+      background-color: ${(p) => p.theme.colors.primary.main};
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .btn {
       display: flex;
-      align-items: center;
-      height: inherit;
     }
   `,
+
+  select: styled.div``,
   switch: styled.div`
     display: flex;
     justify-content: flex-end;
+    align-items: center;
   `,
 };
 
@@ -184,6 +162,20 @@ const ul = {
     }
   `,
 };
+
+/* <ul.nav>
+  {currentWindows.map((window, i) => (
+    <li onClick={() => toggleShowWindow(window.uuid)} key={i}>
+      <Chip
+        avatar={<Avatar>{window.name.slice(0, 1)}</Avatar>}
+        label={window.name}
+        variant="filled"
+        color={window.isShow ? "primary" : "default"}
+        style={{ cursor: "pointer" }}
+      />
+    </li>
+  ))}
+</ul.nav> */
 
 // language
 

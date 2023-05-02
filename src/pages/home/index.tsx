@@ -13,13 +13,14 @@ import Window from "@components/layout/window";
 import Header from "@components/layout/header";
 import Sidebar from "@components/layout/sidebar";
 import Widget from "@components/layout/widget";
+import { useWidgetStore } from "@store/widget";
 
 export default function MyHome() {
+  const { showWidget } = useWidgetStore();
   const { currentWindows } = useWindowStore();
   const { isLogin } = useLoginStore();
   const navigate = useNavigate();
 
-  // 비로그인시 로그인페이지로 이동
   useEffect(() => {
     if (isLogin === false) {
       navigate("/signin");
@@ -40,10 +41,14 @@ export default function MyHome() {
       ))}
 
       {/* widgets */}
-      <div.widget>
-        <Widget component={<DateCalendar defaultValue={dayjs(new Date())} />} />
-        <Widget component={<TimeClock />} />
-      </div.widget>
+      {showWidget && (
+        <div.widget>
+          <Widget
+            component={<DateCalendar defaultValue={dayjs(new Date())} />}
+          />
+          <Widget component={<TimeClock />} />
+        </div.widget>
+      )}
     </div.wrap>
   );
 }

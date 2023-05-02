@@ -22,8 +22,8 @@ import {
 import { LockOutlined } from "@mui/icons-material";
 import { emailRule, passwordRule } from "../../lib/inputRule";
 import { requestLogin } from "../../api/sign";
-// import styled from "styled-components";
-import { styled } from "@mui/system";
+import styled from "styled-components";
+
 import { useNavigate } from "react-router-dom";
 import { useLoginStore } from "@store/login";
 import { generatePhoneNumber } from "@lib/inputRule";
@@ -81,11 +81,11 @@ export default function Signin() {
   }, [isLogin]);
 
   return (
-    <>
+    <div.wrap>
       <Container
         component="main"
         maxWidth="xs"
-        style={{ border: "1px red solid" }}
+        style={{ border: "1px #dfdfdf solid" }}
       >
         <Box
           sx={{
@@ -143,7 +143,7 @@ export default function Signin() {
                   : null
               }
             />
-            <TextField
+            {/* <TextField
               margin="normal"
               label="phone number"
               variant="outlined"
@@ -152,7 +152,7 @@ export default function Signin() {
               onChange={handleChange}
               placeholder="000-0000-0000"
               inputProps={{ maxLength: 13, pattern: "\\d{3}-\\d{3,4}-\\d{4}" }}
-            />
+            /> */}
             <FormControlLabel
               control={
                 <Checkbox
@@ -194,6 +194,15 @@ export default function Signin() {
 
         <Button onClick={() => setOpenDialog(false)}>확인</Button>
       </Dialog>
-    </>
+    </div.wrap>
   );
 }
+
+const div = {
+  wrap: styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  `,
+};

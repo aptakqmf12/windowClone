@@ -2,8 +2,6 @@ import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { requestAccessToken } from "./sign";
 import { ResponseStatus, ResponseCode, ResponseData } from "../types";
 
-const BASE_URL = import.meta.env.VITE_API_URL;
-
 const Instance = () => {
   return axios.create({
     // baseURL: BASE_URL,

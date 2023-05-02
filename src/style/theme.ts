@@ -1,6 +1,6 @@
 import { PaletteOptions, createTheme } from "@mui/material/styles";
 
-const colors: PaletteOptions = {
+const colors = {
   primary: {
     dark: "#4C9EC5",
     main: "#69BBD1",
