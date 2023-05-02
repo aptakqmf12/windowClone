@@ -46,6 +46,9 @@ export const useWindowStore = create<WindowStore>()(
         const isMaxSize = useWindowStore.getState().currentWindows.length === 5;
 
         if (isExistingWindow || isMaxSize) return;
+
+        const [defaultWidth, defaultHeight] = [1000, 600];
+
         set(
           (state) => {
             return {
@@ -58,10 +61,16 @@ export const useWindowStore = create<WindowStore>()(
                   isFullScreen: false,
                   isShow: true,
                   zIndex: props.zIndex || 1,
-                  x: props.x || 10,
-                  y: props.y || 10,
-                  w: props.w || 1000,
-                  h: props.h || 600,
+                  x:
+                    props.x ||
+                    window.innerWidth / 2 -
+                      (props.w ? props.w / 2 : defaultWidth / 2),
+                  y:
+                    props.y ||
+                    window.innerHeight / 2 -
+                      (props.h ? props.h / 2 : defaultHeight / 2),
+                  w: props.w || defaultWidth,
+                  h: props.h || defaultHeight,
                 },
               ],
             };

@@ -21,7 +21,6 @@ export default function MyHome() {
   const { isLogin } = useLoginStore();
   const navigate = useNavigate();
 
-  // 비로그인시 로그인페이지로 이동
   useEffect(() => {
     if (isLogin === false) {
       navigate("/signin");

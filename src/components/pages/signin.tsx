@@ -85,7 +85,7 @@ export default function Signin() {
       <Container
         component="main"
         maxWidth="xs"
-        style={{ border: "1px red solid" }}
+        style={{ border: "1px #dfdfdf solid" }}
       >
         <Box
           sx={{
@@ -143,7 +143,7 @@ export default function Signin() {
                   : null
               }
             />
-            <TextField
+            {/* <TextField
               margin="normal"
               label="phone number"
               variant="outlined"
@@ -152,7 +152,7 @@ export default function Signin() {
               onChange={handleChange}
               placeholder="000-0000-0000"
               inputProps={{ maxLength: 13, pattern: "\\d{3}-\\d{3,4}-\\d{4}" }}
-            />
+            /> */}
             <FormControlLabel
               control={
                 <Checkbox
