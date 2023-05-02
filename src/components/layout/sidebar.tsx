@@ -102,10 +102,6 @@ const div = {
     border-radius: 0 80px 80px 0;
     background-color: rgba(255, 255, 255, 0.7);
 
-    &:hover {
-      background-color: ${(p) => p.theme.colors.common?.black};
-    }
-
     .logo {
       margin-bottom: 50px;
       padding-bottom: 50px;
