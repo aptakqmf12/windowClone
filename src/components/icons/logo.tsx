@@ -20,7 +20,7 @@ export default function LogoIcon() {
           />
         </clipPath>
       </defs>
-      <g id="그룹_72" data-name="그룹 72" clip-path="url(#clip-path)">
+      <g id="그룹_72" data-name="그룹 72" clipPath="url(#clip-path)">
         <path
           id="패스_56"
           data-name="패스 56"
