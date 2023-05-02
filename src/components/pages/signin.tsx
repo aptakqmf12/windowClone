@@ -22,8 +22,8 @@ import {
 import { LockOutlined } from "@mui/icons-material";
 import { emailRule, passwordRule } from "../../lib/inputRule";
 import { requestLogin } from "../../api/sign";
-// import styled from "styled-components";
-import { styled } from "@mui/system";
+import styled from "styled-components";
+
 import { useNavigate } from "react-router-dom";
 import { useLoginStore } from "@store/login";
 import { generatePhoneNumber } from "@lib/inputRule";
@@ -81,7 +81,7 @@ export default function Signin() {
   }, [isLogin]);
 
   return (
-    <>
+    <div.wrap>
       <Container
         component="main"
         maxWidth="xs"
@@ -194,6 +194,15 @@ export default function Signin() {
 
         <Button onClick={() => setOpenDialog(false)}>확인</Button>
       </Dialog>
-    </>
+    </div.wrap>
   );
 }
+
+const div = {
+  wrap: styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  `,
+};

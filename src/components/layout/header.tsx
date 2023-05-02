@@ -27,7 +27,7 @@ export default function Header() {
   const { isLogin, setLogin } = useLoginStore();
   const { i18n } = useTranslation();
 
-  const [site, setSite] = useState<string>("A 현장");
+  const [site, setSite] = useState<string>();
 
   const onSiteChange = (e: SelectChangeEvent) => {
     setSite(e.target.value as string);
@@ -48,8 +48,13 @@ export default function Header() {
 
   return (
     <header.wrap>
-      <div.top>
-        <div className="title">title</div>
+      <div.head>
+        <div className="title">
+          <Typography color={"white"} variant="body1">
+            서울민정공사현장
+          </Typography>
+        </div>
+
         <div className="btn">
           <div
             onClick={() => navigate("/mypage")}
@@ -65,11 +70,12 @@ export default function Header() {
             />
           </div>
         </div>
-      </div.top>
+      </div.head>
 
       <div.select>
         <Select
           value={site}
+          defaultValue="none"
           onChange={onSiteChange}
           sx={{
             width: 300,
@@ -78,7 +84,11 @@ export default function Header() {
             ".MuiSelect-icon": { color: "white" },
           }}
           size="small"
+          placeholder="현장명을 입력하세요."
         >
+          <MenuItem value={"none"} disabled>
+            현장명을 입력하세요.
+          </MenuItem>
           <MenuItem value={"A 현장"}>A 현장</MenuItem>
           <MenuItem value={"B 현장"}>B 현장</MenuItem>
         </Select>
@@ -109,12 +119,13 @@ const header = {
     top: 50px;
     display: flex;
     flex-direction: column;
+
     gap: 30px;
   `,
 };
 
 const div = {
-  top: styled.div`
+  head: styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -122,7 +133,10 @@ const div = {
 
     .title {
       width: 200px;
+      padding: 5px 10px;
       background-color: ${(p) => p.theme.colors.primary.main};
+      border-radius: 6px;
+      text-align: center;
     }
 
     .btn {

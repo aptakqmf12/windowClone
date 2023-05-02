@@ -7,16 +7,19 @@ interface WidgetStore {
 }
 
 export const useWidgetStore = create<WidgetStore>()(
-  devtools((set) => ({
-    showWidget: false,
-    setShowWidget: (bool: boolean) => {
-      set(
-        (state) => ({
-          showWidget: bool,
-        }),
-        undefined,
-        "[Widget] setShow"
-      );
-    },
-  }))
+  devtools(
+    (set) => ({
+      showWidget: false,
+      setShowWidget: (bool: boolean) => {
+        set(
+          (state) => ({
+            showWidget: bool,
+          }),
+          undefined,
+          "[Widget] setShow"
+        );
+      },
+    }),
+    { name: "위젯스토어" }
+  )
 );
