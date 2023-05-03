@@ -4,7 +4,6 @@ export interface ResponseData<T> {
   data: T;
   list: any;
   message: string;
-  status: number;
   success: boolean;
 }
 export enum ResponseStatus {

@@ -26,17 +26,31 @@ export const changePassword = async ({
     });
 };
 
+export interface MypageInfoResponse {
+  dept_code: string;
+  update_id: string;
+  login_id: string;
+  user_type: string;
+  is_active: string;
+  updated_at: string;
+  create_id: string;
+  name: string;
+  created_at: string;
+  company_code: string;
+  id: string;
+}
+
 export const getMypageInfo = async () => {
   return await api
-    .get("/myPage/info", { headers })
-    .then((res: AxiosResponse<ResponseData<any>>) => {
+    .get("/api/myPage/info", { headers })
+    .then((res: AxiosResponse<ResponseData<MypageInfoResponse>>) => {
       return res.data;
     });
 };
 
 export const updateMypageInfo = async () => {
   return await api
-    .post("/myPage/updateMyPage", { headers })
+    .post("/api/myPage/updateMyPage", { headers })
     .then((res: AxiosResponse<ResponseData<any>>) => {
       return res.data;
     });
