@@ -14,12 +14,20 @@ import Header from "@components/layout/header";
 import Sidebar from "@components/layout/sidebar";
 import Widget from "@components/layout/widget";
 import { useWidgetStore } from "@store/widget";
+import { getSitRole } from "@api/siteRole";
 
 export default function MyHome() {
   const { showWidget } = useWidgetStore();
   const { currentWindows } = useWindowStore();
   const { isLogin } = useLoginStore();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const spec = {
+      companyCode: "riskzero",
+    };
+    getSitRole(spec);
+  }, []);
 
   useEffect(() => {
     if (isLogin === false) {

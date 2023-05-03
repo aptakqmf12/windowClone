@@ -11,9 +11,19 @@ import RiskEvaluate from "@components/packages/riskEvaluate";
 import Spreadjs from "@components/packages/spreadjs";
 import Wijmo from "@components/packages/wijmo";
 import PackageCenter from "@components/packages/packageCenter";
+import { MenuType, getMenuList } from "@api/menu";
 
 export default function Sidebar() {
   const { appendWindow } = useWindowStore();
+
+  const [menuList, setMenuList] = useState<MenuType[]>([]);
+
+  useEffect(() => {
+    getMenuList().then((res) => {
+      setMenuList(res.list);
+    });
+  }, []);
+
   const iconSx: SxProps<Theme> = {
     width: 30,
     height: 30,
@@ -28,19 +38,26 @@ export default function Sidebar() {
     },
     {
       icon: <Build sx={iconSx} color="disabled" />,
-      onclick: () => appendWindow({ name: "미정", component: <Wijmo /> }),
+      onclick: () =>
+        appendWindow({ name: "제어판", component: <div>제어판</div> }),
     },
     {
       icon: <PostAdd sx={iconSx} />,
-      onclick: () => appendWindow({ name: "미정", component: <Wijmo /> }),
+      onclick: () =>
+        appendWindow({ name: "자료실", component: <div>자료실</div> }),
     },
     {
       icon: <Settings sx={iconSx} />,
-      onclick: () => appendWindow({ name: "미정", component: <Wijmo /> }),
+      onclick: () =>
+        appendWindow({
+          name: "Riskzero 3.0 station 설정",
+          component: <div>Riskzero 3.0 station 설정</div>,
+        }),
     },
     {
       icon: <Search sx={iconSx} />,
-      onclick: () => appendWindow({ name: "미정", component: <Wijmo /> }),
+      onclick: () =>
+        appendWindow({ name: "도움말", component: <div>도움말</div> }),
     },
   ];
 
@@ -72,6 +89,12 @@ export default function Sidebar() {
             </li>
           ))}
         </ul>
+
+        {/* <ul>
+          {menuList.map((menu, i) => (
+            <li key={i}>{menu.menuName}</li>
+          ))}
+        </ul> */}
       </div.sidebar>
 
       <div.btn onClick={() => setIsFold(!isFold)}></div.btn>

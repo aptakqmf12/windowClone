@@ -14,11 +14,13 @@ import {
   FormControlLabel,
   styled as muiStyled,
   Typography,
+  Popover,
 } from "@mui/material";
 import { Person, Logout, ExitToApp } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { requestLogout, testApi } from "@api/sign";
 import { useWidgetStore } from "@store/widget";
+import Mypage from "@components/pages/mypage";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -28,6 +30,7 @@ export default function Header() {
   const { i18n } = useTranslation();
 
   const [site, setSite] = useState<string>();
+  const [openMypage, setOpenMypage] = useState(false);
 
   const onSiteChange = (e: SelectChangeEvent) => {
     setSite(e.target.value as string);
@@ -57,11 +60,19 @@ export default function Header() {
 
         <div className="btn">
           <div
-            onClick={() => navigate("/mypage")}
             style={{ cursor: "pointer" }}
+            onClick={() => setOpenMypage(!openMypage)}
+            aria-describedby={"test"}
           >
             <Person sx={{ width: 30, height: 30 }} style={{ color: "white" }} />
           </div>
+
+          {openMypage && (
+            <div.modal>
+              <div onClick={() => setOpenMypage(false)}>X</div>
+              <Mypage />
+            </div.modal>
+          )}
 
           <div onClick={onLogout} style={{ cursor: "pointer" }}>
             <ExitToApp
@@ -149,6 +160,15 @@ const div = {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+  `,
+
+  modal: styled.div`
+    position: absolute;
+    right: 60px;
+    top: 10px;
+    width: 500px;
+    background-color: white;
+    z-index: 100;
   `,
 };
 

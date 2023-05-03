@@ -4,7 +4,6 @@ import { ResponseStatus, ResponseCode, ResponseData } from "../types";
 
 const Instance = () => {
   return axios.create({
-    // baseURL: BASE_URL,
     timeout: 5000,
   });
 };
@@ -67,4 +66,17 @@ export const dispatchError = (error: AxiosError<ResponseData<any>>) => {
     case ResponseCode.UNKNOWN_EXCEPTION:
       return console.log("알 수 없는 오류");
   }
+};
+
+// query params
+export const generateQueryParamUrl = (
+  url: string,
+  params: Record<string, any>
+) => {
+  const queryParam = Object.entries(params)
+    .filter(([_, value]) => value !== undefined)
+    .map(([key, value]) => `${key}=${value}`)
+    .join("&");
+
+  return `${url}${queryParam ? `?${queryParam}` : ""}`;
 };
