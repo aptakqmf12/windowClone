@@ -21,9 +21,11 @@ import { useNavigate } from "react-router-dom";
 import { requestLogout, testApi } from "@api/sign";
 import { useWidgetStore } from "@store/widget";
 import Mypage from "@components/pages/mypage";
+import { ModeType, useCommonStore } from "@store/common";
 
 export default function Header() {
   const navigate = useNavigate();
+  const { mode, changeMode } = useCommonStore();
   const { showWidget, setShowWidget } = useWidgetStore();
   const { currentWindows, toggleShowWindow } = useWindowStore();
   const { isLogin, setLogin } = useLoginStore();
@@ -53,6 +55,14 @@ export default function Header() {
     <header.wrap>
       <div.head>
         <div className="btns">
+          <div>
+            <Switch
+              value={mode === ModeType.DARK}
+              onChange={(e) =>
+                changeMode(e.target.checked ? ModeType.DARK : ModeType.LIGHT)
+              }
+            />
+          </div>
           <div
             style={{ cursor: "pointer" }}
             onClick={() => setOpenMypage(!openMypage)}

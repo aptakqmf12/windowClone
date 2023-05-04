@@ -23,6 +23,7 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
+
     
   }
   article, aside, details, figcaption, figure, 
@@ -33,6 +34,7 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1;
     font-family: "Roboto";
     font-weight: 200;
+
   }
   ol, ul, li {
     list-style: none;

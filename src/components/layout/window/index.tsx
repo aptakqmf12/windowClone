@@ -14,7 +14,7 @@ import { useWindowStore } from "@store/window";
 import type { WindowType } from "@store/window";
 import Resizer from "./Resizer";
 import { useTranslation } from "react-i18next";
-import { Breadcrumbs, Link, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
 export const Direction = {
   Top: "top",
@@ -88,6 +88,10 @@ export default function Window(props: WindowType) {
     bottom: window.innerHeight - THRESHOLD,
   };
 
+  const sx = { width: 20, height: 20, fill: "#7E7E7E" };
+
+  const dir = ["depth1", "depth2", "depth3"];
+
   if (isShow === false) return <></>;
 
   return (
@@ -123,26 +127,30 @@ export default function Window(props: WindowType) {
             <Typography fontSize={20} fontWeight={600}>
               {name}
             </Typography>
-
-            <Typography fontSize={11} color={"#A09D9D"}>
-              {directory.join(" / ")}
-            </Typography>
           </div>
 
           <div className="btns">
             <button onClick={onHide}>
-              <Remove />
+              <Remove sx={sx} />
             </button>
-
             <button onClick={onToggleFullScreen}>
-              {isFullScreen ? <ContentCopy /> : <CropSquare />}
+              {isFullScreen ? <ContentCopy sx={sx} /> : <CropSquare sx={sx} />}
             </button>
-
             <button onClick={onClose}>
-              <Close />
+              <Close sx={sx} />
             </button>
           </div>
         </div.head>
+
+        <div.breadCrumb>
+          <Typography fontSize={12} color={"white"}>
+            {dir.slice(0, dir.length - 1).join(" / ")}
+          </Typography>
+
+          <Typography fontSize={12} fontWeight={600} color={"white"}>
+            &nbsp; / {dir[dir.length - 1]}
+          </Typography>
+        </div.breadCrumb>
 
         <div.body>
           <Resizer
@@ -188,7 +196,7 @@ const div = {
     align-items: center;
     height: 30px;
     padding: 4px 10px;
-    box-sizing: border-wrap;
+
     background-color: #eeeeee;
     cursor: ${(p) => (p.isFullScreen ? "default" : "move")};
 
@@ -199,13 +207,23 @@ const div = {
     }
     .btns {
       display: flex;
-      gap: 2px;
+      gap: 10px;
     }
+  `,
+
+  breadCrumb: styled.div`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 30px;
+    padding: 0px 24px;
+
+    background-color: #7b7b7b;
   `,
 
   body: styled.div`
     background-color: #ffffff;
-    height: calc(100% - 30px);
+    height: calc(100% - 50px);
     overflow: auto;
   `,
 };

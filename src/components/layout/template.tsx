@@ -67,7 +67,6 @@ const div = {
 
       padding: 10px;
       background-color: #ffffff;
-      box-sizing: border-box;
     }
   `,
 };

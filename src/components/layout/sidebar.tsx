@@ -65,24 +65,12 @@ export default function Sidebar() {
   const [isFold, setIsFold] = useState(false);
 
   return (
-    <div.wrap
-      initial={{
-        x: 0,
-        y: "-50%",
-      }}
-      animate={{
-        x: isFold ? 15 - 100 : 0,
-        y: "-50%",
-      }}
-      transition={{
-        ease: "linear",
-      }}
+    <div.motion.wrap
+      initial={{ x: 0, y: "-50%" }}
+      animate={{ x: isFold ? 15 - 100 : 0, y: "-50%" }}
+      transition={{ ease: "linear" }}
     >
       <div.sidebar>
-        <div className="logo">
-          <LogoIcon />
-        </div>
-
         <ul>
           {FIXED_STATIONS.map((station, i) => (
             <li onClick={station.onclick} key={i}>
@@ -90,29 +78,25 @@ export default function Sidebar() {
             </li>
           ))}
         </ul>
-
-        {/* <ul>
-          {menuList.map((menu, i) => (
-            <li key={i}>{menu.menuName}</li>
-          ))}
-        </ul> */}
       </div.sidebar>
 
       <div.btn onClick={() => setIsFold(!isFold)}></div.btn>
-    </div.wrap>
+    </div.motion.wrap>
   );
 }
 
 const div = {
-  wrap: styled(motion.div)`
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
+  motion: {
+    wrap: styled(motion.div)`
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
 
-    display: flex;
-    align-items: center;
-  `,
+      display: flex;
+      align-items: center;
+    `,
+  },
 
   sidebar: styled.div`
     display: flex;
