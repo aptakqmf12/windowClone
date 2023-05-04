@@ -6,10 +6,19 @@ const headers = {
   Authorization: `Bearer ${localStorage.getItem("access_token")}`,
 };
 
+export interface MenuType {
+  menuId: string;
+  parentMenuId: string;
+  subParentMenuId: string;
+  menuName: string;
+  url: string;
+  sortOrder: string;
+}
+
 export const getMenuList = async () => {
   return await api
-    .get("/menu/getMenuList", { headers })
-    .then((res: AxiosResponse<ResponseData<any>>) => {
+    .get("/api/menu/getMenuList", { headers })
+    .then((res: AxiosResponse<ResponseData<MenuType[]>>) => {
       return res.data;
     });
 };

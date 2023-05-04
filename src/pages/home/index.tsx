@@ -14,12 +14,21 @@ import Header from "@components/layout/header";
 import Sidebar from "@components/layout/sidebar";
 import Widget from "@components/layout/widget";
 import { useWidgetStore } from "@store/widget";
+import { getSitRole } from "@api/siteRole";
+import { Avatar, Chip } from "@mui/material";
 
 export default function MyHome() {
   const { showWidget } = useWidgetStore();
-  const { currentWindows } = useWindowStore();
+  const { currentWindows, toggleShowWindow } = useWindowStore();
   const { isLogin } = useLoginStore();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const spec = {
+      companyCode: "riskzero",
+    };
+    getSitRole(spec);
+  }, []);
 
   useEffect(() => {
     if (isLogin === false) {
@@ -34,6 +43,20 @@ export default function MyHome() {
       <div.body className="station">
         <Sidebar />
       </div.body>
+
+      <ul.nav>
+        {currentWindows.map((window, i) => (
+          <li onClick={() => toggleShowWindow(window.uuid)} key={i}>
+            <Chip
+              avatar={<Avatar>{window.name.slice(0, 1)}</Avatar>}
+              label={window.name}
+              variant="filled"
+              color={window.isShow ? "primary" : "default"}
+              style={{ cursor: "pointer" }}
+            />
+          </li>
+        ))}
+      </ul.nav>
 
       {/* windows */}
       {currentWindows.map((window) => (
@@ -81,5 +104,20 @@ const div = {
     display: flex;
     flex-direction: row-reverse;
     gap: 20px;
+  `,
+};
+
+const ul = {
+  nav: styled.ul`
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+
+    display: flex;
+    gap: 10px;
+
+    li {
+      cursor: pointer;
+    }
   `,
 };
