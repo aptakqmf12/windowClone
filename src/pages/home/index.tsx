@@ -88,7 +88,7 @@ const div = {
     align-items: flex-start;
     width: 100%;
     height: 100%;
-    background: url("/public/images/bg_hero.png") no-repeat;
+    background: url("/images/bg_hero.png") no-repeat;
     background-size: cover;
     object-fit: cover;
 
