@@ -12,7 +12,6 @@ import { Home, Mail, Inbox, People } from "@mui/icons-material";
 
 export interface TemplateProps {
   name: string;
-  status: TabStatus;
   component: React.ReactNode;
 }
 
@@ -24,41 +23,27 @@ export enum TabStatus {
 }
 
 export default function Template({ data }: { data: TemplateProps[] }) {
-  const [currentTab, setCurrentTab] = useState<TabStatus>(TabStatus.ONE);
+  const [currentTab, setCurrentTab] = useState<string | undefined>();
 
-  const content = data.find((tab) => tab.status === currentTab)?.component;
+  const content = data.find((tab) => tab.name === currentTab)?.component;
 
   return (
     <div.wrap>
-      <div className="sidebar">
-        <Box
-          sx={{
-            width: 300,
-            height: "100%",
-            borderRight: "1px #dddddd solid",
-          }}
-        >
-          <List>
-            {data.map((tab, index) => (
-              <ListItem
-                key={index}
-                onClick={() => setCurrentTab(tab.status)}
-                disablePadding
-              >
-                <ListItemButton>
-                  <ListItemIcon>
-                    {
-                      [<Home />, <Mail />, <Inbox />, <People />, <Mail />][
-                        index
-                      ]
-                    }
-                  </ListItemIcon>
-                  <ListItemText primary={tab.name} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </Box>
+      <div className="leftbar">
+        {data.map((tab, index) => (
+          <ListItem
+            key={index}
+            onClick={() => setCurrentTab(tab.name)}
+            disablePadding
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                {[<Home />, <Mail />, <Inbox />, <People />, <Mail />][index]}
+              </ListItemIcon>
+              <ListItemText primary={tab.name} />
+            </ListItemButton>
+          </ListItem>
+        ))}
       </div>
 
       <div className="content">{content}</div>
@@ -72,6 +57,10 @@ const div = {
     justify-content: flex-start;
     width: 100%;
     height: 100%;
+
+    .leftbar {
+      width: 500px;
+    }
 
     .content {
       width: 100%;

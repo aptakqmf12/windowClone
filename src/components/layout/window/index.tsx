@@ -40,8 +40,19 @@ export default function Window(props: WindowType) {
     focusWindow,
     toggleShowWindow,
   } = useWindowStore();
-  const { name, uuid, component, isFullScreen, isShow, zIndex, x, y, w, h } =
-    props;
+  const {
+    name,
+    uuid,
+    component,
+    isFullScreen,
+    isShow,
+    zIndex,
+    directory,
+    x,
+    y,
+    w,
+    h,
+  } = props;
   const isFocused = zIndex === 2;
 
   const [isDragging, setIsDragging] = useState(false);
@@ -114,7 +125,7 @@ export default function Window(props: WindowType) {
             </Typography>
 
             <Typography fontSize={11} color={"#A09D9D"}>
-              depth1 / depth2 / depth3
+              {directory.join(" / ")}
             </Typography>
           </div>
 

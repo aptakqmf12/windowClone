@@ -129,7 +129,6 @@ const header = {
     top: 50px;
     display: flex;
     flex-direction: column;
-
     gap: 30px;
   `,
 };
@@ -139,7 +138,6 @@ const div = {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-
     width: 100%;
 
     .btns {

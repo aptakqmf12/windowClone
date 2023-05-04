@@ -9,6 +9,7 @@ export interface WindowType {
   isFullScreen: boolean;
   isShow: boolean;
   zIndex: number;
+  directory: string[];
   x: number;
   y: number;
   w: number;
@@ -61,6 +62,7 @@ export const useWindowStore = create<WindowStore>()(
                   isFullScreen: false,
                   isShow: true,
                   zIndex: props.zIndex || 1,
+                  directory: [],
                   x:
                     props.x ||
                     window.innerWidth / 2 -
