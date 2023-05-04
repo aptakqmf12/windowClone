@@ -9,7 +9,6 @@ import LogoIcon from "@components/icons/logo";
 import { MenuType, getMenuList } from "@api/menu";
 
 import ControlPanel from "@components/packages/controlPanel";
-import RiskEvaluate from "@components/packages/riskEvaluate";
 import Spreadjs from "@components/packages/spreadjs";
 import Wijmo from "@components/packages/wijmo";
 import PackageCenter from "@components/packages/packageCenter";
