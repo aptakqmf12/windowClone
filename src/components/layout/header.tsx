@@ -16,7 +16,7 @@ import {
   Typography,
   Popover,
 } from "@mui/material";
-import { Person, Logout, ExitToApp } from "@mui/icons-material";
+import { Person, Logout, ExitToApp, Close } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { requestLogout, testApi } from "@api/sign";
 import { useWidgetStore } from "@store/widget";
@@ -52,33 +52,32 @@ export default function Header() {
   return (
     <header.wrap>
       <div.head>
-        <div className="title">
-          <Typography color={"white"} variant="body1">
-            서울민정공사현장
-          </Typography>
-        </div>
-
-        <div className="btn">
+        <div className="btns">
           <div
             style={{ cursor: "pointer" }}
             onClick={() => setOpenMypage(!openMypage)}
             aria-describedby={"test"}
+            className="btn"
           >
-            <Person sx={{ width: 30, height: 30 }} style={{ color: "white" }} />
+            <Person sx={{ width: 40, height: 40 }} style={{ color: "white" }} />
+            <Typography color={"white"}>마이페이지</Typography>
           </div>
 
           {openMypage && (
             <div.modal>
-              <div onClick={() => setOpenMypage(false)}>X</div>
+              <div onClick={() => setOpenMypage(false)} className="close">
+                <Close />
+              </div>
               <Mypage />
             </div.modal>
           )}
 
-          <div onClick={onLogout} style={{ cursor: "pointer" }}>
+          <div onClick={onLogout} style={{ cursor: "pointer" }} className="btn">
             <ExitToApp
-              sx={{ width: 30, height: 30 }}
+              sx={{ width: 40, height: 40 }}
               style={{ color: "white" }}
             />
+            <Typography color={"white"}>로그아웃</Typography>
           </div>
         </div>
       </div.head>
@@ -138,20 +137,20 @@ const header = {
 const div = {
   head: styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
+
     width: 100%;
 
-    .title {
-      width: 200px;
-      padding: 5px 10px;
-      background-color: ${(p) => p.theme.colors.primary.main};
-      border-radius: 6px;
-      text-align: center;
-    }
-
-    .btn {
+    .btns {
       display: flex;
+      gap: 10px;
+
+      .btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
     }
   `,
 
@@ -169,33 +168,13 @@ const div = {
     width: 500px;
     background-color: white;
     z-index: 100;
-  `,
-};
 
-const ul = {
-  nav: styled.ul`
-    display: flex;
-    gap: 10px;
-
-    li {
-      cursor: pointer;
+    .close {
+      display: inline-flex;
+      background-color: red;
     }
   `,
 };
-
-/* <ul.nav>
-  {currentWindows.map((window, i) => (
-    <li onClick={() => toggleShowWindow(window.uuid)} key={i}>
-      <Chip
-        avatar={<Avatar>{window.name.slice(0, 1)}</Avatar>}
-        label={window.name}
-        variant="filled"
-        color={window.isShow ? "primary" : "default"}
-        style={{ cursor: "pointer" }}
-      />
-    </li>
-  ))}
-</ul.nav> */
 
 // language
 

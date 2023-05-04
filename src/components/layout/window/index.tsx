@@ -1,12 +1,20 @@
 import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import Draggable from "react-draggable";
-import { Fullscreen, FullscreenExit, Close, Remove } from "@mui/icons-material";
+import {
+  Fullscreen,
+  FullscreenExit,
+  Close,
+  Remove,
+  ContentCopy,
+  CropSquare,
+} from "@mui/icons-material";
 
 import { useWindowStore } from "@store/window";
 import type { WindowType } from "@store/window";
 import Resizer from "./Resizer";
 import { useTranslation } from "react-i18next";
+import { Breadcrumbs, Link, Typography } from "@mui/material";
 
 export const Direction = {
   Top: "top",
@@ -100,14 +108,23 @@ export default function Window(props: WindowType) {
           className="handle"
           ref={handleRef}
         >
-          <div className="title">{name}</div>
+          <div className="title">
+            <Typography fontSize={20} fontWeight={600}>
+              {name}
+            </Typography>
+
+            <Typography fontSize={11} color={"#A09D9D"}>
+              depth1 / depth2 / depth3
+            </Typography>
+          </div>
 
           <div className="btns">
             <button onClick={onHide}>
               <Remove />
             </button>
+
             <button onClick={onToggleFullScreen}>
-              {isFullScreen ? <FullscreenExit /> : <Fullscreen />}
+              {isFullScreen ? <ContentCopy /> : <CropSquare />}
             </button>
 
             <button onClick={onClose}>
@@ -147,6 +164,8 @@ const div = {
     border: 1px #777777 solid;
     background-color: white;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
 
     &.transparent {
       opacity: 0.6;
@@ -157,12 +176,15 @@ const div = {
     justify-content: space-between;
     align-items: center;
     height: 30px;
-    padding: 0 5px;
+    padding: 4px 10px;
     box-sizing: border-wrap;
-    background-color: #e2e2e2;
+    background-color: #eeeeee;
     cursor: ${(p) => (p.isFullScreen ? "default" : "move")};
 
     .title {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
     }
     .btns {
       display: flex;
