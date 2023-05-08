@@ -20,14 +20,14 @@ import {
   DialogContent,
 } from "@mui/material";
 import { LockOutlined } from "@mui/icons-material";
-import { emailRule, passwordRule } from "../../lib/inputRule";
-import { requestLogin } from "../../api/sign";
+import { emailRule, passwordRule } from "../lib/inputRule";
+import { requestLogin } from "../api/sign";
 import styled from "styled-components";
 
 import { useNavigate } from "react-router-dom";
 import { useLoginStore } from "@store/login";
 import { generatePhoneNumber } from "@lib/inputRule";
-import { ResponseCode } from "../../types/index";
+import { ResponseCode } from "../types/index";
 
 export default function Signin() {
   const { isLogin, setLogin } = useLoginStore();

@@ -13,7 +13,7 @@ interface CommonStore {
 
 export const useCommonStore = create<CommonStore>()(
   devtools((set) => ({
-    mode: ModeType.DARK,
+    mode: ModeType.LIGHT,
     changeMode: (mode: ModeType) => {
       set(
         (state) => ({

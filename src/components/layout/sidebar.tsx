@@ -8,11 +8,11 @@ import { SxProps, Theme, Typography } from "@mui/material";
 import LogoIcon from "@components/icons/logo";
 import { MenuType, getMenuList } from "@api/menu";
 
-import ControlPanel from "@components/packages/controlPanel";
-import Spreadjs from "@components/packages/spreadjs";
-import Wijmo from "@components/packages/wijmo";
-import PackageCenter from "@components/packages/packageCenter";
-import LibraryRoom from "@components/packages/libraryRoom";
+import ControlPanel from "@components/station/controlPanel";
+import Spreadjs from "@components/station/spreadjs";
+import Wijmo from "@components/station/wijmo";
+import PackageCenter from "@components/station/packageCenter";
+import LibraryRoom from "@components/station/libraryRoom";
 
 export default function Sidebar() {
   const { appendWindow } = useWindowStore();
@@ -36,7 +36,7 @@ export default function Sidebar() {
       name: "패키지 센터",
       icon: <Apps sx={iconSx} />,
       onclick: function () {
-        appendWindow({ name: "패키지 센터", component: <PackageCenter /> });
+        appendWindow({ name: this.name, component: <PackageCenter /> });
       },
     },
     {
