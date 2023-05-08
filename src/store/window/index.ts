@@ -6,6 +6,7 @@ export interface WindowType {
   name: string;
   uuid: string;
   component: React.ReactNode;
+  icon: React.ReactNode;
   isFullScreen: boolean;
   isShow: boolean;
   zIndex: number;
@@ -16,7 +17,9 @@ export interface WindowType {
   h: number;
 }
 
-type AppendWindowProps = Pick<WindowType, "component"> & {
+type AppendWindowProps = {
+  component: React.ReactNode;
+  icon: React.ReactNode;
   name: string;
   zIndex?: number;
   x?: number;
@@ -59,6 +62,7 @@ export const useWindowStore = create<WindowStore>()(
                   name: props.name,
                   uuid: uuidv4(),
                   component: props.component,
+                  icon: props.icon,
                   isFullScreen: false,
                   isShow: true,
                   zIndex: props.zIndex || 1,

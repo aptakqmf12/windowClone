@@ -17,7 +17,7 @@ export interface MenuType {
 
 export const getMenuList = async () => {
   return await api
-    .get("/api/menu/getMenuList", { headers })
+    .get("/api/v1/menu/getMenuList", { headers })
     .then((res: AxiosResponse<ResponseData<MenuType[]>>) => {
       return res.data;
     });

@@ -5,7 +5,7 @@ import styled from "styled-components";
 export default function Logo() {
   return (
     <div.wrap>
-      <LogoIcon />
+      <LogoIcon fill="#707070" />
       <Typography>서울 민정공사</Typography>
     </div.wrap>
   );

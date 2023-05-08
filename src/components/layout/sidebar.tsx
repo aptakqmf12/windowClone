@@ -44,21 +44,33 @@ export default function Sidebar() {
       name: "패키지 센터",
       icon: <Apps sx={iconSx} />,
       onclick: function () {
-        appendWindow({ name: "패키지 센터", component: <PackageCenter /> });
+        appendWindow({
+          name: "패키지 센터",
+          icon: <Apps sx={iconSx} />,
+          component: <PackageCenter />,
+        });
       },
     },
     {
       name: "제어판",
       icon: <Build sx={iconSx} color="disabled" />,
       onclick: function () {
-        appendWindow({ name: "제어판", component: <ControlPanel /> });
+        appendWindow({
+          name: "제어판",
+          icon: <Build sx={iconSx} />,
+          component: <ControlPanel />,
+        });
       },
     },
     {
       name: "자료실",
       icon: <PostAdd sx={iconSx} />,
       onclick: function () {
-        appendWindow({ name: "자료실", component: <LibraryRoom /> });
+        appendWindow({
+          name: "자료실",
+          icon: <PostAdd sx={iconSx} />,
+          component: <LibraryRoom />,
+        });
       },
     },
     {
@@ -67,6 +79,7 @@ export default function Sidebar() {
       onclick: function () {
         appendWindow({
           name: "설정",
+          icon: <Settings sx={iconSx} />,
           component: <div>설정</div>,
         });
       },
@@ -75,7 +88,11 @@ export default function Sidebar() {
       name: "도움말",
       icon: <Search sx={iconSx} />,
       onclick: function () {
-        appendWindow({ name: "도움말", component: <div>도움말</div> });
+        appendWindow({
+          name: "도움말",
+          icon: <Search sx={iconSx} />,
+          component: <div>도움말</div>,
+        });
       },
     },
   ];

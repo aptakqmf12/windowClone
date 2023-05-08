@@ -1,7 +1,7 @@
 import { ThemeOptions } from "@mui/material/styles";
 import { ModeType } from "@store/common";
 
-const darkColors = {
+export const darkColors = {
   primary: {
     dark: "#6B90CC",
     main: "#B0C5EF",
@@ -37,7 +37,7 @@ const darkColors = {
   },
 };
 
-const lightColors = {
+export const lightColors = {
   primary: {
     dark: "#1F375D",
     main: "#33518B",
@@ -109,8 +109,7 @@ const colors = {
   },
 };
 
-export const theme = { colors };
-export type ColorsType = typeof colors;
+export type ColorsType = typeof darkColors;
 
 export const getMuiThemes = (mode: ModeType): ThemeOptions => {
   const isDarkMode = mode === ModeType.DARK;

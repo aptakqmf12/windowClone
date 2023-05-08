@@ -1,8 +1,6 @@
 import { useCommonStore } from "@store/common";
 
-export default function LogoIcon() {
-  const fill = "#707070";
-
+export default function LogoIcon({ fill }: { fill: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

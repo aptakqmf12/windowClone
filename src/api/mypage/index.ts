@@ -20,7 +20,7 @@ export const changePassword = async ({
   const body = { newPass, oldPass };
 
   return await api
-    .post("/myPage/chnagePass", body, { headers })
+    .post("/api/v1/myPage/changePass", body, { headers })
     .then((res: AxiosResponse<ResponseData<any>>) => {
       return res.data;
     });
@@ -42,7 +42,7 @@ export interface MypageInfoResponse {
 
 export const getMypageInfo = async () => {
   return await api
-    .get("/api/myPage/info", { headers })
+    .get("/api/v1/myPage/info", { headers })
     .then((res: AxiosResponse<ResponseData<MypageInfoResponse>>) => {
       return res.data;
     });
@@ -50,7 +50,7 @@ export const getMypageInfo = async () => {
 
 export const updateMypageInfo = async () => {
   return await api
-    .post("/api/myPage/updateMyPage", { headers })
+    .post("/api/v1/myPage/updateMyPage", { headers })
     .then((res: AxiosResponse<ResponseData<any>>) => {
       return res.data;
     });

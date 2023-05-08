@@ -5,14 +5,7 @@ import { MypageInfoResponse, getMypageInfo } from "@api/mypage";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Mypage() {
-  const { isLoading, data: mypageData } = useQuery(
-    ["queryKey"],
-    getMypageInfo,
-    {
-      refetchInterval: 5000,
-      refetchIntervalInBackground: true,
-    }
-  );
+  const { isLoading, data: mypageData } = useQuery(["queryKey"], getMypageInfo);
 
   return (
     <div.wrap>

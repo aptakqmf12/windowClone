@@ -10,6 +10,13 @@ const Instance = () => {
 
 export const api = Instance();
 
+/**
+ * 1. TOKEN_EXPIRED 응답 받음
+ * 2. requestAccessToken 요청 후 신선한 토큰을 받음
+ * 3. 신선한 토큰을 api.request(config)로 보내야하는데?
+ * 4. 기존의 stale한 토큰을 보내는것같음.
+ */
+
 api.interceptors.response.use(
   (response) => {
     return response;
