@@ -4,12 +4,6 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import { Divider } from "@mui/material";
 import Template from "@components/layout/template";
 
-/**
- *
- * 1. zustand에 dir저장
- * 2. dir의 마지막값만 뽑아서 switch문에 넣어서 generate해주기.
- */
-
 const paths = {
   DELEGATION: "위임전결규정",
   FORM: "양식함",

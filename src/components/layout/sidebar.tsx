@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Apps, Build, PostAdd, Settings, Search } from "@mui/icons-material";
+import {
+  Apps,
+  Build,
+  PostAdd,
+  Settings,
+  Search,
+  ArrowLeft,
+  ArrowRight,
+} from "@mui/icons-material";
 import { useWindowStore } from "@store/window";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -36,7 +44,7 @@ export default function Sidebar() {
       name: "패키지 센터",
       icon: <Apps sx={iconSx} />,
       onclick: function () {
-        appendWindow({ name: this.name, component: <PackageCenter /> });
+        appendWindow({ name: "패키지 센터", component: <PackageCenter /> });
       },
     },
     {
@@ -74,6 +82,13 @@ export default function Sidebar() {
 
   const [isFold, setIsFold] = useState(false);
 
+  const foldIconSx = { color: "#90caf9" };
+  const foldIcon = isFold ? (
+    <ArrowRight sx={foldIconSx} />
+  ) : (
+    <ArrowLeft sx={foldIconSx} />
+  );
+
   return (
     <div.motion.wrap
       initial={{ x: 0, y: "-50%" }}
@@ -89,9 +104,15 @@ export default function Sidebar() {
             </li>
           ))}
         </ul>
+
+        {/* {menuList.map((menu) => (
+          <div>{menu.menuName}</div>
+        ))} */}
       </div.sidebar>
 
-      <div.btn onClick={() => setIsFold(!isFold)}></div.btn>
+      <div.bar onClick={() => setIsFold(!isFold)}>
+        <div className="btn">{foldIcon}</div>
+      </div.bar>
     </div.motion.wrap>
   );
 }
@@ -121,12 +142,6 @@ const div = {
     border-radius: 0 80px 80px 0;
     background-color: rgba(255, 255, 255, 0.7);
 
-    .logo {
-      margin-bottom: 50px;
-      padding-bottom: 50px;
-      border-bottom: 1px #454545 solid;
-    }
-
     ul {
       display: flex;
       flex-direction: column;
@@ -138,16 +153,41 @@ const div = {
         flex-direction: column;
         align-items: center;
         cursor: pointer;
+
+        &:hover {
+          > * {
+            color: red;
+            fill: red;
+            transition: none;
+          }
+        }
       }
     }
   `,
 
-  btn: styled.div`
+  bar: styled.div`
+    position: relative;
     width: 6px;
     height: 390px;
     background-color: #90caf9;
     border-radius: 0 50px 50px 0;
-
     cursor: pointer;
+
+    .btn {
+      position: absolute;
+      left: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+
+      width: 14px;
+      height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      align-items: center;
+      background-color: #fff;
+      border-radius: 0 10px 10px 0;
+    }
   `,
 };

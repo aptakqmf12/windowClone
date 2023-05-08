@@ -2,15 +2,17 @@ import { useState, useEffect } from "react";
 import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
 import styled from "styled-components";
 import { MypageInfoResponse, getMypageInfo } from "@api/mypage";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Mypage() {
-  const [data, setData] = useState<MypageInfoResponse>();
-
-  useEffect(() => {
-    getMypageInfo().then((res) => {
-      setData(res.data);
-    });
-  }, []);
+  const { isLoading, data: mypageData } = useQuery(
+    ["queryKey"],
+    getMypageInfo,
+    {
+      refetchInterval: 5000,
+      refetchIntervalInBackground: true,
+    }
+  );
 
   return (
     <div.wrap>
@@ -26,7 +28,10 @@ export default function Mypage() {
           <Typography>민정건설</Typography>
         </div>
         <div>
-          <Typography>{data?.name}님</Typography>
+          <Typography>
+            {/* {isLoading ? "loading..." : data?.data.name}님 */}
+            {mypageData?.data.name}
+          </Typography>
         </div>
       </div.top>
 
