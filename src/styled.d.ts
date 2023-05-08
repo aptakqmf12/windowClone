@@ -7,6 +7,6 @@ declare module "styled-components" {
     isTablet: boolean;
     isDesktop: boolean;
 
-    colors: ColorsType;
+    colors: any;
   }
 }

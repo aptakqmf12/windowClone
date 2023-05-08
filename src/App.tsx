@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
-import { getDesignTokens, theme } from "./style/theme";
+import { getMuiThemes, theme } from "./style/theme";
 import { PaletteOptions, createTheme } from "@mui/material/styles";
 
 import useDisplay from "./hook/useDisplay";
@@ -19,7 +19,8 @@ function App() {
   const { mode } = useCommonStore();
   const display = useDisplay();
   const themes = { ...theme, ...display };
-  const muiTheme = createTheme(getDesignTokens(mode));
+
+  const muiTheme = createTheme(getMuiThemes(mode));
 
   useEffect(() => {
     const access_token = localStorage.getItem("access_token");

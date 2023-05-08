@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, ChangeEvent } from "react";
 import styled from "styled-components";
 import { useWindowStore } from "../../store/window";
 import { useLoginStore } from "@store/login";

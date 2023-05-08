@@ -16,6 +16,7 @@ import Widget from "@components/layout/widget";
 import { useWidgetStore } from "@store/widget";
 import { getSitRole } from "@api/siteRole";
 import { Avatar, Chip } from "@mui/material";
+import Logo from "@components/layout/logo";
 
 export default function MyHome() {
   const { showWidget } = useWidgetStore();
@@ -38,6 +39,8 @@ export default function MyHome() {
 
   return (
     <div.wrap>
+      <Logo />
+
       <Header />
 
       <div.body className="station">

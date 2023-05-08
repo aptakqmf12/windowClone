@@ -4,7 +4,7 @@ import { Apps, Build, PostAdd, Settings, Search } from "@mui/icons-material";
 import { useWindowStore } from "@store/window";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { SxProps, Theme } from "@mui/material";
+import { SxProps, Theme, Typography } from "@mui/material";
 import LogoIcon from "@components/icons/logo";
 import { MenuType, getMenuList } from "@api/menu";
 
@@ -33,32 +33,42 @@ export default function Sidebar() {
 
   const FIXED_STATIONS = [
     {
+      name: "패키지 센터",
       icon: <Apps sx={iconSx} />,
-      onclick: () =>
-        appendWindow({ name: "패키지 센터", component: <PackageCenter /> }),
+      onclick: function () {
+        appendWindow({ name: "패키지 센터", component: <PackageCenter /> });
+      },
     },
     {
+      name: "제어판",
       icon: <Build sx={iconSx} color="disabled" />,
-      onclick: () =>
-        appendWindow({ name: "제어판", component: <ControlPanel /> }),
+      onclick: function () {
+        appendWindow({ name: "제어판", component: <ControlPanel /> });
+      },
     },
     {
+      name: "자료실",
       icon: <PostAdd sx={iconSx} />,
-      onclick: () =>
-        appendWindow({ name: "자료실", component: <LibraryRoom /> }),
+      onclick: function () {
+        appendWindow({ name: "자료실", component: <LibraryRoom /> });
+      },
     },
     {
+      name: "설정",
       icon: <Settings sx={iconSx} />,
-      onclick: () =>
+      onclick: function () {
         appendWindow({
-          name: "Riskzero 3.0 station 설정",
-          component: <div>Riskzero 3.0 station 설정</div>,
-        }),
+          name: "설정",
+          component: <div>설정</div>,
+        });
+      },
     },
     {
+      name: "도움말",
       icon: <Search sx={iconSx} />,
-      onclick: () =>
-        appendWindow({ name: "도움말", component: <div>도움말</div> }),
+      onclick: function () {
+        appendWindow({ name: "도움말", component: <div>도움말</div> });
+      },
     },
   ];
 
@@ -75,6 +85,7 @@ export default function Sidebar() {
           {FIXED_STATIONS.map((station, i) => (
             <li onClick={station.onclick} key={i}>
               {station.icon}
+              <Typography variant="caption">{station.name}</Typography>
             </li>
           ))}
         </ul>
@@ -123,6 +134,9 @@ const div = {
       align-items: center;
       gap: 60px;
       li {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         cursor: pointer;
       }
     }
