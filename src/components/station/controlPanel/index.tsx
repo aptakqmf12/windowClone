@@ -1,35 +1,17 @@
 import { useState } from "react";
 import styled from "styled-components";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-import {
-  Collapse,
-  Divider,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-} from "@mui/material";
 
 import UserList from "./userManage/userList";
-import {
-  ExpandLess,
-  ExpandMore,
-  Home,
-  ListAlt,
-  People,
-  ArrowForward,
-} from "@mui/icons-material";
+import { Home, People, ArrowForward } from "@mui/icons-material";
 import NestedAccordion from "@components/layout/nestedAccordion";
 
 const enum PathType {
   DELEGATION = "위임전결규정",
   FORM_ROOM = "양식함",
   USER_MANAGE = "사용자관리",
-  REQUEST_CREATE_ACCOUNT = "계정생성요청",
-  CREATE_ACCOUNT = "계정 직접 생성",
-
+  USER_REQUEST_CREATE_ACCOUNT = "계정생성요청",
+  USER_CREATE_ACCOUNT = "계정 직접 생성",
   PERMISSION = "권한설정",
   PARTNER_MANAGE = "협력사관리",
   CODE_MANAGE = "코드관리",
@@ -46,9 +28,9 @@ export default function ControlPanel() {
         return <div>양식함</div>;
       case PathType.USER_MANAGE:
         return <UserList />;
-      case PathType.REQUEST_CREATE_ACCOUNT:
+      case PathType.USER_REQUEST_CREATE_ACCOUNT:
         return <div>계정생성요청</div>;
-      case PathType.CREATE_ACCOUNT:
+      case PathType.USER_CREATE_ACCOUNT:
         return <div>계정 직접 생성</div>;
       case PathType.PERMISSION:
         return <div>권한설정</div>;
@@ -103,17 +85,17 @@ export default function ControlPanel() {
         {
           name: "계정생성요청",
           icon: <People />,
-          path: PathType.REQUEST_CREATE_ACCOUNT,
+          path: PathType.USER_REQUEST_CREATE_ACCOUNT,
           onClick: () => {
-            setCurrentPath(PathType.REQUEST_CREATE_ACCOUNT);
+            setCurrentPath(PathType.USER_REQUEST_CREATE_ACCOUNT);
           },
         },
         {
           name: "계정 직접 생성",
           icon: <People />,
-          path: PathType.CREATE_ACCOUNT,
+          path: PathType.USER_CREATE_ACCOUNT,
           onClick: () => {
-            setCurrentPath(PathType.CREATE_ACCOUNT);
+            setCurrentPath(PathType.USER_CREATE_ACCOUNT);
           },
         },
       ],
