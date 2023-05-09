@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Button,
   MenuItem,
@@ -18,46 +18,22 @@ import {
 } from "@mui/material";
 import styled from "styled-components";
 import { Search } from "@mui/icons-material";
+import { getUserList, UserResponse } from "@api/userManage";
+import { UserRole } from "../../../../types/index";
 
 export default function UserList() {
   const [filter, setFilter] = useState<string>("10");
+  const [userList, setUserList] = useState<UserResponse[]>([]);
+
+  useEffect(() => {
+    getUserList({ auth: UserRole.SITE_USER }).then((res) => {
+      setUserList(res.list);
+    });
+  }, []);
 
   const onFilterChange = (e: SelectChangeEvent) => {
     setFilter(e.target.value as string);
   };
-
-  const tableList = [
-    {
-      id: 1,
-      name: "김태완",
-      phone: "010-8009-5439",
-      day: 5,
-      team: "난방코일스리브",
-      startDate: "2022-11-15",
-      endDate: "2022-11-20",
-      change: <Button variant="contained">복귀</Button>,
-    },
-    {
-      id: 2,
-      name: "김태완",
-      phone: "010-8009-5439",
-      day: 5,
-      team: "난방코일스리브",
-      startDate: "2022-11-15",
-      endDate: "2022-11-20",
-      change: <Button variant="contained">복귀</Button>,
-    },
-    {
-      id: 3,
-      name: "김태완",
-      phone: "010-8009-5439",
-      day: 5,
-      team: "난방코일스리브",
-      startDate: "2022-11-15",
-      endDate: "2022-11-20",
-      change: <Button variant="contained">복귀</Button>,
-    },
-  ];
 
   return (
     <div>
@@ -120,23 +96,27 @@ export default function UserList() {
                 <TableCell align="center">변경</TableCell>
               </TableRow>
             </TableHead>
+
             <TableBody>
-              {tableList.map((row, i) => (
-                <TableRow
-                  key={i}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {row.id}
-                  </TableCell>
-                  <TableCell align="center">{row.name}</TableCell>
-                  <TableCell align="center">{row.phone}</TableCell>
-                  <TableCell align="center">{row.team}</TableCell>
-                  <TableCell align="center">{row.startDate}</TableCell>
-                  <TableCell align="center">{row.endDate}</TableCell>
-                  <TableCell align="center">{row.change}</TableCell>
-                </TableRow>
-              ))}
+              {userList.map((user, i) => {
+                const { id, auth, name, createId, loginId, isActive } = user;
+                return (
+                  <TableRow
+                    key={i}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {id}
+                    </TableCell>
+                    <TableCell align="center">{name}</TableCell>
+                    <TableCell align="center">{auth}</TableCell>
+                    <TableCell align="center">{createId}</TableCell>
+                    <TableCell align="center">{loginId}</TableCell>
+                    <TableCell align="center">{isActive}</TableCell>
+                    <TableCell align="center">{isActive}</TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>

@@ -196,7 +196,7 @@ const div = {
     justify-content: flex-start;
     height: 100%;
     .side {
-      width: 200px;
+      width: 220px;
       border-right: 1px #e8e8e8 solid;
     }
     .component {

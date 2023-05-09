@@ -223,7 +223,7 @@ const div = {
 
   body: styled.div`
     background-color: white;
-    height: calc(100% - 50px);
+    height: calc(100% - 60px);
     overflow: auto;
   `,
 };

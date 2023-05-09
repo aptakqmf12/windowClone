@@ -27,11 +27,11 @@ export default function Sidebar() {
 
   const [menuList, setMenuList] = useState<PackageMenuType[]>([]);
 
-  useEffect(() => {
-    getPackageMenuList({ depth: 1 }).then((res) => {
-      setMenuList(res.list);
-    });
-  }, []);
+  // useEffect(() => {
+  //   getPackageMenuList({ depth: 1 }).then((res) => {
+  //     setMenuList(res.list);
+  //   });
+  // }, []);
 
   const iconSx: SxProps<Theme> = {
     width: 30,

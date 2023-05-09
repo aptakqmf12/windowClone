@@ -5,13 +5,13 @@ import { MypageInfoResponse, getMypageInfo } from "@api/mypage";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Mypage() {
-  const { isLoading, data: mypageData } = useQuery(["queryKey"], getMypageInfo);
+  const { isLoading, data } = useQuery(["queryKey"], getMypageInfo);
 
   const USER_DATA = [
     { key: "이름", value: "김민정" },
     { key: "연락처", value: "010-1234-5678" },
     { key: "소속", value: "기술연구소" },
-    { key: "이메일", value: "abcdefghifqjhfqkjh@naver.com" },
+    { key: "이메일", value: "abcdefghifqjhfqkjhabcdefghifqjhfqkjh@naver.com" },
   ];
 
   return (
@@ -26,23 +26,16 @@ export default function Mypage() {
             MASTER
           </Typography>
         </div>
-
-        <div>
-          <Typography>
-            {/* {isLoading ? "loading..." : data?.data.name}님 */}
-            {mypageData?.data.name}
-          </Typography>
-        </div>
       </div.top>
 
       <div.body>
-        {USER_DATA.map((data, i) => (
-          <div className="info">
+        {USER_DATA.map((d, i) => (
+          <div className="info" key={i}>
             <div className="key">
-              <Typography>{data.key}</Typography>
+              <Typography>{d.key}</Typography>
             </div>
             <div className="value">
-              <Typography>{data.value}</Typography>
+              <Typography>{d.value}</Typography>
             </div>
           </div>
         ))}
@@ -60,7 +53,9 @@ const div = {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 50px 100px;
+    justify-content: center;
+    padding: 20px;
+    height: 100%;
   `,
   top: styled.div`
     display: flex;
@@ -82,6 +77,9 @@ const div = {
 
       .key {
         width: 80px;
+      }
+      .value {
+        width: calc(100% - 80px);
       }
     }
 

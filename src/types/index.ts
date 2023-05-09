@@ -30,3 +30,8 @@ export enum UserRole {
   SITE_USER = "SITE_USER",
   WORKER = "WORKER",
 }
+
+export enum YorN {
+  Y = "Y",
+  N = "N",
+}

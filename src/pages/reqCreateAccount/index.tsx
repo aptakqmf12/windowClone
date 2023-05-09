@@ -2,7 +2,7 @@ import { ChangeEvent, useState, useEffect } from "react";
 import { MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import { generatePhoneNumber } from "@lib/inputRule";
 import { useLocation } from "react-router-dom";
-import { requestCreateAccount } from "@api/requestCreateAccount";
+import { requestCreateAccount } from "@api/userManage";
 
 enum AuthType {
   SITE_USER = "SITE_USER",
