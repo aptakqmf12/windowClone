@@ -2,7 +2,9 @@ import { useState } from "react";
 import styled from "styled-components";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import {
+  Collapse,
   Divider,
+  List,
   ListItem,
   ListItemButton,
   ListItemIcon,
@@ -11,42 +13,27 @@ import {
 } from "@mui/material";
 
 import UserList from "./userManage/userList";
+import {
+  ExpandLess,
+  ExpandMore,
+  Home,
+  ListAlt,
+  People,
+  ArrowForward,
+} from "@mui/icons-material";
+import NestedAccordion from "@components/layout/nestedAccordion";
 
 const enum PathType {
   DELEGATION = "위임전결규정",
   FORM_ROOM = "양식함",
   USER_MANAGE = "사용자관리",
+  REQUEST_CREATE_ACCOUNT = "계정생성요청",
+  CREATE_ACCOUNT = "계정 직접 생성",
+
   PERMISSION = "권한설정",
   PARTNER_MANAGE = "협력사관리",
   CODE_MANAGE = "코드관리",
 }
-
-const FIXED_PATH = [
-  {
-    name: "위임전결규정",
-    path: PathType.DELEGATION,
-  },
-  {
-    name: "양식함",
-    path: PathType.FORM_ROOM,
-  },
-  {
-    name: "사용자관리",
-    path: PathType.USER_MANAGE,
-  },
-  {
-    name: "권한설정",
-    path: PathType.PERMISSION,
-  },
-  {
-    name: "협력사관리",
-    path: PathType.PARTNER_MANAGE,
-  },
-  {
-    name: "코드관리",
-    path: PathType.CODE_MANAGE,
-  },
-];
 
 export default function ControlPanel() {
   const [currentPath, setCurrentPath] = useState<PathType | undefined>();
@@ -57,10 +44,12 @@ export default function ControlPanel() {
         return <div>위임전결규정</div>;
       case PathType.FORM_ROOM:
         return <div>양식함</div>;
-
       case PathType.USER_MANAGE:
         return <UserList />;
-
+      case PathType.REQUEST_CREATE_ACCOUNT:
+        return <div>계정생성요청</div>;
+      case PathType.CREATE_ACCOUNT:
+        return <div>계정 직접 생성</div>;
       case PathType.PERMISSION:
         return <div>권한설정</div>;
       case PathType.PARTNER_MANAGE:
@@ -71,6 +60,89 @@ export default function ControlPanel() {
         return <></>;
     }
   };
+
+  const FIXED_LIST_DATA = [
+    {
+      name: "Home",
+      icon: <Home />,
+      path: undefined,
+      onClick: () => {
+        setCurrentPath(undefined);
+      },
+    },
+    {
+      name: "위임전결규정",
+      icon: <ArrowForward />,
+      path: PathType.DELEGATION,
+      onClick: () => {
+        setCurrentPath(PathType.DELEGATION);
+      },
+    },
+    {
+      name: "양식함",
+      icon: <ArrowForward />,
+      path: PathType.FORM_ROOM,
+      onClick: () => {
+        setCurrentPath(PathType.FORM_ROOM);
+      },
+    },
+    {
+      name: "사용자 관리",
+      icon: <People />,
+      path: PathType.USER_MANAGE,
+      onClick: () => {},
+      childList: [
+        {
+          name: "사용자 목록",
+          icon: <People />,
+          path: PathType.USER_MANAGE,
+          onClick: () => {
+            setCurrentPath(PathType.USER_MANAGE);
+          },
+        },
+        {
+          name: "계정생성요청",
+          icon: <People />,
+          path: PathType.REQUEST_CREATE_ACCOUNT,
+          onClick: () => {
+            setCurrentPath(PathType.REQUEST_CREATE_ACCOUNT);
+          },
+        },
+        {
+          name: "계정 직접 생성",
+          icon: <People />,
+          path: PathType.CREATE_ACCOUNT,
+          onClick: () => {
+            setCurrentPath(PathType.CREATE_ACCOUNT);
+          },
+        },
+      ],
+    },
+    {
+      name: "권한설정",
+      icon: <ArrowForward />,
+      path: PathType.PERMISSION,
+      onClick: () => {
+        setCurrentPath(PathType.PERMISSION);
+      },
+    },
+    {
+      name: "협력사관리",
+      icon: <ArrowForward />,
+      path: PathType.PARTNER_MANAGE,
+      onClick: () => {
+        setCurrentPath(PathType.PARTNER_MANAGE);
+      },
+    },
+    {
+      name: "코드관리",
+      icon: <ArrowForward />,
+      path: PathType.CODE_MANAGE,
+      onClick: () => {
+        setCurrentPath(PathType.CODE_MANAGE);
+      },
+    },
+  ];
 
   if (currentPath === undefined) {
     return (
@@ -85,16 +157,17 @@ export default function ControlPanel() {
             outline: 0,
           }}
         />
+
         <ul>
-          {FIXED_PATH.map((path, i) => (
+          {FIXED_LIST_DATA.slice(1).map((list, i) => (
             <li
               key={i}
               onClick={() => {
-                setCurrentPath(path.path);
+                setCurrentPath(list.path);
               }}
             >
               <DescriptionOutlinedIcon />
-              {path.name}
+              {list.name}
             </li>
           ))}
         </ul>
@@ -105,27 +178,7 @@ export default function ControlPanel() {
   return (
     <div.sub>
       <div className="side">
-        {[
-          {
-            name: "HOME",
-            path: undefined,
-          },
-          ...FIXED_PATH,
-        ].map((tab, index) => {
-          const { path, name } = tab;
-          return (
-            <ListItem
-              key={index}
-              onClick={() => setCurrentPath(path)}
-              disablePadding
-            >
-              <ListItemButton>
-                {/* <ListItemIcon>{icon}</ListItemIcon> */}
-                <Typography>{name}</Typography>
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
+        <NestedAccordion list={FIXED_LIST_DATA} />
       </div>
 
       <div className="component">{renderCompontntByPath(currentPath)}</div>
@@ -161,6 +214,7 @@ const div = {
     justify-content: flex-start;
     height: 100%;
     .side {
+      width: 200px;
       border-right: 1px #e8e8e8 solid;
     }
     .component {

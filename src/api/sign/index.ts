@@ -13,6 +13,10 @@ interface LoginRequest {
 
 interface LoginResponse {
   accessToken: string;
+  packages: {
+    package_group_id: string;
+    package_group_name: string;
+  }[];
   refreshToken: string;
 }
 

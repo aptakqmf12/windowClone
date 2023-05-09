@@ -1,12 +1,18 @@
 import { useCommonStore } from "@store/common";
 
-export default function LogoIcon({ fill }: { fill: string }) {
+interface IconProps {
+  fill: string;
+  width?: number;
+  height?: number;
+}
+
+export default function LogoIcon({ fill, width = 168 }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      width="168.43"
-      height="24.901"
+      width={width}
+      height={width / 7}
       viewBox="0 0 168.43 24.901"
     >
       <defs>

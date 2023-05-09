@@ -28,6 +28,7 @@ import { useNavigate } from "react-router-dom";
 import { useLoginStore } from "@store/login";
 import { generatePhoneNumber } from "@lib/inputRule";
 import { ResponseCode } from "../types/index";
+import LogoIcon from "@components/icons/logo";
 
 export default function Signin() {
   const { isLogin, setLogin } = useLoginStore();
@@ -82,38 +83,20 @@ export default function Signin() {
 
   return (
     <div.wrap>
-      <Container
-        component="main"
-        maxWidth="xs"
-        style={{ border: "1px #dfdfdf solid" }}
-      >
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
-            <LockOutlined />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
+      <div.sign style={{ border: "1px #dfdfdf solid" }}>
+        <div className="head">
+          <LogoIcon fill="#ffffff" width={250} />
+        </div>
 
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+        <div className="body">
+          <Box component="form" onSubmit={handleSubmit} noValidate>
             <TextField
               margin="normal"
               required
               fullWidth
               id="email"
-              label="Email Address"
+              // label="Email Address"
+              placeholder="Email Address"
               name="email"
               autoComplete="email"
               value={email}
@@ -129,7 +112,8 @@ export default function Signin() {
               required
               fullWidth
               name="password"
-              label="Password"
+              // label="Password"
+              placeholder="Password"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -153,6 +137,7 @@ export default function Signin() {
               placeholder="000-0000-0000"
               inputProps={{ maxLength: 13, pattern: "\\d{3}-\\d{3,4}-\\d{4}" }}
             /> */}
+
             <FormControlLabel
               control={
                 <Checkbox
@@ -161,7 +146,7 @@ export default function Signin() {
                   color="primary"
                 />
               }
-              label="Remember me"
+              label="아이디 저장"
             />
 
             <Button
@@ -169,24 +154,20 @@ export default function Signin() {
               fullWidth
               variant="contained"
               color="primary"
-              sx={{ mt: 2, mb: 0 }}
+              sx={{ mt: 2, mb: 2 }}
             >
-              로그인
+              LOG IN
             </Button>
-          </Box>
-        </Box>
 
-        <Button
-          type="button"
-          fullWidth
-          variant="contained"
-          color="secondary"
-          sx={{ mt: 2, mb: 2 }}
-          onClick={() => navigate("/signup")}
-        >
-          회원가입
-        </Button>
-      </Container>
+            <div
+              style={{ display: "flex", gap: 10 }}
+              onClick={() => navigate("/signup")}
+            >
+              <Link sx={{ cursor: "pointer" }}>회원가입</Link>
+            </div>
+          </Box>
+        </div>
+      </div.sign>
 
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogTitle>로그인 실패</DialogTitle>
@@ -204,5 +185,25 @@ const div = {
     align-items: center;
     justify-content: center;
     height: 100vh;
+  `,
+
+  sign: styled.div`
+    width: 500px;
+    border-radius: 5px;
+    overflow: hidden;
+
+    .head {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 125px;
+      background-color: ${(p) => p.theme.colors.primary.main};
+    }
+    .body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 80px 20px 35px;
+    }
   `,
 };

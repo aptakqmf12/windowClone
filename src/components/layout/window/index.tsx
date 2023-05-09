@@ -222,7 +222,7 @@ const div = {
   `,
 
   body: styled.div`
-    background-color: ${(p) => p.theme.colors.font.main};
+    background-color: white;
     height: calc(100% - 50px);
     overflow: auto;
   `,

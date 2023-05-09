@@ -15,7 +15,6 @@ import Header from "@components/layout/header";
 import Sidebar from "@components/layout/sidebar";
 import Widget from "@components/layout/widget";
 import { useWidgetStore } from "@store/widget";
-import { getSitRole } from "@api/siteRole";
 import { Avatar, Chip, SvgIconTypeMap } from "@mui/material";
 import Logo from "@components/layout/logo";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
@@ -25,13 +24,6 @@ export default function MyHome() {
   const { currentWindows, toggleShowWindow } = useWindowStore();
   const { isLogin } = useLoginStore();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const spec = {
-      companyCode: "riskzero",
-    };
-    getSitRole(spec);
-  }, []);
 
   useEffect(() => {
     if (isLogin === false) {
@@ -48,6 +40,7 @@ export default function MyHome() {
       <div.body className="station">
         <Sidebar />
       </div.body>
+
 
       <ul.nav>
         {currentWindows.map((window, i) => (

@@ -20,7 +20,7 @@ import { Person, Logout, ExitToApp, Close } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { requestLogout, testApi } from "@api/sign";
 import { useWidgetStore } from "@store/widget";
-import Mypage from "@components/pages/mypage";
+import Mypage from "@components/mypage";
 import { ModeType, useCommonStore } from "@store/common";
 
 export default function Header() {
