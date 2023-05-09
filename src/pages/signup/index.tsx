@@ -29,9 +29,9 @@ import { useNavigate } from "react-router-dom";
 import { useLoginStore } from "@store/login";
 
 import LogoIcon from "@components/icons/logo";
-import SignUpAgree from "./agree";
-import SignUpInput from "./input";
-import SignUpComplete from "./complete";
+import SignUpAgree from "./component/agree";
+import SignUpInput from "./component/input";
+import SignUpComplete from "./component/complete";
 
 export default function SignUp() {
   const { isLogin, setLogin } = useLoginStore();
@@ -91,36 +91,35 @@ export default function SignUp() {
             ))}
           </Stepper>
 
-          <div>
+          <div style={{ marginTop: 150 }}>
             {FIXED_STEPS.find((step) => step.step === currentStep)?.component}
           </div>
 
-          <Grid
-            container
-            direction={"row"}
-            justifyContent={"center"}
-            alignItems={"center"}
-          >
-            <Grid item xs={1} md={1}>
-              <Button
-                fullWidth
-                onClick={handleNext}
-                disabled={currentStep === MAX_STEP - 1}
-              >
-                다음
-              </Button>
-            </Grid>
+          <div style={{ marginTop: 50 }}>
+            {currentStep !== 2 && (
+              <div>
+                <Button
+                  variant="contained"
+                  onClick={handleNext}
+                  disabled={currentStep === MAX_STEP - 1}
+                >
+                  다음
+                </Button>
+              </div>
+            )}
 
-            <Grid item xs={1} md={1}>
-              <Button
-                fullWidth
-                onClick={handleSignUp}
-                disabled={currentStep !== MAX_STEP - 1}
-              >
-                회원가입
-              </Button>
-            </Grid>
-          </Grid>
+            {currentStep === 2 && (
+              <div>
+                <Button
+                  variant="contained"
+                  onClick={handleSignUp}
+                  disabled={currentStep !== MAX_STEP - 1}
+                >
+                  로그인
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
       </div.sign>
     </div.wrap>
@@ -137,8 +136,10 @@ const div = {
 
   sign: styled.div`
     width: 500px;
+
     border-radius: 5px;
     overflow: hidden;
+    border: 1px #dfdfdf solid;
 
     .head {
       display: flex;

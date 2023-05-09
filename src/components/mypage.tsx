@@ -7,19 +7,26 @@ import { useQuery } from "@tanstack/react-query";
 export default function Mypage() {
   const { isLoading, data: mypageData } = useQuery(["queryKey"], getMypageInfo);
 
+  const USER_DATA = [
+    { key: "이름", value: "김민정" },
+    { key: "연락처", value: "010-1234-5678" },
+    { key: "소속", value: "기술연구소" },
+    { key: "이메일", value: "abcdefghifqjhfqkjh@naver.com" },
+  ];
+
   return (
     <div.wrap>
       <div.top>
         <div>
-          <Avatar />
+          <Avatar sx={{ width: 145, height: 145 }} />
         </div>
 
         <div>
-          <Typography>MASTER</Typography>
+          <Typography fontSize={20} fontWeight={600}>
+            MASTER
+          </Typography>
         </div>
-        <div>
-          <Typography>민정건설</Typography>
-        </div>
+
         <div>
           <Typography>
             {/* {isLoading ? "loading..." : data?.data.name}님 */}
@@ -29,24 +36,20 @@ export default function Mypage() {
       </div.top>
 
       <div.body>
-        <div className="info">
-          <div>연락처</div>
-          <div>010-1234-5678</div>
-        </div>
-        <div className="info">
-          <div>소속</div>
-          <div>010-1234-5678</div>
-        </div>
-        <div className="info">
-          <div>직급</div>
-          <div>010-1234-5678</div>
-        </div>
-        <div className="info">
-          <div>이메일</div>
-          <div>010-1234-5678</div>
-        </div>
+        {USER_DATA.map((data, i) => (
+          <div className="info">
+            <div className="key">
+              <Typography>{data.key}</Typography>
+            </div>
+            <div className="value">
+              <Typography>{data.value}</Typography>
+            </div>
+          </div>
+        ))}
 
-        <Button variant="contained">수정하기</Button>
+        <div className="btn">
+          <Button variant="contained">수정하기</Button>
+        </div>
       </div.body>
     </div.wrap>
   );
@@ -69,12 +72,24 @@ const div = {
   body: styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 10px;
+
     .info {
       display: flex;
       justify-content: space-between;
       gap: 20px;
+
+      .key {
+        width: 80px;
+      }
+    }
+
+    .btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
     }
   `,
 };

@@ -16,7 +16,7 @@ import {
   Typography,
   Popover,
 } from "@mui/material";
-import { Person, Logout, ExitToApp, Close } from "@mui/icons-material";
+import { Person, Logout, ExitToApp, Close, People } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { requestLogout, testApi } from "@api/sign";
 import { useWidgetStore } from "@store/widget";
@@ -27,7 +27,7 @@ export default function Header() {
   const navigate = useNavigate();
   const { mode, changeMode } = useCommonStore();
   const { showWidget, setShowWidget } = useWidgetStore();
-  const { currentWindows, toggleShowWindow } = useWindowStore();
+  const { currentWindows, appendWindow, toggleShowWindow } = useWindowStore();
   const { isLogin, setLogin } = useLoginStore();
   const { i18n } = useTranslation();
 
@@ -65,7 +65,15 @@ export default function Header() {
           </div>
           <div
             style={{ cursor: "pointer" }}
-            onClick={() => setOpenMypage(!openMypage)}
+            // onClick={() => setOpenMypage(!openMypage)}
+            onClick={() => {
+              appendWindow({
+                component: <Mypage />,
+                icon: <People />,
+                name: "마이 페이지",
+                w: 400,
+              });
+            }}
             aria-describedby={"test"}
             className="btn"
           >
@@ -73,14 +81,11 @@ export default function Header() {
             <Typography color={"white"}>마이페이지</Typography>
           </div>
 
-          {openMypage && (
+          {/* {openMypage && (
             <div.modal>
-              <div onClick={() => setOpenMypage(false)} className="close">
-                <Close />
-              </div>
               <Mypage />
             </div.modal>
-          )}
+          )} */}
 
           <div onClick={onLogout} style={{ cursor: "pointer" }} className="btn">
             <ExitToApp

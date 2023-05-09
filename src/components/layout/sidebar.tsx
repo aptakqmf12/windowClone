@@ -14,7 +14,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { SxProps, Theme, Typography } from "@mui/material";
 import LogoIcon from "@components/icons/logo";
-import { MenuType, getMenuList } from "@api/menu";
+import { PackageMenuType, getPackageMenuList } from "@api/menu";
 
 import ControlPanel from "@components/station/controlPanel";
 import Spreadjs from "@components/station/spreadjs";
@@ -25,10 +25,10 @@ import LibraryRoom from "@components/station/libraryRoom";
 export default function Sidebar() {
   const { appendWindow } = useWindowStore();
 
-  const [menuList, setMenuList] = useState<MenuType[]>([]);
+  const [menuList, setMenuList] = useState<PackageMenuType[]>([]);
 
   useEffect(() => {
-    getMenuList().then((res) => {
+    getPackageMenuList({ depth: 1 }).then((res) => {
       setMenuList(res.list);
     });
   }, []);

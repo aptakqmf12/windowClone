@@ -83,7 +83,7 @@ export default function Signin() {
 
   return (
     <div.wrap>
-      <div.sign style={{ border: "1px #dfdfdf solid" }}>
+      <div.sign>
         <div className="head">
           <LogoIcon fill="#ffffff" width={250} />
         </div>
@@ -191,6 +191,7 @@ const div = {
     width: 500px;
     border-radius: 5px;
     overflow: hidden;
+    border: 1px #dfdfdf solid;
 
     .head {
       display: flex;

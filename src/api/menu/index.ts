@@ -1,12 +1,12 @@
 import { AxiosResponse } from "axios";
 import { ResponseData, ResponseCode } from "../../types";
-import { api } from "..";
+import { api, generateQueryParamUrl } from "..";
 
 const headers = {
   Authorization: `Bearer ${localStorage.getItem("access_token")}`,
 };
 
-export interface MenuType {
+export interface PackageMenuType {
   menuId: string;
   parentMenuId: string;
   subParentMenuId: string;
@@ -15,10 +15,17 @@ export interface MenuType {
   sortOrder: string;
 }
 
-export const getMenuList = async () => {
+interface PackageMenuListRequest {
+  depth: number;
+  parentPackageId?: string;
+}
+
+export const getPackageMenuList = async (props: PackageMenuListRequest) => {
+  const url = generateQueryParamUrl("/api/v1/package/getPackageMenu", props);
+
   return await api
-    .get("/api/v1/menu/getMenuList", { headers })
-    .then((res: AxiosResponse<ResponseData<MenuType[]>>) => {
+    .get(url, { headers })
+    .then((res: AxiosResponse<ResponseData<PackageMenuType[]>>) => {
       return res.data;
     });
 };
