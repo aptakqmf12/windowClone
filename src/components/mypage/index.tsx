@@ -1,18 +1,12 @@
 import { useState, useEffect } from "react";
 import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
 import styled from "styled-components";
-import { MypageInfoResponse, getMypageInfo } from "@api/mypage";
-import { useQuery } from "@tanstack/react-query";
+
+import MypageView from "./view";
+import MypageEdit from "./edit";
 
 export default function Mypage() {
-  const { isLoading, data } = useQuery(["queryKey"], getMypageInfo);
-
-  const USER_DATA = [
-    { key: "이름", value: "김민정" },
-    { key: "연락처", value: "010-1234-5678" },
-    { key: "소속", value: "기술연구소" },
-    { key: "이메일", value: "abcdefghifqjhfqkjhabcdefghifqjhfqkjh@naver.com" },
-  ];
+  const [tab, setTab] = useState<"view" | "edit">("view");
 
   return (
     <div.wrap>
@@ -29,20 +23,7 @@ export default function Mypage() {
       </div.top>
 
       <div.body>
-        {USER_DATA.map((d, i) => (
-          <div className="info" key={i}>
-            <div className="key">
-              <Typography>{d.key}</Typography>
-            </div>
-            <div className="value">
-              <Typography>{d.value}</Typography>
-            </div>
-          </div>
-        ))}
-
-        <div className="btn">
-          <Button variant="contained">수정하기</Button>
-        </div>
+        {tab === "view" ? <MypageView setTab={setTab} /> : <MypageEdit />}
       </div.body>
     </div.wrap>
   );
@@ -69,6 +50,7 @@ const div = {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+    overflow: auto;
 
     .info {
       display: flex;
