@@ -46,6 +46,29 @@ function CustomToolbar() {
           ],
         }}
       />
+      <GridToolbarExport
+        csvOptions={{
+          fileName: "퇴직자 목록",
+          delimiter: ",",
+          utf8WithBom: true,
+        }}
+        printOptions={{
+          hideFooter: true,
+          hideToolbar: true,
+          pageStyle:
+            ".MuiDataGrid-root .MuiDataGrid-main { color: rgba(0, 0, 0, 0.87); }",
+          copyStyles: true,
+          fields: [
+            "workerName",
+            "phone",
+            "job",
+            "workingDays",
+            "teamName",
+            "enteranceStartDate",
+            "retireedDate",
+          ],
+        }}
+      />
     </GridToolbarContainer>
   );
 }
