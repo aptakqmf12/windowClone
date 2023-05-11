@@ -8,7 +8,6 @@ import {
   InputBase,
   Typography,
 } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Search } from "@mui/icons-material";
 import {
@@ -18,22 +17,35 @@ import {
   GridRowSelectionModel,
   GridToolbarContainer,
   GridToolbarExport,
-  koKR,
 } from "@mui/x-data-grid";
 import styled from "styled-components";
 
-const theme = createTheme(
-  {
-    palette: {
-      primary: { main: "#33518B" },
-    },
-  },
-  koKR
-);
 function CustomToolbar() {
   return (
     <GridToolbarContainer>
-      <GridToolbarExport />
+      <GridToolbarExport
+        csvOptions={{
+          fileName: "퇴직자 목록",
+          delimiter: ",",
+          utf8WithBom: true,
+        }}
+        printOptions={{
+          hideFooter: true,
+          hideToolbar: true,
+          pageStyle:
+            ".MuiDataGrid-root .MuiDataGrid-main { color: rgba(0, 0, 0, 0.87); }",
+          copyStyles: true,
+          fields: [
+            "workerName",
+            "phone",
+            "job",
+            "workingDays",
+            "teamName",
+            "enteranceStartDate",
+            "retireedDate",
+          ],
+        }}
+      />
     </GridToolbarContainer>
   );
 }
@@ -78,7 +90,16 @@ export default function RetireesList() {
       </div.search>
 
       <DataGrid
-        sx={{ width: "100%", transform: "skew(-0.05deg)" }}
+        sx={{
+          width: "100%",
+          transform: "skew(-0.05deg)",
+          "& .MuiDataGrid-columnHeader": {
+            paddingRight: "20px",
+          },
+          "& .MuiDataGrid-columnHeaderCheckbox": {
+            paddingRight: "0",
+          },
+        }}
         checkboxSelection
         rows={rows}
         columns={columns}
@@ -102,7 +123,7 @@ const columns: GridColDef[] = [
     headerName: "NO",
     headerAlign: "center",
     align: "center",
-    width: 50,
+
     renderCell: (params) => {
       return params.api.getRowIndexRelativeToVisibleRows(params.id) + 1;
     },
@@ -112,7 +133,6 @@ const columns: GridColDef[] = [
     headerName: "이름",
     headerAlign: "center",
     align: "center",
-    width: 70,
   },
   {
     field: "phone",
@@ -146,7 +166,7 @@ const columns: GridColDef[] = [
     headerName: "퇴사일",
     headerAlign: "center",
     align: "center",
-    width: 200,
+    width: 150,
   },
   {
     field: "workerId",

@@ -6,6 +6,7 @@ import UserList from "./userManage/userList";
 import { Home, People, Build, Topic } from "@mui/icons-material";
 import NestedAccordion from "@components/layout/nestedAccordion";
 import { Typography } from "@mui/material";
+import PartnerList from "./partnerManage/partnerList";
 
 const enum PathType {
   DELEGATION = "위임전결규정",
@@ -36,7 +37,7 @@ export default function ControlPanel() {
       case PathType.PERMISSION:
         return <div>권한설정</div>;
       case PathType.PARTNER_MANAGE:
-        return <div>협력사관리</div>;
+        return <PartnerList />;
       case PathType.CODE_MANAGE:
         return <div>코드관리</div>;
       default:
