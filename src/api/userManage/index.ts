@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { ResponseData, ResponseCode, UserRole } from "../../types";
-import { ResponseStatus, YorN } from "../../types";
+import { ResponseStatus } from "../../types";
 import { api, dispatchError, generateQueryParamUrl } from "..";
 
 const headers = {
@@ -8,7 +8,6 @@ const headers = {
 };
 
 interface getUserProps {
-  auth: UserRole;
   name?: string;
 }
 
@@ -19,7 +18,7 @@ export interface UserResponse {
   companyName: string;
   createId: string;
   createdAt: string;
-  deletedYn: YorN;
+  deletedYn: "Y" | "N";
   deptCode: string;
   deptName: string;
   id: string;

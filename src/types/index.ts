@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 export interface ResponseData<T> {
-  data: T;
+  data: any;
   list: any;
   message: string;
   success: boolean;
@@ -28,9 +28,4 @@ export enum UserRole {
   ADMIN = "ADMIN",
   SITE_USER = "SITE_USER",
   WORKER = "WORKER",
-}
-
-export enum YorN {
-  Y = "Y",
-  N = "N",
 }

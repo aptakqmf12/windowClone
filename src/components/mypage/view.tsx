@@ -10,6 +10,8 @@ export default function MypageView({
 }) {
   const { isLoading, data } = useQuery(["queryKey"], getMypageInfo);
 
+  console.log(data);
+
   const USER_DATA = [
     { key: "이름", value: "김민정" },
     { key: "연락처", value: "010-1234-5678" },
