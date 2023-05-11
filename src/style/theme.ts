@@ -124,6 +124,13 @@ export const getMuiThemes = (mode: ModeType): ThemeOptions => {
           },
         },
       },
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            color: isDarkMode ? "#fff" : "#000",
+          },
+        },
+      },
     },
   };
 };

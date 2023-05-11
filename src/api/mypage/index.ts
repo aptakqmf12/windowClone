@@ -3,29 +3,11 @@ import { ResponseData, ResponseCode } from "../../types";
 import { ResponseStatus } from "../../types";
 import { api, dispatchError } from "..";
 
-interface ChangePasswordProps {
-  newPass: string;
-  oldPass: string;
-}
-
 const headers = {
   Authorization: `Bearer ${localStorage.getItem("access_token")}`,
 };
 
 // api
-export const changePassword = async ({
-  newPass,
-  oldPass,
-}: ChangePasswordProps) => {
-  const body = { newPass, oldPass };
-
-  return await api
-    .post("/api/v1/myPage/changePass", body, { headers })
-    .then((res: AxiosResponse<ResponseData<any>>) => {
-      return res.data;
-    });
-};
-
 export interface MypageInfoResponse {
   dept_code: string;
   update_id: string;
@@ -48,9 +30,32 @@ export const getMypageInfo = async () => {
     });
 };
 
-export const updateMypageInfo = async () => {
+interface ChangePasswordProps {
+  newPass: string;
+  oldPass: string;
+}
+
+export const changePassword = async ({
+  newPass,
+  oldPass,
+}: ChangePasswordProps) => {
+  const formData = new FormData();
+  Object.entries({ newPass, oldPass }).map((entry) =>
+    formData.append(entry[0], entry[1])
+  );
+
+  const body = { newPass, oldPass };
+
   return await api
-    .post("/api/v1/myPage/updateMyPage", { headers })
+    .post("/api/v1/myPage/changePass", formData, { headers })
+    .then((res: AxiosResponse<ResponseData<any>>) => {
+      return res.data;
+    });
+};
+
+export const updateMypageInfo = async (props: { name: string }) => {
+  return await api
+    .post("/api/v1/myPage/updateMyPage", props, { headers })
     .then((res: AxiosResponse<ResponseData<any>>) => {
       return res.data;
     });

@@ -3,8 +3,9 @@ import styled from "styled-components";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 
 import UserList from "./userManage/userList";
-import { Home, People, ArrowForward } from "@mui/icons-material";
+import { Home, People, Build, Topic } from "@mui/icons-material";
 import NestedAccordion from "@components/layout/nestedAccordion";
+import { Typography } from "@mui/material";
 
 const enum PathType {
   DELEGATION = "위임전결규정",
@@ -54,7 +55,7 @@ export default function ControlPanel() {
     },
     {
       name: "위임전결규정",
-      icon: <ArrowForward />,
+
       path: PathType.DELEGATION,
       onClick: () => {
         setCurrentPath(PathType.DELEGATION);
@@ -62,7 +63,7 @@ export default function ControlPanel() {
     },
     {
       name: "양식함",
-      icon: <ArrowForward />,
+
       path: PathType.FORM_ROOM,
       onClick: () => {
         setCurrentPath(PathType.FORM_ROOM);
@@ -84,7 +85,7 @@ export default function ControlPanel() {
         },
         {
           name: "계정생성요청",
-          icon: <People />,
+
           path: PathType.USER_REQUEST_CREATE_ACCOUNT,
           onClick: () => {
             setCurrentPath(PathType.USER_REQUEST_CREATE_ACCOUNT);
@@ -92,7 +93,7 @@ export default function ControlPanel() {
         },
         {
           name: "계정 직접 생성",
-          icon: <People />,
+
           path: PathType.USER_CREATE_ACCOUNT,
           onClick: () => {
             setCurrentPath(PathType.USER_CREATE_ACCOUNT);
@@ -102,7 +103,7 @@ export default function ControlPanel() {
     },
     {
       name: "권한설정",
-      icon: <ArrowForward />,
+
       path: PathType.PERMISSION,
       onClick: () => {
         setCurrentPath(PathType.PERMISSION);
@@ -110,7 +111,7 @@ export default function ControlPanel() {
     },
     {
       name: "협력사관리",
-      icon: <ArrowForward />,
+
       path: PathType.PARTNER_MANAGE,
       onClick: () => {
         setCurrentPath(PathType.PARTNER_MANAGE);
@@ -118,7 +119,7 @@ export default function ControlPanel() {
     },
     {
       name: "코드관리",
-      icon: <ArrowForward />,
+
       path: PathType.CODE_MANAGE,
       onClick: () => {
         setCurrentPath(PathType.CODE_MANAGE);
@@ -129,7 +130,10 @@ export default function ControlPanel() {
   if (currentPath === undefined) {
     return (
       <div.wrap>
-        <div>제어판 </div>
+        <div>
+          <Build color="primary" sx={{ width: 50, height: 50 }} />
+          <Typography fontSize={20}>제어판</Typography>
+        </div>
 
         <hr
           style={{
@@ -148,8 +152,10 @@ export default function ControlPanel() {
                 setCurrentPath(list.path);
               }}
             >
-              <DescriptionOutlinedIcon />
-              {list.name}
+              <Topic color="secondary" sx={{ width: 40, height: 30 }} />
+              <Typography fontSize={17} color="secondary">
+                {list.name}
+              </Typography>
             </li>
           ))}
         </ul>
@@ -175,7 +181,9 @@ const div = {
     justify-content: center;
     align-items: center;
     gap: 10px;
-    margin: 50px;
+    height: 100%;
+    padding: 0 50px;
+    overflow: hidden;
 
     ul {
       display: flex;
@@ -201,6 +209,7 @@ const div = {
     }
     .component {
       padding: 10px;
+      width: calc(100% - 220px);
     }
   `,
 };

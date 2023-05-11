@@ -87,3 +87,11 @@ export const generateQueryParamUrl = (
 
   return `${url}${queryParam ? `?${queryParam}` : ""}`;
 };
+
+// form data
+export const genereateFormData = (props: Record<string, any>) => {
+  const formData = new FormData();
+  Object.entries(props).map((entry) => formData.append(entry[0], entry[1]));
+
+  return formData;
+};

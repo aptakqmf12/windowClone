@@ -248,6 +248,7 @@ const div = {
     }
     .component {
       padding: 10px;
+      width: calc(100% - 200px);
     }
   `,
   right: styled.div`

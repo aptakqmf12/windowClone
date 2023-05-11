@@ -1,5 +1,4 @@
 import { AxiosResponse } from "axios";
-
 export interface ResponseData<T> {
   data: T;
   list: any;

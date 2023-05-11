@@ -48,6 +48,7 @@ export default function RetireesList() {
       <Typography fontSize={20} fontWeight={600}>
         퇴직자 목록
       </Typography>
+
       <div.search>
         <DatePicker
           label="퇴직일"
@@ -76,23 +77,22 @@ export default function RetireesList() {
         <Button variant="contained">퇴직자 추가</Button>
       </div.search>
 
-      <ThemeProvider theme={theme}>
-        <DataGrid
-          checkboxSelection
-          rows={rows}
-          columns={columns}
-          pageSizeOptions={[25, 50, 100]}
-          paginationModel={{ page: 0, pageSize: 25 }}
-          onRowSelectionModelChange={(newRowSelectionWorker) => {
-            setRowSelectionWorker(newRowSelectionWorker);
-            console.log(newRowSelectionWorker);
-          }}
-          rowSelectionModel={rowSelectionWorker}
-          slots={{
-            toolbar: CustomToolbar,
-          }}
-        />
-      </ThemeProvider>
+      <DataGrid
+        sx={{ width: "100%", transform: "skew(-0.05deg)" }}
+        checkboxSelection
+        rows={rows}
+        columns={columns}
+        pageSizeOptions={[25, 50, 100]}
+        paginationModel={{ page: 0, pageSize: 25 }}
+        onRowSelectionModelChange={(newRowSelectionWorker) => {
+          setRowSelectionWorker(newRowSelectionWorker);
+          console.log(newRowSelectionWorker);
+        }}
+        rowSelectionModel={rowSelectionWorker}
+        slots={{
+          toolbar: CustomToolbar,
+        }}
+      />
     </div>
   );
 }
@@ -152,6 +152,7 @@ const columns: GridColDef[] = [
     field: "workerId",
     headerName: "변경",
     headerAlign: "center",
+    align: "center",
     sortable: false,
     renderCell: (params) => {
       const onClick = (e: any) => {

@@ -26,6 +26,18 @@ export const GlobalStyle = createGlobalStyle`
     word-break: break-all;
     box-sizing: border-box;
 
+    &::-webkit-scrollbar {
+      width:4px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.2);
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-track  {
+      background: #eee;
+    }
+
+    
     
   }
   article, aside, details, figcaption, figure, 

@@ -23,7 +23,11 @@ export default function Mypage() {
       </div.top>
 
       <div.body>
-        {tab === "view" ? <MypageView setTab={setTab} /> : <MypageEdit />}
+        {tab === "view" ? (
+          <MypageView setTab={setTab} />
+        ) : (
+          <MypageEdit setTab={setTab} />
+        )}
       </div.body>
     </div.wrap>
   );

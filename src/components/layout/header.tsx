@@ -56,6 +56,7 @@ export default function Header() {
       <div.head>
         <div className="btns">
           <div>
+            <Typography>{mode}</Typography>
             <Switch
               value={mode === ModeType.DARK}
               onChange={(e) =>
