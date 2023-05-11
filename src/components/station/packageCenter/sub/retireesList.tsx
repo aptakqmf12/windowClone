@@ -8,7 +8,6 @@ import {
   InputBase,
   Typography,
 } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Search } from "@mui/icons-material";
 import {
@@ -18,22 +17,35 @@ import {
   GridRowSelectionModel,
   GridToolbarContainer,
   GridToolbarExport,
-  koKR,
 } from "@mui/x-data-grid";
 import styled from "styled-components";
 
-const theme = createTheme(
-  {
-    palette: {
-      primary: { main: "#33518B" },
-    },
-  },
-  koKR
-);
 function CustomToolbar() {
   return (
     <GridToolbarContainer>
-      <GridToolbarExport />
+      <GridToolbarExport
+        csvOptions={{
+          fileName: "퇴직자 목록",
+          delimiter: ",",
+          utf8WithBom: true,
+        }}
+        printOptions={{
+          hideFooter: true,
+          hideToolbar: true,
+          pageStyle:
+            ".MuiDataGrid-root .MuiDataGrid-main { color: rgba(0, 0, 0, 0.87); }",
+          copyStyles: true,
+          fields: [
+            "workerName",
+            "phone",
+            "job",
+            "workingDays",
+            "teamName",
+            "enteranceStartDate",
+            "retireedDate",
+          ],
+        }}
+      />
     </GridToolbarContainer>
   );
 }
@@ -78,7 +90,21 @@ export default function RetireesList() {
       </div.search>
 
       <DataGrid
-        sx={{ width: "100%", transform: "skew(-0.05deg)" }}
+        sx={{
+          width: "100%",
+          transform: "skew(-0.05deg)",
+          // 정렬을 위한 스타일
+          "& .MuiDataGrid-columnHeader": {
+            paddingRight: "17px",
+          },
+          "& .MuiDataGrid-columnHeaderCheckbox": {
+            paddingRight: "0",
+          },
+          //  column header 스타일
+          // "& .super-app-theme--header": {
+          //   backgroundColor: "rgba(255, 7, 0, 0.55)",
+          // },
+        }}
         checkboxSelection
         rows={rows}
         columns={columns}
@@ -102,7 +128,7 @@ const columns: GridColDef[] = [
     headerName: "NO",
     headerAlign: "center",
     align: "center",
-    width: 50,
+    flex: 0.1,
     renderCell: (params) => {
       return params.api.getRowIndexRelativeToVisibleRows(params.id) + 1;
     },
@@ -111,29 +137,39 @@ const columns: GridColDef[] = [
     field: "workerName",
     headerName: "이름",
     headerAlign: "center",
+    headerClassName: "super-app-theme--header",
     align: "center",
-    width: 70,
+    flex: 0.5,
   },
   {
     field: "phone",
     headerName: "연락처",
     headerAlign: "center",
     align: "center",
-    width: 150,
+    flex: 0.5,
+    minWidth: 150,
   },
-  { field: "job", headerName: "직종", headerAlign: "center", align: "center" },
+  {
+    field: "job",
+    headerName: "직종",
+    headerAlign: "center",
+    align: "center",
+    flex: 1,
+  },
   {
     field: "workingDays",
     headerName: "근무일수",
     headerAlign: "center",
     align: "center",
+    flex: 0.7,
   },
   {
     field: "teamName",
     headerName: "소속팀",
     headerAlign: "center",
     align: "center",
-    width: 150,
+    flex: 1,
+    minWidth: 150,
   },
   {
     field: "enteranceStartDate",
@@ -146,7 +182,8 @@ const columns: GridColDef[] = [
     headerName: "퇴사일",
     headerAlign: "center",
     align: "center",
-    width: 200,
+    minWidth: 150,
+    flex: 1,
   },
   {
     field: "workerId",
@@ -162,7 +199,11 @@ const columns: GridColDef[] = [
       };
 
       return (
-        <Button variant="contained" onClick={onClick}>
+        <Button
+          variant="contained"
+          sx={{ width: "40px", height: "30px;", minWidth: "30px" }}
+          onClick={onClick}
+        >
           복귀
         </Button>
       );
@@ -177,7 +218,8 @@ const rows = [
     phone: "010-1234-1234",
     job: "배관공",
     workingDays: "20일",
-    teamName: "난방코일슬리브",
+    teamName:
+      "난방코일슬리브난방코일슬리브난방코일슬리브난방코일슬리브난방코일슬리브",
     enteranceStartDate: "2023-03-15",
     retireedDate: "2023-04-11 18:16",
     workerId: "test1",
@@ -197,8 +239,8 @@ const rows = [
     id: "7889797",
     workerName: "홍길동",
     phone: "010-1234-1234",
-    job: "목공",
-    workingDays: "300일",
+    job: "난방코일슬리브난방코일슬리브난방코일슬리브난방코일슬리브",
+    workingDays: "1300일",
     teamName: "난방코일슬리브",
     enteranceStartDate: "2021-03-15",
     retireedDate: "2023-04-11 18:16",
