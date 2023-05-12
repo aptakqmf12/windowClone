@@ -19,33 +19,12 @@ import {
   GridToolbarExport,
 } from "@mui/x-data-grid";
 import styled from "styled-components";
+import { getRetireeList } from "@api/userManage";
+import { useQuery } from "@tanstack/react-query";
 
 function CustomToolbar() {
   return (
     <GridToolbarContainer>
-      <GridToolbarExport
-        csvOptions={{
-          fileName: "퇴직자 목록",
-          delimiter: ",",
-          utf8WithBom: true,
-        }}
-        printOptions={{
-          hideFooter: true,
-          hideToolbar: true,
-          pageStyle:
-            ".MuiDataGrid-root .MuiDataGrid-main { color: rgba(0, 0, 0, 0.87); }",
-          copyStyles: true,
-          fields: [
-            "workerName",
-            "phone",
-            "job",
-            "workingDays",
-            "teamName",
-            "enteranceStartDate",
-            "retireedDate",
-          ],
-        }}
-      />
       <GridToolbarExport
         csvOptions={{
           fileName: "퇴직자 목록",
@@ -77,7 +56,21 @@ export default function RetireesList() {
 
   const [rowSelectionWorker, setRowSelectionWorker] =
     useState<GridRowSelectionModel>([]);
+  const [retireInfo, setRetireInfo] = useState<any>();
+  const [searchText, setSearchText] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pagePerView, setPagePerView] = useState(5);
 
+  const { isLoading, data: retireesList } = useQuery(
+    ["retireesList"],
+    () => {
+      return getRetireeList({ searchText });
+    },
+    {
+      refetchInterval: 5000,
+    }
+  );
+  if (!retireesList) return <></>;
   return (
     <div>
       <Typography fontSize={20} fontWeight={600}>
@@ -123,7 +116,7 @@ export default function RetireesList() {
           // },
         }}
         checkboxSelection
-        rows={rows}
+        rows={retireesList.list}
         columns={columns}
         pageSizeOptions={[25, 50, 100]}
         paginationModel={{ page: 0, pageSize: 25 }}
