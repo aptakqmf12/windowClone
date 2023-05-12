@@ -86,4 +86,12 @@ export const GlobalStyle = createGlobalStyle`
       outline:none
     }
   }
+   // MUI DataGrid의 정렬을 위한 스타일
+  .MuiDataGrid-columnHeader{
+    padding-right: 17px !important;
+  }
+  .MuiDataGrid-columnHeaderCheckbox{
+    padding-right: 0px !important;
+  }
+ 
 `;

@@ -116,13 +116,7 @@ export default function RetireesList() {
         sx={{
           width: "100%",
           transform: "skew(-0.05deg)",
-          // 정렬을 위한 스타일
-          "& .MuiDataGrid-columnHeader": {
-            paddingRight: "17px",
-          },
-          "& .MuiDataGrid-columnHeaderCheckbox": {
-            paddingRight: "0",
-          },
+
           //  column header 스타일
           // "& .super-app-theme--header": {
           //   backgroundColor: "rgba(255, 7, 0, 0.55)",

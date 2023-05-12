@@ -18,14 +18,18 @@ import { ViewType } from "./partnerList";
 
 export default function PartnerDetail({
   setView,
+  data,
 }: {
   setView: (ViewType: ViewType) => void;
+  data: any[];
 }) {
   const [construction, setConstruction] = useState("");
 
   const handleChange = (event: SelectChangeEvent) => {
     setConstruction(event.target.value as string);
   };
+
+  console.log("data", data);
   return (
     <div>
       <div.between>

@@ -32,10 +32,12 @@ export default function PartnerList() {
     useState<GridRowSelectionModel>([]);
   const [view, setView] = useState<ViewType>(ViewType.LIST);
 
+  const [data, setData] = useState<any>();
+
   const renderCompontntByPath = (viewPath: ViewType) => {
     switch (viewPath) {
       case ViewType.DETAIL:
-        return <PartnerDetail setView={setView} />;
+        return <PartnerDetail setView={setView} data={data} />;
       case ViewType.CREATE:
         return <PartnerCreate setView={setView} />;
       default:
@@ -81,9 +83,6 @@ export default function PartnerList() {
           sx={{
             width: "100%",
             transform: "skew(-0.05deg)",
-            "& .MuiDataGrid-columnHeader": {
-              paddingRight: "17px",
-            },
           }}
           rows={rows}
           columns={columns}
@@ -91,8 +90,14 @@ export default function PartnerList() {
           paginationModel={{ page: 0, pageSize: 25 }}
           onRowSelectionModelChange={(newRowSelectionWorker) => {
             setRowSelectionWorker(newRowSelectionWorker);
-            setView(ViewType.DETAIL);
+
             console.log(newRowSelectionWorker);
+          }}
+          onRowClick={(params) => {
+            console.log("params", params.row);
+
+            setData(params.row);
+            setView(ViewType.DETAIL);
           }}
           rowSelectionModel={rowSelectionWorker}
           slots={{
