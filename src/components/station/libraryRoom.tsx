@@ -51,8 +51,8 @@ export default function LibraryRoom() {
       </Paper>
 
       <div.chips>
-        {Array.from({ length: 4 }, (v, i) => `자료 ${i}`).map((data) => (
-          <Chip label={data} onDelete={() => {}} />
+        {Array.from({ length: 4 }, (v, i) => `자료 ${i}`).map((data, i) => (
+          <Chip label={data} onDelete={() => {}} key={i} />
         ))}
       </div.chips>
     </div.wrap>

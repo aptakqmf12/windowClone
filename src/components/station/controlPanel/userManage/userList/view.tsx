@@ -20,24 +20,113 @@ import {
 import styled from "styled-components";
 import { Search } from "@mui/icons-material";
 import { getUserList, UserResponse } from "@api/userManage";
-import { UserRole } from "../../../../types/index";
+import { UserRole } from "../../../../../types/index";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import dayjs from "dayjs";
 import { useQuery } from "@tanstack/react-query";
+import UserListEdit from "./edit";
 
-interface RowsType {
-  id: string;
-  name: string;
-  deptCode: string;
-  companyCode: string;
-  loginId: string;
-  userType: string;
-  isActive: string;
-}
+const columns: GridColDef[] = [
+  {
+    field: "name",
+    headerName: "이름",
+    headerAlign: "center",
+    align: "center",
+  },
+  {
+    field: "deptCode",
+    headerName: "담당부서",
+    headerAlign: "center",
+    align: "center",
+  },
+  {
+    field: "companyCode",
+    headerName: "회사코드",
+    headerAlign: "center",
+    align: "center",
+  },
+  {
+    field: "companyName",
+    headerName: "회사이름",
+    headerAlign: "center",
+    align: "center",
+  },
+  {
+    field: "deletedYn",
+    headerName: "deletedYn",
+    headerAlign: "center",
+    align: "center",
+  },
+  {
+    field: "loginId",
+    headerName: "loginId",
+    headerAlign: "center",
+    align: "center",
+  },
+  {
+    field: "updateId",
+    headerName: "updateId",
+    headerAlign: "center",
+    align: "center",
+    width: 200,
+  },
+  {
+    field: "userType",
+    headerName: "계정타입",
+    headerAlign: "center",
+    align: "center",
+  },
+  {
+    field: "isActive",
+    headerName: "isActive",
+    headerAlign: "center",
+    align: "center",
+    // renderCell: (params) => {
+    //   const onClick = (e: any) => {
+    //     e.stopPropagation();
+    //     console.log(e);
+    //     console.log(params.api.getRowIndexRelativeToVisibleRows(params.id));
+    //   };
+
+    //   return (
+    //     <Button variant="contained" onClick={onClick}>
+    //       Click
+    //     </Button>
+    //   );
+    // },
+  },
+  {
+    field: "updatedAt",
+    headerName: "업데이트 날짜",
+    headerAlign: "center",
+    align: "center",
+    width: 200,
+    renderCell: (params) => {
+      return params.formattedValue
+        ? dayjs(params.formattedValue).format("YYYY년MM월DD일 hh시mm분")
+        : "-";
+    },
+  },
+];
 
 export default function UserList() {
+  const [tab, setTab] = useState<"view" | "edit">("view");
+  const [rows, setRows] = useState<UserResponse>();
+
+  return tab === "view" ? (
+    <UserListView setTab={setTab} setRows={setRows} />
+  ) : (
+    <UserListEdit setTab={setTab} rows={rows} />
+  );
+}
+
+interface UserListViewProps {
+  setTab: (v: "view" | "edit") => void;
+  setRows: (v: UserResponse) => void;
+}
+
+const UserListView = ({ setTab, setRows }: UserListViewProps) => {
   const [userInfo, setUserInfo] = useState<any>();
-  // const [userList, setUserList] = useState<UserResponse[]>([]);
   const [name, setName] = useState<string>();
   // pagination
   const [currentPage, setCurrentPage] = useState(0);
@@ -52,106 +141,6 @@ export default function UserList() {
       refetchInterval: 5000,
     }
   );
-
-  // const recordUserList = async () => {
-  //   const res = await getUserList({ name });
-  //   setUserInfo(res.data);
-  //   setUserList(res.list);
-  // };
-
-  // useEffect(() => {
-  //   recordUserList();
-  // }, []);
-
-  const columns: GridColDef[] = [
-    {
-      field: "id",
-      headerName: "uuid",
-      headerAlign: "center",
-      align: "center",
-      width: 300,
-    },
-    {
-      field: "name",
-      headerName: "이름",
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      field: "deptCode",
-      headerName: "담당부서",
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      field: "companyCode",
-      headerName: "회사코드",
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      field: "companyName",
-      headerName: "회사이름",
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      field: "deletedYn",
-      headerName: "deletedYn",
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      field: "loginId",
-      headerName: "loginId",
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      field: "updateId",
-      headerName: "updateId",
-      headerAlign: "center",
-      align: "center",
-      width: 200,
-    },
-    {
-      field: "userType",
-      headerName: "계정타입",
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      field: "isActive",
-      headerName: "isActive",
-      headerAlign: "center",
-      align: "center",
-      // renderCell: (params) => {
-      //   const onClick = (e: any) => {
-      //     e.stopPropagation();
-      //     console.log(e);
-      //     console.log(params.api.getRowIndexRelativeToVisibleRows(params.id));
-      //   };
-
-      //   return (
-      //     <Button variant="contained" onClick={onClick}>
-      //       Click
-      //     </Button>
-      //   );
-      // },
-    },
-    {
-      field: "updatedAt",
-      headerName: "업데이트 날짜",
-      headerAlign: "center",
-      align: "center",
-      width: 200,
-      renderCell: (params) => {
-        return params.formattedValue
-          ? dayjs(params.formattedValue).format("YYYY년MM월DD일 hh시mm분")
-          : "-";
-      },
-    },
-  ];
 
   if (!userList) return <></>;
 
@@ -197,7 +186,7 @@ export default function UserList() {
       </div>
 
       <DataGrid
-        checkboxSelection={true}
+        checkboxSelection={false}
         pageSizeOptions={[5, 10, 15]}
         paginationModel={{ page: currentPage, pageSize: pagePerView }}
         rows={userList.list}
@@ -206,8 +195,10 @@ export default function UserList() {
           setCurrentPage(model.page);
           setPagePerView(model.pageSize);
         }}
-        onRowSelectionModelChange={(checkdIds, detail) => {
-          // console.log(checkdIds);
+        onRowSelectionModelChange={(checkdIds, detail) => {}}
+        onRowClick={(params) => {
+          setRows(params.row);
+          setTab("edit");
         }}
         sx={{
           width: "100%",
@@ -217,7 +208,7 @@ export default function UserList() {
       />
     </div>
   );
-}
+};
 
 const div = {
   btween: styled.div`

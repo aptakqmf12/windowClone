@@ -2,10 +2,12 @@ import { useState } from "react";
 import styled from "styled-components";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 
-import UserList from "./userManage/userList";
+import UserList from "./userManage/userList/view";
 import { Home, People, Build, Topic } from "@mui/icons-material";
 import NestedAccordion from "@components/layout/nestedAccordion";
 import { Typography } from "@mui/material";
+import CreateUser from "./userManage/createUser";
+import ReqeustCreateUser from "./userManage/reqeustCreateUser";
 
 const enum PathType {
   DELEGATION = "위임전결규정",
@@ -27,12 +29,15 @@ export default function ControlPanel() {
         return <div>위임전결규정</div>;
       case PathType.FORM_ROOM:
         return <div>양식함</div>;
+
       case PathType.USER_MANAGE:
         return <UserList />;
+
       case PathType.USER_REQUEST_CREATE_ACCOUNT:
-        return <div>계정생성요청</div>;
+        return <ReqeustCreateUser />;
+
       case PathType.USER_CREATE_ACCOUNT:
-        return <div>계정 직접 생성</div>;
+        return <CreateUser />;
       case PathType.PERMISSION:
         return <div>권한설정</div>;
       case PathType.PARTNER_MANAGE:
@@ -93,7 +98,7 @@ export default function ControlPanel() {
         },
         {
           name: "계정 직접 생성",
-
+          icon: <People />,
           path: PathType.USER_CREATE_ACCOUNT,
           onClick: () => {
             setCurrentPath(PathType.USER_CREATE_ACCOUNT);

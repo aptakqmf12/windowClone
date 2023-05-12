@@ -40,13 +40,8 @@ const setStorageAndHeaderByToken = (
 
 // api
 export const requestLogin = async ({ username, password }: LoginRequest) => {
-  const formData = new FormData();
-  Object.entries({ username, password }).map((entry) =>
-    formData.append(entry[0], entry[1])
-  );
-
   return await api
-    .post(`/api/auth/authenticate`, formData)
+    .post(`/api/auth/authenticate`, { username, password })
     .then((res: AxiosResponse<ResponseData<LoginResponse>>) => {
       return res.data;
     });
