@@ -118,7 +118,7 @@ export default function ControlPanel() {
     },
     {
       name: "협력사관리",
-
+      icon: <People />,
       path: PathType.PARTNER_MANAGE,
       onClick: () => {
         setCurrentPath(PathType.PARTNER_MANAGE);

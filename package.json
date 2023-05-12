@@ -23,6 +23,7 @@
     "@grapecity/wijmo.react.chart.animation": "^5.20222.877",
     "@grapecity/wijmo.react.grid": "^5.20222.877",
     "@mui/icons-material": "^5.11.16",
+    "@mui/lab": "^5.0.0-alpha.129",
     "@mui/material": "^5.11.16",
     "@mui/x-data-grid": "^6.3.1",
     "@mui/x-date-pickers": "^6.3.0",

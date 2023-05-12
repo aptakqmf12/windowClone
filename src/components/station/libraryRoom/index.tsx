@@ -12,6 +12,12 @@ import {
   Button,
   Typography,
   Pagination,
+  TableContainer,
+  Table,
+  TableHead,
+  TableCell,
+  TableRow,
+  TableBody,
 } from "@mui/material";
 import { Search, PostAdd } from "@mui/icons-material";
 import styled from "styled-components";
@@ -75,8 +81,37 @@ export default function LibraryRoom() {
       </div.search>
 
       <div.table>
-        <Pagination count={10} color="primary" />
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">No</TableCell>
+                <TableCell align="center">자료명</TableCell>
+                <TableCell align="center">작성자</TableCell>
+                <TableCell align="center">업로드</TableCell>
+                <TableCell align="center">조회수</TableCell>
+                <TableCell align="center">파일형식</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell align="center">1</TableCell>
+                <TableCell align="center">안전보고자료1</TableCell>
+                <TableCell align="center">김민정</TableCell>
+                <TableCell align="center">2023-05-09</TableCell>
+                <TableCell align="center">13</TableCell>
+                <TableCell align="center">hwp</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div.table>
+
+      <div.pagination>
+        <Pagination count={10} color="primary" />
+      </div.pagination>
     </div.wrap>
   );
 }
@@ -105,5 +140,11 @@ const div = {
     margin-top: 20px;
   `,
 
-  table: styled.div``,
+  table: styled.div`
+    margin-bottom: 20px;
+  `,
+  pagination: styled.div`
+    display: flex;
+    align-items: center;
+  `,
 };
