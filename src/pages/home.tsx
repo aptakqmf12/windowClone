@@ -12,7 +12,7 @@ import { Home } from "@mui/icons-material";
 
 import Window from "@components/layout/window";
 import Header from "@components/layout/header";
-import Sidebar from "@components/layout/sidebar";
+import Sidebar from "@components/layout";
 import Widget from "@components/layout/widget";
 import { useWidgetStore } from "@store/widget";
 import { Avatar, Chip, SvgIconTypeMap } from "@mui/material";
@@ -40,7 +40,6 @@ export default function MyHome() {
       <div.body className="station">
         <Sidebar />
       </div.body>
-
 
       <ul.nav>
         {currentWindows.map((window, i) => (

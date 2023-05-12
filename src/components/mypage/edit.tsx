@@ -28,6 +28,7 @@ import { SelectChangeEventType } from "@mui/base";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import PopUpWrap from "@components/common/popup";
 import { changePassword, updateMypageInfo } from "@api/mypage";
+import LabelComponent from "@components/common/labelComponent";
 
 export default function MypageEdit({
   setTab,
@@ -56,6 +57,16 @@ export default function MypageEdit({
           <Typography>민정건설</Typography>
           <Typography>김민정</Typography>
         </div.between>
+
+        <LabelComponent
+          label="민정건설"
+          value={<Typography>김민정</Typography>}
+        />
+        <LabelComponent
+          label="연락처"
+          value={<TextField fullWidth variant="standard" />}
+        />
+
         <div.info>
           <Typography className="label">연락처</Typography>
           <TextField fullWidth variant="standard" />
@@ -184,7 +195,6 @@ const div = {
 
     .label {
       min-width: 120px;
-      border-right: 1px black solid;
     }
   `,
   between: styled.div`

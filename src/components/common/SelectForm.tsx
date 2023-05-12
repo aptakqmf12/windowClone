@@ -13,6 +13,7 @@ interface SelectFormProps {
 
   variant?: "standard" | "outlined" | "filled";
   fullWidth?: boolean;
+  width?: number;
 }
 
 export default function SelectForm({
@@ -22,9 +23,14 @@ export default function SelectForm({
   menuList,
   variant,
   fullWidth,
+  width,
 }: SelectFormProps) {
   return (
-    <FormControl fullWidth={fullWidth} variant={variant || "standard"}>
+    <FormControl
+      fullWidth={fullWidth}
+      variant={variant || "standard"}
+      sx={{ width }}
+    >
       <Select
         value={value || undefined}
         defaultValue={defaultValue}
