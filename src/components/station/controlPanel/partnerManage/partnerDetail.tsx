@@ -28,20 +28,20 @@ export default function PartnerDetail({
   };
   return (
     <div>
-      <div.between>
-        <Typography fontSize={20} fontWeight={600}>
-          협력사 세부사항
-        </Typography>
-        <Button
-          variant="contained"
-          onClick={() => {
-            setView(ViewType.LIST);
-          }}
-        >
-          목록
-        </Button>
-      </div.between>
       <div.wrap>
+        <div.between>
+          <Typography fontSize={20} fontWeight={600}>
+            협력사 세부사항
+          </Typography>
+          <Button
+            variant="contained"
+            onClick={() => {
+              setView(ViewType.LIST);
+            }}
+          >
+            목록
+          </Button>
+        </div.between>
         <div.info>
           <Typography className="label">업체명</Typography>
           <TextField
@@ -104,7 +104,7 @@ const div = {
     justify-content: flex-start;
     align-items: flex-start;
     gap: 20px;
-    width: 80%;
+    width: 70%;
     margin: 5% auto;
   `,
   info: styled.div`

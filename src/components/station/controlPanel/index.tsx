@@ -9,6 +9,7 @@ import { Typography } from "@mui/material";
 import CreateUser from "./userManage/createUser";
 import ReqeustCreateUser from "./userManage/reqeustCreateUser";
 import PartnerList from "./partnerManage/partnerList";
+import Permission from "./permission";
 
 const enum PathType {
   DELEGATION = "위임전결규정",
@@ -40,7 +41,7 @@ export default function ControlPanel() {
       case PathType.USER_CREATE_ACCOUNT:
         return <CreateUser />;
       case PathType.PERMISSION:
-        return <div>권한설정</div>;
+        return <Permission />;
       case PathType.PARTNER_MANAGE:
         return <PartnerList />;
       case PathType.CODE_MANAGE:
