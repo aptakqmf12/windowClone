@@ -50,6 +50,7 @@ export default function PartnerList() {
         <Typography fontSize={20} fontWeight={600}>
           협력사 목록
         </Typography>
+
         <div.search>
           <Paper
             component="form"

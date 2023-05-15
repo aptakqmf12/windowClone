@@ -27,18 +27,16 @@ export default function LibraryRoom() {
   const [filter, setFilter] = useState<string>("");
   return (
     <div.wrap>
-      <div>
+      <div.title>
         <PostAdd sx={{ width: 52, height: 52 }} color="primary" />
         <Typography>자료실</Typography>
-      </div>
+      </div.title>
 
       <div.search>
         <div>
           <SelectForm
             value={filter}
-            setValue={(v) => {
-              setFilter(v);
-            }}
+            setValue={(v) => setFilter(v)}
             menuList={["전체", "자료명", "확장자"]}
             defaultValue="전체"
             width={120}
@@ -54,6 +52,7 @@ export default function LibraryRoom() {
                 display: "flex",
                 alignItems: "center",
                 width: 400,
+                height: 40,
               }}
             >
               <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
@@ -67,14 +66,17 @@ export default function LibraryRoom() {
               />
             </Paper>
 
-            <Button variant="contained" sx={{ paddingX: 3 }}>
+            <Button variant="contained" size="small" sx={{ paddingX: 3 }}>
               검색
             </Button>
           </div.input>
 
           <div.chips>
             {Array.from({ length: 4 }, (v, i) => `자료 ${i}`).map((data, i) => (
-              <Chip label={data} onDelete={() => {}} key={i} />
+              // <Chip label={data} onDelete={() => {}} key={i} />
+              <Button variant="contained" size="small">
+                {data}
+              </Button>
             ))}
           </div.chips>
         </div>
@@ -125,11 +127,14 @@ const div = {
     padding: 50px;
   `,
 
+  title: styled.div`
+    margin-bottom: 20px;
+  `,
   search: styled.div`
     display: flex;
     gap: 10px;
+    margin-bottom: 20px;
   `,
-
   input: styled.div`
     display: flex;
     gap: 10px;
@@ -137,7 +142,7 @@ const div = {
   chips: styled.div`
     display: flex;
     gap: 10px;
-    margin-top: 20px;
+    margin-top: 10px;
   `,
 
   table: styled.div`

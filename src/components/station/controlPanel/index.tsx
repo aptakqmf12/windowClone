@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 
@@ -10,42 +10,43 @@ import CreateUser from "./userManage/createUser";
 import ReqeustCreateUser from "./userManage/reqeustCreateUser";
 import PartnerList from "./partnerManage/partnerList";
 import Permission from "./permission";
+import FormRoom from "./formRoom";
 
-const enum PathType {
-  DELEGATION = "위임전결규정",
-  FORM_ROOM = "양식함",
-  USER_MANAGE = "사용자관리",
-  USER_REQUEST_CREATE_ACCOUNT = "계정생성요청",
-  USER_CREATE_ACCOUNT = "계정 직접 생성",
-  PERMISSION = "권한설정",
-  PARTNER_MANAGE = "협력사관리",
-  CODE_MANAGE = "코드관리",
-}
+import { useWindowStore } from "@store/window";
 
 export default function ControlPanel() {
-  const [currentPath, setCurrentPath] = useState<PathType | undefined>();
+  const { setDirectory } = useWindowStore();
+  const [currentPath, setCurrentPath] = useState<string>("");
 
-  const renderCompontntByPath = (path: PathType) => {
+  useEffect(() => {
+    setDirectory(currentPath);
+  }, [currentPath]);
+
+  const renderCompontntByPath = (path: string) => {
     switch (path) {
-      case PathType.DELEGATION:
+      case "위임전결규정":
         return <div>위임전결규정</div>;
-      case PathType.FORM_ROOM:
-        return <div>양식함</div>;
+      case "양식함":
+        return <FormRoom />;
 
-      case PathType.USER_MANAGE:
+      case "사용자관리":
         return <UserList />;
 
-      case PathType.USER_REQUEST_CREATE_ACCOUNT:
+      case "계정생성요청":
         return <ReqeustCreateUser />;
 
-      case PathType.USER_CREATE_ACCOUNT:
+      case "계정 직접 생성":
         return <CreateUser />;
-      case PathType.PERMISSION:
+
+      case "권한설정":
         return <Permission />;
-      case PathType.PARTNER_MANAGE:
+
+      case "협력사관리":
         return <PartnerList />;
-      case PathType.CODE_MANAGE:
+
+      case "코드관리":
         return <div>코드관리</div>;
+
       default:
         return <></>;
     }
@@ -55,86 +56,81 @@ export default function ControlPanel() {
     {
       name: "Home",
       icon: <Home />,
-      path: undefined,
+      path: "",
       onClick: () => {
-        setCurrentPath(undefined);
+        setCurrentPath("");
       },
     },
     {
       name: "위임전결규정",
-
-      path: PathType.DELEGATION,
+      path: "위임전결규정",
       onClick: () => {
-        setCurrentPath(PathType.DELEGATION);
+        setCurrentPath("위임전결규정");
       },
     },
     {
       name: "양식함",
-
-      path: PathType.FORM_ROOM,
+      path: "양식함",
       onClick: () => {
-        setCurrentPath(PathType.FORM_ROOM);
+        setCurrentPath("양식함");
       },
     },
     {
       name: "사용자 관리",
+      path: "사용자관리",
       icon: <People />,
-      path: PathType.USER_MANAGE,
       onClick: () => {},
       childList: [
         {
           name: "사용자 목록",
+          path: "사용자관리/사용자 목록",
           icon: <People />,
-          path: PathType.USER_MANAGE,
           onClick: () => {
-            setCurrentPath(PathType.USER_MANAGE);
+            setCurrentPath("사용자관리/사용자 목록");
           },
         },
         {
           name: "계정생성요청",
-
-          path: PathType.USER_REQUEST_CREATE_ACCOUNT,
+          path: "사용자관리/계정생성요청",
           onClick: () => {
-            setCurrentPath(PathType.USER_REQUEST_CREATE_ACCOUNT);
+            setCurrentPath("사용자관리/계정생성요청");
           },
         },
         {
           name: "계정 직접 생성",
+          path: "사용자관리/계정 직접 생성",
           icon: <People />,
-          path: PathType.USER_CREATE_ACCOUNT,
           onClick: () => {
-            setCurrentPath(PathType.USER_CREATE_ACCOUNT);
+            setCurrentPath("사용자관리/계정 직접 생성");
           },
         },
       ],
     },
     {
       name: "권한설정",
-
-      path: PathType.PERMISSION,
+      path: "권한설정",
       onClick: () => {
-        setCurrentPath(PathType.PERMISSION);
+        setCurrentPath("권한설정");
       },
     },
     {
       name: "협력사관리",
+      path: "협력사관리",
       icon: <People />,
-      path: PathType.PARTNER_MANAGE,
       onClick: () => {
-        setCurrentPath(PathType.PARTNER_MANAGE);
+        setCurrentPath("협력사관리");
       },
     },
     {
       name: "코드관리",
-
-      path: PathType.CODE_MANAGE,
+      path: "코드관리",
       onClick: () => {
-        setCurrentPath(PathType.CODE_MANAGE);
+        setCurrentPath("코드관리");
       },
     },
   ];
 
-  if (currentPath === undefined) {
+  if (currentPath.length === 0) {
     return (
       <div.wrap>
         <div>

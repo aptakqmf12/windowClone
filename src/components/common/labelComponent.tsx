@@ -15,9 +15,15 @@ export default function LabelComponent({
 }: LabelComponentProps) {
   return (
     <div.info>
-      <Typography sx={{ width: labelWidth || 120 }}>{label}</Typography>
+      <Typography
+        sx={{ width: labelWidth || 120 }}
+        color={"primary.main"}
+        fontWeight={600}
+      >
+        {label}
+      </Typography>
 
-      <div>{value}</div>
+      <div className="value">{value}</div>
     </div.info>
   );
 }
@@ -29,5 +35,9 @@ const div = {
     gap: 10px;
     width: 100%;
     padding-right: 10px;
+
+    .value {
+      width: calc(100% - 120px);
+    }
   `,
 };

@@ -29,6 +29,8 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import PopUpWrap from "@components/common/popup";
 import { changePassword, updateMypageInfo } from "@api/mypage";
 import LabelComponent from "@components/common/labelComponent";
+import SelectForm from "@components/common/SelectForm";
+import PasswordInput from "@components/common/passwordInput";
 
 export default function MypageEdit({
   setTab,
@@ -54,104 +56,71 @@ export default function MypageEdit({
     <>
       <div.wrap>
         <div.between>
-          <Typography>민정건설</Typography>
-          <Typography>김민정</Typography>
+          <Typography color={"white"}>민정건설</Typography>
+          <Typography color={"white"}>김민정(alswjd7711)님</Typography>
         </div.between>
 
         <LabelComponent
-          label="민정건설"
-          value={<Typography>김민정</Typography>}
+          label="이름"
+          value={<TextField fullWidth variant="standard" />}
         />
+        <LabelComponent
+          label="아이디"
+          value={<Input fullWidth disabled defaultValue={"김민정"} />}
+        />
+
         <LabelComponent
           label="연락처"
           value={<TextField fullWidth variant="standard" />}
         />
 
-        <div.info>
-          <Typography className="label">연락처</Typography>
-          <TextField fullWidth variant="standard" />
-        </div.info>
-
-        <div.info>
-          <Typography className="label">소속</Typography>
-
-          <FormControl fullWidth variant="standard">
-            <Select
+        <LabelComponent
+          label="소속"
+          value={
+            <SelectForm
+              fullWidth
+              defaultValue="기술연구소1"
               value={team}
-              onChange={(e: SelectChangeEvent) =>
-                setTeam(e.target.value as string)
-              }
-            >
-              <MenuItem value={"기술연구소1"} onClick={() => {}}>
-                기술연구소1
-              </MenuItem>
-              <MenuItem value={"기술연구소2"} onClick={() => {}}>
-                기술연구소2
-              </MenuItem>
-            </Select>
-          </FormControl>
-        </div.info>
-
-        <div.info>
-          <Typography className="label">이메일</Typography>
-          <TextField fullWidth variant="standard" />
-        </div.info>
-
-        <div.info>
-          <Typography className="label">기존 패스워드</Typography>
-
-          <FormControl fullWidth>
-            <Input
-              type={showPassword ? "text" : "password"}
-              value={oldPass}
-              onChange={(e) => {
-                setOldPass(e.target.value);
-              }}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={() => setShowPassword(!showPassword)}
-                    onMouseDown={(e: any) => e.preventDefault()}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
+              setValue={(e) => setTeam(e)}
+              menuList={["기술연구소1", "기술연구소2"]}
             />
-          </FormControl>
-        </div.info>
-
-        <div.info>
-          <Typography className="label">신규 패스워드</Typography>
-
-          <FormControl fullWidth>
-            <Input
-              type={showPassword ? "text" : "password"}
-              value={newPass}
-              onChange={(e) => {
-                setNewPass(e.target.value);
-              }}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={() => setShowPassword(!showPassword)}
-                    onMouseDown={(e: any) => e.preventDefault()}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
+          }
+        />
+        <LabelComponent
+          label="이메일"
+          value={<TextField fullWidth variant="standard" />}
+        />
+        <LabelComponent
+          label="기존 패스워드"
+          value={
+            <PasswordInput
+              password={oldPass}
+              setPassword={(value) => setOldPass(value)}
             />
-          </FormControl>
-        </div.info>
-
-        <Button variant="contained" onClick={onChangePassword}>
-          비밀번호 체크
-        </Button>
+          }
+        />
+        <LabelComponent
+          label="신규 패스워드"
+          value={
+            <PasswordInput
+              password={newPass}
+              setPassword={(value) => setNewPass(value)}
+            />
+          }
+        />
         <Button variant="contained" onClick={onSubmit}>
           완료
         </Button>
-        <Button variant="contained" onClick={() => setOpenModal(true)}>
+
+        <Button variant="contained" color="info" onClick={onChangePassword}>
+          비밀번호 체크
+        </Button>
+
+        <Button
+          variant="contained"
+          color="info"
+          onClick={() => setOpenModal(true)}
+        >
           모달
         </Button>
       </div.wrap>
@@ -202,7 +171,9 @@ const div = {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    padding: 4px 8px;
     background-color: ${(p) => p.theme.colors.primary.main};
+    border-radius: 4px;
   `,
   modal: styled.div`
     display: flex;

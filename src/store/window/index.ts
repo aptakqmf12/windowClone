@@ -10,7 +10,7 @@ export interface WindowType {
   isFullScreen: boolean;
   isShow: boolean;
   zIndex: number;
-  directory: string[];
+  directory: string;
   x: number;
   y: number;
   w: number;
@@ -37,6 +37,7 @@ interface WindowStore {
   toggleShowWindow: (uuid: string) => void;
   focusWindow: (uuid: string) => void;
   resizeWindow: (uuid: string, w: number, h: number) => void;
+  setDirectory: (dir: string) => void;
 }
 
 export const useWindowStore = create<WindowStore>()(
@@ -48,6 +49,11 @@ export const useWindowStore = create<WindowStore>()(
           .getState()
           .currentWindows.some((window) => window.name === props.name);
         const isMaxSize = useWindowStore.getState().currentWindows.length === 5;
+
+        // zIndex 초기화
+        useWindowStore
+          .getState()
+          .currentWindows.map((window) => (window.zIndex = 1));
 
         if (isExistingWindow || isMaxSize) return;
 
@@ -65,8 +71,8 @@ export const useWindowStore = create<WindowStore>()(
                   icon: props.icon,
                   isFullScreen: false,
                   isShow: true,
-                  zIndex: props.zIndex || 1,
-                  directory: [],
+                  zIndex: 2,
+                  directory: "",
                   x:
                     props.x ||
                     window.innerWidth / 2 -
@@ -165,6 +171,19 @@ export const useWindowStore = create<WindowStore>()(
           }),
           undefined,
           "[window] resize"
+        );
+      },
+      setDirectory: (dir: string) => {
+        set(
+          (state) => ({
+            currentWindows: state.currentWindows.map((window) => {
+              window.directory = dir;
+
+              return window;
+            }),
+          }),
+          undefined,
+          "[window] setDirectory"
         );
       },
     }),

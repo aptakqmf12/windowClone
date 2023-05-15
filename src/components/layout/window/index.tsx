@@ -90,8 +90,6 @@ export default function Window(props: WindowType) {
 
   const sx = { width: 20, height: 20, fill: "#7E7E7E" };
 
-  const dir = ["depth1", "depth2", "depth3"];
-
   if (isShow === false) return <></>;
 
   return (
@@ -142,15 +140,7 @@ export default function Window(props: WindowType) {
           </div>
         </div.head>
 
-        <div.breadCrumb>
-          <Typography fontSize={12} color={"white"}>
-            {dir.slice(0, dir.length - 1).join(" / ")}
-          </Typography>
-
-          <Typography fontSize={12} fontWeight={600} color={"white"}>
-            &nbsp; / {dir[dir.length - 1]}
-          </Typography>
-        </div.breadCrumb>
+        <BreadCrumbs directory={directory} />
 
         <div.body>
           <Resizer
@@ -170,6 +160,28 @@ export default function Window(props: WindowType) {
     </Draggable>
   );
 }
+
+const BreadCrumbs = ({ directory }: { directory: string }) => {
+  const directoryArr = directory.split("/");
+
+  return (
+    <div.breadCrumb>
+      {directory.length > 0 && (
+        <>
+          <Typography fontSize={12} color={"white"}>
+            {directoryArr.slice(0, directoryArr.length - 1).join(" / ")}
+          </Typography>
+
+          <Typography fontSize={12} fontWeight={600} color={"white"}>
+            {directoryArr.length > 1 && <>&nbsp;/&nbsp;</>}
+
+            {directoryArr[directoryArr.length - 1]}
+          </Typography>
+        </>
+      )}
+    </div.breadCrumb>
+  );
+};
 
 const div = {
   wrap: styled.div`
@@ -216,7 +228,7 @@ const div = {
     justify-content: flex-start;
     align-items: center;
     height: 30px;
-    padding: 0px 24px;
+    padding: 0px 12px;
 
     background-color: #7b7b7b;
   `,
