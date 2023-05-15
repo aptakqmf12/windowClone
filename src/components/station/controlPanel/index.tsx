@@ -109,6 +109,7 @@ export default function ControlPanel() {
     {
       name: "권한설정",
       path: "권한설정",
+      icon: <People />,
       onClick: () => {
         setCurrentPath("권한설정");
       },

@@ -14,22 +14,27 @@ import {
   Grid,
 } from "@mui/material";
 import styled from "styled-components";
+import SelectForm from "@components/common/SelectForm";
+import LabelComponent from "@components/common/labelComponent";
+import { PartnerInfo } from "./partnerList";
 import { ViewType } from "./partnerList";
 
 export default function PartnerDetail({
   setView,
-  data,
+  partnerInfo,
 }: {
   setView: (ViewType: ViewType) => void;
-  data: any[];
+  partnerInfo: PartnerInfo;
 }) {
-  const [construction, setConstruction] = useState("");
+  const [construction, setConstruction] = useState(
+    partnerInfo.constructionName
+  );
 
   const handleChange = (event: SelectChangeEvent) => {
     setConstruction(event.target.value as string);
   };
 
-  console.log("data", data);
+  console.log("partnerInfo", partnerInfo);
   return (
     <div>
       <div.wrap>
@@ -47,47 +52,107 @@ export default function PartnerDetail({
           </Button>
         </div.between>
         <div.info>
-          <Typography className="label">업체명</Typography>
-          <TextField
-            required
-            id="partnerName"
-            placeholder="업체명"
-            size="small"
+          <LabelComponent
+            label="업체명"
+            value={
+              <>
+                <TextField
+                  required
+                  name="partnerName"
+                  placeholder="업체명"
+                  size="small"
+                  value={partnerInfo.partnerName}
+                />
+              </>
+            }
           />
-
-          <Typography className="label">대표 아이디</Typography>
-          <TextField id="partnerId" placeholder="대표 아이디" size="small" />
-        </div.info>
-        <div.info>
-          <Typography className="label">사업자 등록번호</Typography>
-          <TextField
-            id="partnerLicense"
-            placeholder="사업자 등록번호"
-            size="small"
+          <LabelComponent
+            label="대표 아이디"
+            value={
+              <>
+                <TextField
+                  required
+                  name="partnerId"
+                  placeholder="대표 아이디"
+                  size="small"
+                  value={partnerInfo.partnerId}
+                />
+              </>
+            }
           />
-          <Typography className="label"> 투입공종</Typography>
-          <Select
-            id="construction"
-            value={construction}
-            label="construction"
-            onChange={handleChange}
-            placeholder="투입공종"
-            size="small"
-          >
-            <MenuItem value={"터파기 공사"}>터파기 공사</MenuItem>
-            <MenuItem value={"전기 공사"}>전기 공사</MenuItem>
-            <MenuItem value={"터널 공사"}>터널 공사</MenuItem>
-          </Select>
         </div.info>
         <div.info>
-          <Typography className="label">대표자명</Typography>
-          <TextField id="CEOName" placeholder="대표자명" size="small" />
-          <Typography className="label">등록일</Typography>
-          <Typography></Typography>
+          <LabelComponent
+            label="사업자 등록번호"
+            value={
+              <>
+                <TextField
+                  required
+                  name="partnerLicense"
+                  placeholder="사업자 등록번호"
+                  size="small"
+                  value={partnerInfo.partnerLicense}
+                />
+              </>
+            }
+          />
+          <LabelComponent
+            label="투입공종"
+            value={
+              <>
+                <SelectForm
+                  value={construction}
+                  defaultValue={"터파기 공사"}
+                  setValue={setConstruction}
+                  menuList={["터파기 공사", "전기 공사", "터널 공사"]}
+                />
+              </>
+            }
+          />
         </div.info>
         <div.info>
-          <Typography className="label">연락처</Typography>
-          <TextField id="phone" placeholder="연락처" size="small" />
+          <LabelComponent
+            label="대표자명"
+            value={
+              <>
+                <TextField
+                  required
+                  name="CEOName"
+                  placeholder="대표자명"
+                  size="small"
+                  value={partnerInfo.CEOName}
+                />
+              </>
+            }
+          />
+          <LabelComponent
+            label="등록일"
+            value={
+              <>
+                <TextField
+                  placeholder="등록일"
+                  size="small"
+                  value={partnerInfo.createDate}
+                />
+              </>
+            }
+          />
+        </div.info>
+        <div.info>
+          <LabelComponent
+            label="연락처"
+            value={
+              <>
+                <TextField
+                  required
+                  name="phone"
+                  placeholder="연락처"
+                  size="small"
+                  value={partnerInfo.phone}
+                />
+              </>
+            }
+          />
         </div.info>
         <div.buttons>
           <Button variant="contained" onClick={() => {}}>

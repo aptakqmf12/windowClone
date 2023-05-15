@@ -19,7 +19,11 @@ import {
 } from "@mui/x-data-grid";
 import styled from "styled-components";
 
-export default function UserRolePermission() {
+export default function UserRolePermission({
+  setUserView,
+}: {
+  setUserView: (v: "search" | "list" | "edit") => void;
+}) {
   return (
     <div>
       <div.search>
@@ -38,84 +42,18 @@ export default function UserRolePermission() {
             size="small"
           />
         </Paper>
-        <Button variant="contained" onClick={() => {}}>
+        <Button
+          variant="contained"
+          onClick={() => {
+            setUserView("list");
+          }}
+        >
           검색
         </Button>
       </div.search>
     </div>
   );
 }
-const columns: GridColDef[] = [
-  {
-    field: "id",
-    headerName: "NO",
-    headerAlign: "center",
-    align: "center",
-    flex: 0.1,
-    renderCell: (params) => {
-      return params.api.getRowIndexRelativeToVisibleRows(params.id) + 1;
-    },
-  },
-  {
-    field: "userName",
-    headerName: "사용자명",
-    headerAlign: "center",
-    align: "center",
-    flex: 0.5,
-  },
-  {
-    field: "userId",
-    headerName: "아이디",
-    headerAlign: "center",
-    align: "center",
-    flex: 1,
-  },
-
-  {
-    field: "phone",
-    headerName: "연락처",
-    headerAlign: "center",
-    align: "center",
-    flex: 0.5,
-  },
-  {
-    field: "team",
-    headerName: "소속",
-    headerAlign: "center",
-    align: "center",
-    flex: 1,
-  },
-  {
-    field: "jobTitle",
-    headerName: "직급",
-    headerAlign: "center",
-    align: "center",
-    flex: 0.5,
-  },
-  {
-    field: "email",
-    headerName: "이메일",
-    headerAlign: "center",
-    align: "center",
-    flex: 0.5,
-  },
-  {
-    field: "userType",
-    headerName: "계정타입",
-    headerAlign: "center",
-    align: "center",
-    flex: 0.5,
-    renderCell: (params) => {
-      const onClick = (e: any) => {
-        e.stopPropagation();
-        console.log(e);
-        console.log(params.api.getRowIndexRelativeToVisibleRows(params.id));
-      };
-
-      return <Chip label="Sub MANAGER" color="success" variant="outlined" />;
-    },
-  },
-];
 
 const div = {
   btween: styled.div`
