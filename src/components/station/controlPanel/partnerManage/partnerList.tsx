@@ -61,7 +61,8 @@ export default function PartnerList() {
         <></>;
     }
   };
-  if (view === ViewType.LIST || undefined) {
+
+  if (view === ViewType.LIST) {
     return (
       <div>
         <Typography fontSize={20} fontWeight={600}>

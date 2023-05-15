@@ -14,22 +14,30 @@ import FormRoom from "./formRoom";
 
 import { useWindowStore } from "@store/window";
 
-export default function ControlPanel() {
+interface ControlPanelProps {
+  uuid: string;
+}
+
+export default function ControlPanel({ uuid }: ControlPanelProps) {
   const { setDirectory } = useWindowStore();
   const [currentPath, setCurrentPath] = useState<string>("");
 
   useEffect(() => {
-    setDirectory(currentPath);
+    setDirectory(uuid, currentPath);
   }, [currentPath]);
 
   const renderCompontntByPath = (path: string) => {
     switch (path) {
       case "위임전결규정":
         return <div>위임전결규정</div>;
+
       case "양식함":
         return <FormRoom />;
 
       case "사용자관리":
+        return <UserList />;
+
+      case "사용자관리/사용자 목록":
         return <UserList />;
 
       case "계정생성요청":
@@ -77,7 +85,7 @@ export default function ControlPanel() {
     },
     {
       name: "사용자 관리",
-      path: "사용자관리",
+      path: "사용자관리/사용자 목록",
       icon: <People />,
       onClick: () => {},
       childList: [

@@ -22,6 +22,8 @@ import Wijmo from "@components/station/wijmo";
 import PackageCenter from "@components/station/packageCenter";
 import LibraryRoom from "@components/station/libraryRoom";
 
+import { v4 as uuidv4 } from "uuid";
+
 export default function Sidebar() {
   const { appendWindow } = useWindowStore();
 
@@ -44,10 +46,13 @@ export default function Sidebar() {
       name: "패키지 센터",
       icon: <Apps sx={iconSx} />,
       onclick: function () {
+        const uuid = uuidv4();
+
         appendWindow({
+          uuid: uuid,
           name: "패키지 센터",
           icon: <Apps sx={iconSx} />,
-          component: <PackageCenter />,
+          component: <PackageCenter uuid={uuid} />,
         });
       },
     },
@@ -55,10 +60,13 @@ export default function Sidebar() {
       name: "제어판",
       icon: <Build sx={iconSx} color="disabled" />,
       onclick: function () {
+        const uuid = uuidv4();
+
         appendWindow({
+          uuid: uuid,
           name: "제어판",
           icon: <Build sx={iconSx} />,
-          component: <ControlPanel />,
+          component: <ControlPanel uuid={uuid} />,
         });
       },
     },
@@ -66,10 +74,13 @@ export default function Sidebar() {
       name: "자료실",
       icon: <PostAdd sx={iconSx} />,
       onclick: function () {
+        const uuid = uuidv4();
+
         appendWindow({
+          uuid: uuid,
           name: "자료실",
           icon: <PostAdd sx={iconSx} />,
-          component: <LibraryRoom />,
+          component: <LibraryRoom uuid={uuid} />,
         });
       },
     },
@@ -77,7 +88,10 @@ export default function Sidebar() {
       name: "설정",
       icon: <Settings sx={iconSx} />,
       onclick: function () {
+        const uuid = uuidv4();
+
         appendWindow({
+          uuid: uuid,
           name: "설정",
           icon: <Settings sx={iconSx} />,
           component: <div>설정</div>,
@@ -88,7 +102,10 @@ export default function Sidebar() {
       name: "도움말",
       icon: <Search sx={iconSx} />,
       onclick: function () {
+        const uuid = uuidv4();
+
         appendWindow({
+          uuid: uuid,
           name: "도움말",
           icon: <Search sx={iconSx} />,
           component: <div>도움말</div>,

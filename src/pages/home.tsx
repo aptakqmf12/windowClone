@@ -12,12 +12,11 @@ import { Home } from "@mui/icons-material";
 
 import Window from "@components/layout/window";
 import Header from "@components/layout/header";
-import Sidebar from "@components/layout";
+import Sidebar from "@components/layout/sidebar";
 import Widget from "@components/layout/widget";
 import { useWidgetStore } from "@store/widget";
 import { Avatar, Chip, SvgIconTypeMap } from "@mui/material";
 import Logo from "@components/layout/logo";
-import { OverridableComponent } from "@mui/material/OverridableComponent";
 
 export default function MyHome() {
   const { showWidget } = useWidgetStore();

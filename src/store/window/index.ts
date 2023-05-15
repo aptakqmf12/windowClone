@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
-import { v4 as uuidv4 } from "uuid";
 
 export interface WindowType {
   name: string;
@@ -18,6 +17,7 @@ export interface WindowType {
 }
 
 type AppendWindowProps = {
+  uuid: string;
   component: React.ReactNode;
   icon: React.ReactNode;
   name: string;
@@ -37,7 +37,7 @@ interface WindowStore {
   toggleShowWindow: (uuid: string) => void;
   focusWindow: (uuid: string) => void;
   resizeWindow: (uuid: string, w: number, h: number) => void;
-  setDirectory: (dir: string) => void;
+  setDirectory: (uuid: string, dir: string) => void;
 }
 
 export const useWindowStore = create<WindowStore>()(
@@ -66,7 +66,7 @@ export const useWindowStore = create<WindowStore>()(
                 ...state.currentWindows,
                 {
                   name: props.name,
-                  uuid: uuidv4(),
+                  uuid: props.uuid,
                   component: props.component,
                   icon: props.icon,
                   isFullScreen: false,
@@ -173,12 +173,13 @@ export const useWindowStore = create<WindowStore>()(
           "[window] resize"
         );
       },
-      setDirectory: (dir: string) => {
+      setDirectory: (uuid: string, dir: string) => {
         set(
           (state) => ({
             currentWindows: state.currentWindows.map((window) => {
-              window.directory = dir;
-
+              if (window.uuid === uuid) {
+                window.directory = dir;
+              }
               return window;
             }),
           }),

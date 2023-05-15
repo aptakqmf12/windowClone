@@ -32,7 +32,11 @@ const enum PathType {
   RISK_NOTIFICATION = "위험알림",
 }
 
-export default function PackageCenter() {
+interface PackageCenterProps {
+  uuid: string;
+}
+
+export default function PackageCenter({ uuid }: PackageCenterProps) {
   const [currentPath, setCurrentPath] = useState<PathType | undefined>();
 
   const renderCompontntByPath = (path: PathType) => {

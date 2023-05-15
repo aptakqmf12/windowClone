@@ -23,7 +23,11 @@ import { Search, PostAdd } from "@mui/icons-material";
 import styled from "styled-components";
 import SelectForm from "@components/common/SelectForm";
 
-export default function LibraryRoom() {
+interface LibraryRoomProps {
+  uuid: string;
+}
+
+export default function LibraryRoom({ uuid }: LibraryRoomProps) {
   const [filter, setFilter] = useState<string>("");
   return (
     <div.wrap>
