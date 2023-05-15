@@ -110,7 +110,7 @@ export default function ControlPanel() {
     },
     {
       name: "권한설정",
-
+      icon: <People />,
       path: PathType.PERMISSION,
       onClick: () => {
         setCurrentPath(PathType.PERMISSION);

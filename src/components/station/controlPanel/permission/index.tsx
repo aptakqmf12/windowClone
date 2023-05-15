@@ -5,14 +5,50 @@ import { TabPanel, TabContext } from "@mui/lab";
 import styled from "styled-components";
 import PackageMenuRolePermission from "./tabs/packageMenuRolePermission";
 import UserRolePermission from "./tabs/userRolePermission";
+import UserRolePermissionList from "./tabs/userRolePermissionList";
+import UserRolePermissionEdit from "./tabs/userRolePermissionEdit";
+import { userInfo } from "./tabs/userRolePermissionList";
 
 export default function Permission() {
   const [tab, setTab] = useState("package");
-
+  const [userView, setUserView] = useState<"search" | "list" | "edit">(
+    "search"
+  );
+  const [userInfo, setUserInfo] = useState<userInfo>({
+    id: "string",
+    userName: "string",
+    userId: "string",
+    phone: "string",
+    team: "string",
+    jobTitle: "string",
+    email: "string",
+    userType: "string",
+  });
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setTab(newValue);
   };
-
+  const renderCompontntByPath = (userView: string) => {
+    switch (userView) {
+      case "search":
+        return <UserRolePermission setUserView={setUserView} />;
+      case "list":
+        return (
+          <UserRolePermissionList
+            setUserView={setUserView}
+            setUserInfo={setUserInfo}
+          />
+        );
+      case "edit":
+        return (
+          <UserRolePermissionEdit
+            setUserView={setUserView}
+            userInfo={userInfo}
+          />
+        );
+      default:
+        return <UserRolePermission setUserView={setUserView} />;
+    }
+  };
   return (
     <div>
       <div.wrap>
@@ -29,7 +65,7 @@ export default function Permission() {
             <PackageMenuRolePermission />
           </TabPanel>
           <TabPanel value="user" className="tab">
-            <UserRolePermission />
+            {renderCompontntByPath(userView)}
           </TabPanel>
         </TabContext>
       </div.wrap>
