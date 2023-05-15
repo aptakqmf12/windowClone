@@ -1,18 +1,10 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-
-import UserList from "./userManage/userList/view";
 import { Home, People, Build, Topic } from "@mui/icons-material";
-import NestedAccordion from "@components/layout/nestedAccordion";
 import { Typography } from "@mui/material";
-import CreateUser from "./userManage/createUser";
-import ReqeustCreateUser from "./userManage/reqeustCreateUser";
-import PartnerList from "./partnerManage/partnerList";
-import Permission from "./permission";
-import FormRoom from "./formRoom";
-
 import { useWindowStore } from "@store/window";
+import NestedAccordion from "@components/layout/nestedAccordion";
+import { Paths, renderCompontntByPath } from "./router";
 
 interface ControlPanelProps {
   uuid: string;
@@ -20,161 +12,81 @@ interface ControlPanelProps {
 
 export default function ControlPanel({ uuid }: ControlPanelProps) {
   const { setDirectory } = useWindowStore();
-  const [currentPath, setCurrentPath] = useState<string>("");
+  const [currentPath, setCurrentPath] = useState<Paths>(Paths.HOME);
 
   useEffect(() => {
     setDirectory(uuid, currentPath);
   }, [currentPath]);
 
-  const renderCompontntByPath = (path: string) => {
-    switch (path) {
-      case "위임전결규정":
-        return <div>위임전결규정</div>;
-
-      case "양식함":
-        return <FormRoom />;
-
-      case "사용자관리":
-        return <UserList />;
-
-      case "사용자관리/사용자 목록":
-        return <UserList />;
-
-      case "계정생성요청":
-        return <ReqeustCreateUser />;
-
-      case "계정 직접 생성":
-        return <CreateUser />;
-
-      case "권한설정":
-        return <Permission />;
-
-      case "협력사관리":
-        return <PartnerList />;
-
-      case "코드관리":
-        return <div>코드관리</div>;
-
-      default:
-        return <></>;
-    }
-  };
-
   const FIXED_LIST_DATA = [
     {
       name: "Home",
       icon: <Home />,
-      path: "",
-      onClick: () => {
-        setCurrentPath("");
-      },
+      path: Paths.HOME,
+      onClick: () => setCurrentPath(Paths.HOME),
     },
     {
-      name: "위임전결규정",
-      path: "위임전결규정",
-      onClick: () => {
-        setCurrentPath("위임전결규정");
-      },
+      name: "위임 전결 규정",
+      path: Paths.DELEGATION,
+      onClick: () => setCurrentPath(Paths.DELEGATION),
     },
     {
       name: "양식함",
-      path: "양식함",
-      onClick: () => {
-        setCurrentPath("양식함");
-      },
+      path: Paths.FORM_ROOM,
+      onClick: () => setCurrentPath(Paths.FORM_ROOM),
     },
     {
       name: "사용자 관리",
-      path: "사용자관리/사용자 목록",
+      path: Paths.USER_LIST,
       icon: <People />,
       onClick: () => {},
       childList: [
         {
           name: "사용자 목록",
-          path: "사용자관리/사용자 목록",
+          path: Paths.USER_LIST,
           icon: <People />,
-          onClick: () => {
-            setCurrentPath("사용자관리/사용자 목록");
-          },
+          onClick: () => setCurrentPath(Paths.USER_LIST),
         },
         {
           name: "계정생성요청",
-          path: "사용자관리/계정생성요청",
-          onClick: () => {
-            setCurrentPath("사용자관리/계정생성요청");
-          },
+          path: Paths.REQUEST_CREATE_USER,
+          onClick: () => setCurrentPath(Paths.REQUEST_CREATE_USER),
         },
         {
           name: "계정 직접 생성",
-          path: "사용자관리/계정 직접 생성",
+          path: Paths.CREATE_USER,
           icon: <People />,
-          onClick: () => {
-            setCurrentPath("사용자관리/계정 직접 생성");
-          },
+          onClick: () => setCurrentPath(Paths.CREATE_USER),
         },
       ],
     },
     {
-      name: "권한설정",
-      path: "권한설정",
+      name: "권한 설정",
+      path: Paths.PERMISSION,
       icon: <People />,
-      onClick: () => {
-        setCurrentPath("권한설정");
-      },
+      onClick: () => setCurrentPath(Paths.PERMISSION),
     },
     {
-      name: "협력사관리",
-      path: "협력사관리",
+      name: "협력사 관리",
+      path: Paths.PARTNER_MANAGE,
       icon: <People />,
-      onClick: () => {
-        setCurrentPath("협력사관리");
-      },
+      onClick: () => setCurrentPath(Paths.PARTNER_MANAGE),
     },
     {
-      name: "코드관리",
+      name: Paths.CODE_MANAGE,
       path: "코드관리",
-      onClick: () => {
-        setCurrentPath("코드관리");
-      },
+      onClick: () => setCurrentPath(Paths.CODE_MANAGE),
     },
   ];
 
-  if (currentPath.length === 0) {
+  if (currentPath === Paths.HOME) {
     return (
-      <div.wrap>
-        <div>
-          <Build color="primary" sx={{ width: 50, height: 50 }} />
-          <Typography fontSize={20}>제어판</Typography>
-        </div>
-
-        <hr
-          style={{
-            width: "100%",
-            height: 1,
-            backgroundColor: "#c6c6c6",
-            outline: 0,
-          }}
-        />
-
-        <ul>
-          {FIXED_LIST_DATA.slice(1).map((list, i) => (
-            <li
-              key={i}
-              onClick={() => {
-                setCurrentPath(list.path);
-              }}
-            >
-              <Topic color="secondary" sx={{ width: 40, height: 30 }} />
-              <Typography fontSize={17} color="secondary">
-                {list.name}
-              </Typography>
-            </li>
-          ))}
-        </ul>
-      </div.wrap>
+      <ControlPanelMain
+        list={FIXED_LIST_DATA}
+        setCurrentPath={setCurrentPath}
+      />
     );
   }
-
   return (
     <div.sub>
       <div className="side">
@@ -185,6 +97,48 @@ export default function ControlPanel({ uuid }: ControlPanelProps) {
     </div.sub>
   );
 }
+
+const ControlPanelMain = ({
+  list,
+  setCurrentPath,
+}: {
+  list: any[];
+  setCurrentPath: (v: Paths) => void;
+}) => {
+  return (
+    <div.wrap>
+      <div>
+        <Build color="primary" sx={{ width: 50, height: 50 }} />
+        <Typography fontSize={20}>제어판</Typography>
+      </div>
+
+      <hr
+        style={{
+          width: "100%",
+          height: 1,
+          backgroundColor: "#c6c6c6",
+          outline: 0,
+        }}
+      />
+
+      <ul>
+        {list.slice(1).map((list, i) => (
+          <li
+            key={i}
+            onClick={() => {
+              setCurrentPath(list.path);
+            }}
+          >
+            <Topic color="secondary" sx={{ width: 40, height: 30 }} />
+            <Typography fontSize={17} color="secondary">
+              {list.name}
+            </Typography>
+          </li>
+        ))}
+      </ul>
+    </div.wrap>
+  );
+};
 
 const div = {
   wrap: styled.div`
