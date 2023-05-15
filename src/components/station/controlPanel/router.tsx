@@ -42,7 +42,7 @@ export const renderCompontntByPath = (path: string) => {
     case Paths.PARTNER_MANAGE:
       return <PartnerList />;
 
-    case "코드관리":
+    case Paths.CODE_MANAGE:
       return <div>코드관리</div>;
 
     default:
