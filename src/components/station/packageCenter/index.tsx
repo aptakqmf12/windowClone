@@ -224,7 +224,7 @@ export default function PackageCenter({ uuid }: PackageCenterProps) {
   return (
     <div.sub>
       <div className="side">
-        <NestedAccordion list={FIXED_LIST_DATA} />
+        <NestedAccordion list={FIXED_LIST_DATA} currentPath={currentPath} />
       </div>
 
       <div className="component">{renderCompontntByPath(currentPath)}</div>

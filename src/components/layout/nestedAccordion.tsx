@@ -15,6 +15,7 @@ import { ExpandLess, ExpandMore, Home } from "@mui/icons-material";
 interface NestedAccordionProps {
   list: {
     name: string;
+    path: any;
     onClick: (v: any) => void;
 
     icon?: any;
@@ -24,13 +25,18 @@ interface NestedAccordionProps {
       onClick: (v: any) => void;
     }[];
   }[];
+  currentPath: any;
 }
 
-export default function NestedAccordion({ list }: NestedAccordionProps) {
+export default function NestedAccordion({
+  list,
+  currentPath,
+}: NestedAccordionProps) {
   return (
     <List>
       {list.map((accrd, i) => {
-        const { icon, name, onClick, childList } = accrd;
+        const { icon, name, path, onClick, childList } = accrd;
+        const isCurrentPath = path === currentPath;
 
         if (childList) {
           return (
@@ -52,7 +58,12 @@ export default function NestedAccordion({ list }: NestedAccordionProps) {
                   </ListItemIcon>
                 )}
 
-                <Typography>{name}</Typography>
+                <Typography
+                  color={isCurrentPath ? "primary.main" : "font"}
+                  fontWeight={isCurrentPath ? 600 : 400}
+                >
+                  {name}
+                </Typography>
               </ListItemButton>
             </ListItem>
           </List>
