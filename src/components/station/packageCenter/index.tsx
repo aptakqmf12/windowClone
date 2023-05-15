@@ -13,67 +13,15 @@ import { Apps, ArrowForward, Home, People } from "@mui/icons-material";
 import NestedAccordion from "@components/layout/nestedAccordion";
 import RetireesManagement from "./sub/retireesList";
 import RetireesList from "./sub/retireesList";
-
-const enum PathType {
-  DASHBOARD = "대시보드 관리",
-  CONSTRUCTION_OVERVIEW = "공사개요",
-  WORKER_MANAGE = "근로자 관리",
-  WORKER_LIST = "근로자 목록",
-  WORKER_ENTERANCE_MANAGE = "근로자 출역관리",
-  RETIREES_LIST = "퇴직자 목록",
-
-  WORKER_SAFETY_CHECK = "근로자 안전점검",
-  OCCUPATIONAL_SAFETY_AND_HEALTH_ACT = "안전보건지지침",
-  LEGAL_INFORMATION = "법령정보",
-  SCHEDULER = "스케쥴러",
-  MEMO = "MEMO",
-  TO_DO_LIST_MANAGE = "TO DO LIST 관리",
-  EMERGENCY_CALL = "비상연락망",
-  RISK_NOTIFICATION = "위험알림",
-}
+import { Paths, renderCompontntByPath } from "./router";
 
 interface PackageCenterProps {
   uuid: string;
 }
 
 export default function PackageCenter({ uuid }: PackageCenterProps) {
-  const [currentPath, setCurrentPath] = useState<PathType | undefined>();
+  const [currentPath, setCurrentPath] = useState<Paths | undefined>();
 
-  const renderCompontntByPath = (path: PathType) => {
-    switch (path) {
-      case PathType.DASHBOARD:
-        return <div>대시보드</div>;
-      case PathType.CONSTRUCTION_OVERVIEW:
-        return <div>공사개요</div>;
-      case PathType.WORKER_MANAGE:
-        return <div>근로자 관리</div>;
-      case PathType.WORKER_LIST:
-        return <div>근로자 목록</div>;
-      case PathType.WORKER_ENTERANCE_MANAGE:
-        return <div>근로자 출역관리</div>;
-      case PathType.RETIREES_LIST:
-        return <RetireesList />;
-      case PathType.WORKER_SAFETY_CHECK:
-        return <div>근로자 안전점검</div>;
-      case PathType.OCCUPATIONAL_SAFETY_AND_HEALTH_ACT:
-        return <div>안전보건지지침</div>;
-      case PathType.LEGAL_INFORMATION:
-        return <div>법령정보</div>;
-      case PathType.SCHEDULER:
-        return <div>스케쥴러</div>;
-      case PathType.MEMO:
-        return <div>MEMO</div>;
-      case PathType.TO_DO_LIST_MANAGE:
-        return <div>TO DO LIST 관리</div>;
-      case PathType.EMERGENCY_CALL:
-        return <div>비상연락망</div>;
-      case PathType.RISK_NOTIFICATION:
-        return <div>위험알림</div>;
-
-      default:
-        return <></>;
-    }
-  };
   const FIXED_LIST_DATA = [
     {
       name: "Home",
@@ -86,48 +34,48 @@ export default function PackageCenter({ uuid }: PackageCenterProps) {
     {
       name: "대시보드 관리",
       icon: <ArrowForward />,
-      path: PathType.DASHBOARD,
+      path: Paths.DASHBOARD,
       onClick: () => {
-        setCurrentPath(PathType.DASHBOARD);
+        setCurrentPath(Paths.DASHBOARD);
       },
     },
     {
       name: "공사개요",
       icon: <ArrowForward />,
-      path: PathType.CONSTRUCTION_OVERVIEW,
+      path: Paths.CONSTRUCTION_OVERVIEW,
       onClick: () => {
-        setCurrentPath(PathType.CONSTRUCTION_OVERVIEW);
+        setCurrentPath(Paths.CONSTRUCTION_OVERVIEW);
       },
     },
 
     {
       name: "근로자 관리",
       icon: <ArrowForward />,
-      path: PathType.WORKER_MANAGE,
+      path: Paths.WORKER_MANAGE,
       onClick: () => {},
       childList: [
         {
           name: "근로자 목록",
           icon: <People />,
-          path: PathType.WORKER_MANAGE,
+          path: Paths.WORKER_MANAGE,
           onClick: () => {
-            setCurrentPath(PathType.WORKER_MANAGE);
+            setCurrentPath(Paths.WORKER_MANAGE);
           },
         },
         {
           name: "근로자 출역관리",
           icon: <People />,
-          path: PathType.WORKER_MANAGE,
+          path: Paths.WORKER_MANAGE,
           onClick: () => {
-            setCurrentPath(PathType.WORKER_ENTERANCE_MANAGE);
+            setCurrentPath(Paths.WORKER_ENTERANCE_MANAGE);
           },
         },
         {
           name: "퇴직자 목록",
           icon: <People />,
-          path: PathType.WORKER_MANAGE,
+          path: Paths.WORKER_MANAGE,
           onClick: () => {
-            setCurrentPath(PathType.RETIREES_LIST);
+            setCurrentPath(Paths.RETIREES_LIST);
           },
         },
       ],
@@ -135,65 +83,65 @@ export default function PackageCenter({ uuid }: PackageCenterProps) {
     {
       name: "근로자 안전점검",
       icon: <ArrowForward />,
-      path: PathType.WORKER_SAFETY_CHECK,
+      path: Paths.WORKER_SAFETY_CHECK,
       onClick: () => {
-        setCurrentPath(PathType.WORKER_SAFETY_CHECK);
+        setCurrentPath(Paths.WORKER_SAFETY_CHECK);
       },
     },
     {
       name: "안전보건지지침",
       icon: <ArrowForward />,
-      path: PathType.OCCUPATIONAL_SAFETY_AND_HEALTH_ACT,
+      path: Paths.OCCUPATIONAL_SAFETY_AND_HEALTH_ACT,
       onClick: () => {
-        setCurrentPath(PathType.OCCUPATIONAL_SAFETY_AND_HEALTH_ACT);
+        setCurrentPath(Paths.OCCUPATIONAL_SAFETY_AND_HEALTH_ACT);
       },
     },
     {
       name: "법령정보",
       icon: <ArrowForward />,
-      path: PathType.LEGAL_INFORMATION,
+      path: Paths.LEGAL_INFORMATION,
       onClick: () => {
-        setCurrentPath(PathType.LEGAL_INFORMATION);
+        setCurrentPath(Paths.LEGAL_INFORMATION);
       },
     },
     {
       name: "스케쥴러",
       icon: <ArrowForward />,
-      path: PathType.SCHEDULER,
+      path: Paths.SCHEDULER,
       onClick: () => {
-        setCurrentPath(PathType.SCHEDULER);
+        setCurrentPath(Paths.SCHEDULER);
       },
     },
     {
       name: "MEMO",
       icon: <ArrowForward />,
-      path: PathType.MEMO,
+      path: Paths.MEMO,
       onClick: () => {
-        setCurrentPath(PathType.MEMO);
+        setCurrentPath(Paths.MEMO);
       },
     },
     {
       name: "TO DO LIST 관리",
       icon: <ArrowForward />,
-      path: PathType.TO_DO_LIST_MANAGE,
+      path: Paths.TO_DO_LIST_MANAGE,
       onClick: () => {
-        setCurrentPath(PathType.TO_DO_LIST_MANAGE);
+        setCurrentPath(Paths.TO_DO_LIST_MANAGE);
       },
     },
     {
       name: "비상연락망",
       icon: <ArrowForward />,
-      path: PathType.EMERGENCY_CALL,
+      path: Paths.EMERGENCY_CALL,
       onClick: () => {
-        setCurrentPath(PathType.EMERGENCY_CALL);
+        setCurrentPath(Paths.EMERGENCY_CALL);
       },
     },
     {
       name: "위험알림",
       icon: <ArrowForward />,
-      path: PathType.RISK_NOTIFICATION,
+      path: Paths.RISK_NOTIFICATION,
       onClick: () => {
-        setCurrentPath(PathType.RISK_NOTIFICATION);
+        setCurrentPath(Paths.RISK_NOTIFICATION);
       },
     },
   ];

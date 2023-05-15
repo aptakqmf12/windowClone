@@ -21,6 +21,7 @@ import Spreadjs from "@components/station/spreadjs";
 import Wijmo from "@components/station/wijmo";
 import PackageCenter from "@components/station/packageCenter";
 import LibraryRoom from "@components/station/libraryRoom";
+import Help from "@components/station/help";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -108,7 +109,7 @@ export default function Sidebar() {
           uuid: uuid,
           name: "도움말",
           icon: <Search sx={iconSx} />,
-          component: <div>도움말</div>,
+          component: <Help />,
         });
       },
     },
