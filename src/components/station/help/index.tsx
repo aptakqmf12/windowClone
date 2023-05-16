@@ -107,13 +107,7 @@ export default function Help() {
               {data}
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </Typography>
+              <Typography>A. 여기있어요!</Typography>
             </AccordionDetails>
           </Accordion>
         ))}
@@ -169,6 +163,12 @@ const div = {
     align-items: center;
   `,
   accodians: styled.div`
+    width: 100%;
+
+    .MuiAccordionDetails-root {
+      padding-left: 4%;
+    }
+
     .Mui-expanded {
       color: ${(p) => p.theme.colors.primary.main};
       font-weight: 500;
