@@ -20,7 +20,7 @@ interface PackageCenterProps {
 }
 
 export default function PackageCenter({ uuid }: PackageCenterProps) {
-  const [currentPath, setCurrentPath] = useState<Paths | undefined>();
+  const [currentPath, setCurrentPath] = useState<string[] | undefined>();
 
   const FIXED_LIST_DATA = [
     {
@@ -51,21 +51,21 @@ export default function PackageCenter({ uuid }: PackageCenterProps) {
     {
       name: "근로자 관리",
       icon: <ArrowForward />,
-      path: Paths.WORKER_MANAGE,
+      path: Paths.WORKER_LIST,
       onClick: () => {},
       childList: [
         {
           name: "근로자 목록",
           icon: <People />,
-          path: Paths.WORKER_MANAGE,
+          path: Paths.WORKER_LIST,
           onClick: () => {
-            setCurrentPath(Paths.WORKER_MANAGE);
+            setCurrentPath(Paths.WORKER_LIST);
           },
         },
         {
           name: "근로자 출역관리",
           icon: <People />,
-          path: Paths.WORKER_MANAGE,
+          path: Paths.WORKER_ENTERANCE_MANAGE,
           onClick: () => {
             setCurrentPath(Paths.WORKER_ENTERANCE_MANAGE);
           },
@@ -73,7 +73,7 @@ export default function PackageCenter({ uuid }: PackageCenterProps) {
         {
           name: "퇴직자 목록",
           icon: <People />,
-          path: Paths.WORKER_MANAGE,
+          path: Paths.RETIREES_LIST,
           onClick: () => {
             setCurrentPath(Paths.RETIREES_LIST);
           },
