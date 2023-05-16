@@ -3,10 +3,6 @@ import { ResponseData, ResponseCode } from "../../types";
 import { ResponseStatus } from "../../types";
 import { api, dispatchError, generateQueryParamUrl } from "..";
 
-const headers = {
-  Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-};
-
 interface getSiteOrganizationProps {
   companyCode: string;
   deptName?: string;
@@ -18,11 +14,9 @@ interface getSiteOrganizationProps {
 export const getSiteOrganization = async (props: getSiteOrganizationProps) => {
   const url = generateQueryParamUrl("/api/site/org/getSiteOrganization", props);
 
-  return await api
-    .get(url, { headers })
-    .then((res: AxiosResponse<ResponseData<any>>) => {
-      return res.data;
-    });
+  return await api.get(url).then((res: AxiosResponse<ResponseData<any>>) => {
+    return res.data;
+  });
 };
 
 // FIXME: body로 바꿔야할듯

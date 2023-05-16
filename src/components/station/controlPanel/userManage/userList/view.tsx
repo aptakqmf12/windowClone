@@ -126,12 +126,12 @@ interface UserListViewProps {
 }
 
 const UserListView = ({ setTab, setRows }: UserListViewProps) => {
-  const [userInfo, setUserInfo] = useState<any>();
   const [name, setName] = useState<string>();
   // pagination
   const [currentPage, setCurrentPage] = useState(0);
   const [pagePerView, setPagePerView] = useState(5);
 
+  const [userInfo, setUserInfo] = useState<any>();
   const [userList, setUserList] = useState<any[]>([]);
 
   const record = async () => {
@@ -144,10 +144,6 @@ const UserListView = ({ setTab, setRows }: UserListViewProps) => {
   useEffect(() => {
     record();
   }, []);
-
-  // const { isLoading, data: userList } = useQuery(["userList"], () => {
-  //   return getUserList({ name });
-  // });
 
   return (
     <div>

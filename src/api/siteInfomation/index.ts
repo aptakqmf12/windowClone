@@ -3,10 +3,6 @@ import { ResponseData, ResponseCode } from "../../types";
 import { ResponseStatus } from "../../types";
 import { api, dispatchError, generateQueryParamUrl } from "..";
 
-const headers = {
-  Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-};
-
 // interface getSiteOrganizationProps {
 //   companyCode: string;
 //   deptName?: string;
@@ -19,7 +15,7 @@ const headers = {
 //   const url = generateQueryParamUrl("/api/site/org/getSiteOrganization", props);
 
 //   return await api
-//     .get(url, { headers })
+//     .get(url)
 //     .then((res: AxiosResponse<ResponseData<any>>) => {
 //       return res.data;
 //     });

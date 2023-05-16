@@ -3,10 +3,6 @@ import { ResponseData, ResponseCode } from "../../types";
 import { ResponseStatus } from "../../types";
 import { api, dispatchError, generateQueryParamUrl } from "..";
 
-const headers = {
-  Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-};
-
 interface getSitRoleProps {
   companyCode: string;
   roleName?: string;
@@ -18,11 +14,9 @@ interface getSitRoleProps {
 export const getSitRole = async (props: getSitRoleProps) => {
   const url = generateQueryParamUrl("/api/site/role/getSiteRole", props);
 
-  return await api
-    .get(url, { headers })
-    .then((res: AxiosResponse<ResponseData<any>>) => {
-      return res.data;
-    });
+  return await api.get(url).then((res: AxiosResponse<ResponseData<any>>) => {
+    return res.data;
+  });
 };
 
 interface SaveSiteRoleInfoProps {
@@ -36,7 +30,7 @@ export const saveSiteRoleInfo = async (props: SaveSiteRoleInfoProps) => {
   const body = props;
 
   return await api
-    .post("/api/site/role/saveSiteRoleInfo", { body }, { headers })
+    .post("/api/site/role/saveSiteRoleInfo", { body })
     .then((res: AxiosResponse<ResponseData<any>>) => {
       return res.data;
     });

@@ -1,14 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { requestAccessToken } from "./sign";
 import { ResponseStatus, ResponseCode, ResponseData } from "../types";
-import { url } from "inspector";
-
-/**
- * 1. TOKEN_EXPIRED 응답 받음
- * 2. requestAccessToken 요청 후 신선한 토큰을 받음
- * 3. 신선한 토큰을 api.request(config)로 보내야하는데?
- * 4. 기존의 stale한 토큰을 보내는것같음.
- */
 
 const Instance = () => {
   return axios.create({
@@ -28,7 +20,9 @@ api.interceptors.request.use(
       )}`;
       return request;
     } else {
-      if (parsedURL?.startsWith("/api/auth")) return request;
+      if (parsedURL?.startsWith("/api/auth")) {
+        return request;
+      }
 
       request.headers.Authorization = `Bearer ${localStorage.getItem(
         "access_token"
@@ -50,7 +44,7 @@ api.interceptors.response.use(
       const res = await requestAccessToken();
 
       if (res.success === true) {
-        await api.request(config);
+        return await api.request(config);
       } else {
         // 에러
         return Promise.reject(err);

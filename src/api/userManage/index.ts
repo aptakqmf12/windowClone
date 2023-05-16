@@ -3,10 +3,6 @@ import { ResponseData, ResponseCode, UserRole } from "../../types";
 import { ResponseStatus } from "../../types";
 import { api, dispatchError, generateQueryParamUrl } from "..";
 
-const headers = {
-  Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-};
-
 interface getUserProps {
   name?: string;
 }
@@ -29,6 +25,7 @@ export interface UserResponse {
   updatedAt: string;
   userType: string;
 }
+
 export const getUserList = async (props: getUserProps) => {
   const url = generateQueryParamUrl("/api/v1/userMgr/getUserList", props);
 
@@ -44,11 +41,9 @@ export const getWorkerList = async ({ searchText }: { searchText: string }) => {
     searchText,
   });
 
-  return await api
-    .get(url, { headers })
-    .then((res: AxiosResponse<ResponseData<any>>) => {
-      return res.data;
-    });
+  return await api.get(url).then((res: AxiosResponse<ResponseData<any>>) => {
+    return res.data;
+  });
 };
 
 interface getRetireeProps {
@@ -64,11 +59,9 @@ export const getRetireeList = async ({
     searchText,
   });
 
-  return await api
-    .get(url, { headers })
-    .then((res: AxiosResponse<ResponseData<any>>) => {
-      return res.data;
-    });
+  return await api.get(url).then((res: AxiosResponse<ResponseData<any>>) => {
+    return res.data;
+  });
 };
 
 interface SaveSiteRoleInfoProps {
@@ -83,7 +76,7 @@ export const saveSiteRoleInfo = async (props: SaveSiteRoleInfoProps) => {
   const body = props;
 
   return await api
-    .post("/api/v1/site/role/saveSiteRoleInfo", { body }, { headers })
+    .post("/api/v1/site/role/saveSiteRoleInfo", { body })
     .then((res: AxiosResponse<ResponseData<any>>) => {
       return res.data;
     });
@@ -104,7 +97,7 @@ export const requestCreateAccount = async (
   );
 
   return await api
-    .post(url, props, { headers })
+    .post(url, props)
     .then((res: AxiosResponse<ResponseData<any>>) => {
       return res.data;
     });
@@ -112,7 +105,7 @@ export const requestCreateAccount = async (
 
 export const addRetiree = async ({ retirees }: { retirees: string }) => {
   return await api
-    .post("/api/v1/userMgr/addRetiree", { retirees }, { headers })
+    .post("/api/v1/userMgr/addRetiree", { retirees })
     .then((res: AxiosResponse<ResponseData<any>>) => {
       return res.data;
     });
@@ -126,7 +119,7 @@ interface CreateAccountSelfProps {
 
 export const createAccountSelf = async (props: CreateAccountSelfProps) => {
   return await api
-    .post("/api/v1/userMgr/createAccountSelf", props, { headers })
+    .post("/api/v1/userMgr/createAccountSelf", props)
     .then((res: AxiosResponse<ResponseData<any>>) => {
       return res.data;
     });

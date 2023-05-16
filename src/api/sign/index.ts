@@ -29,7 +29,6 @@ const setStorageAndHeaderByToken = (
   accessToken: string,
   refreshToken: string
 ) => {
-  // axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
   localStorage.removeItem("access_token");
   localStorage.removeItem("refresh_token");
 

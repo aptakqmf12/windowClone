@@ -3,10 +3,6 @@ import { ResponseData, ResponseCode } from "../../types";
 import { ResponseStatus } from "../../types";
 import { api, dispatchError } from "..";
 
-const headers = {
-  Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-};
-
 // api
 export interface MypageInfoResponse {
   dept_code: string;
@@ -24,7 +20,7 @@ export interface MypageInfoResponse {
 
 export const getMypageInfo = async () => {
   return await api
-    .get("/api/v1/myPage/info", { headers })
+    .get("/api/v1/myPage/info")
     .then((res: AxiosResponse<ResponseData<MypageInfoResponse>>) => {
       return res.data;
     });
@@ -47,7 +43,7 @@ export const changePassword = async ({
   const body = { newPass, oldPass };
 
   return await api
-    .post("/api/v1/myPage/changePass", formData, { headers })
+    .post("/api/v1/myPage/changePass", formData)
     .then((res: AxiosResponse<ResponseData<any>>) => {
       return res.data;
     });
@@ -55,7 +51,7 @@ export const changePassword = async ({
 
 export const updateMypageInfo = async (props: { name: string }) => {
   return await api
-    .post("/api/v1/myPage/updateMyPage", props, { headers })
+    .post("/api/v1/myPage/updateMyPage", props)
     .then((res: AxiosResponse<ResponseData<any>>) => {
       return res.data;
     });
