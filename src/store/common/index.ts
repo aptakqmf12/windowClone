@@ -6,9 +6,16 @@ export enum ModeType {
   LIGHT = "light",
 }
 
+export enum LanguageType {
+  KO = "ko",
+  EN = "en",
+}
+
 interface CommonStore {
   mode: ModeType;
   changeMode: (mode: ModeType) => void;
+  language: LanguageType;
+  changeLanguage: (lang: LanguageType) => void;
 }
 
 export const useCommonStore = create<CommonStore>()(
@@ -22,6 +29,12 @@ export const useCommonStore = create<CommonStore>()(
         undefined,
         "[Common] setMode"
       );
+    },
+    language: LanguageType.KO,
+    changeLanguage: (lang: LanguageType) => {
+      set((state) => ({
+        language: lang,
+      }));
     },
   }))
 );

@@ -100,28 +100,6 @@ export default function Header() {
         </div>
       </div.head>
 
-      <div.select>
-        <Select
-          value={site}
-          defaultValue="none"
-          onChange={onSiteChange}
-          sx={{
-            width: 300,
-            border: "1px white solid",
-            color: "white",
-            ".MuiSelect-icon": { color: "white" },
-          }}
-          size="small"
-          placeholder="현장명을 입력하세요."
-        >
-          <MenuItem value={"none"} disabled>
-            현장명을 입력하세요.
-          </MenuItem>
-          <MenuItem value={"A 현장"}>A 현장</MenuItem>
-          <MenuItem value={"B 현장"}>B 현장</MenuItem>
-        </Select>
-      </div.select>
-
       <div.switch>
         <FormControlLabel
           control={
@@ -170,7 +148,6 @@ const div = {
     }
   `,
 
-  select: styled.div``,
   switch: styled.div`
     display: flex;
     justify-content: flex-end;
