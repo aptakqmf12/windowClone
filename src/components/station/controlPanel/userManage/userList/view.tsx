@@ -136,6 +136,7 @@ const UserListView = ({ setTab, setRows }: UserListViewProps) => {
 
   const record = async () => {
     const res = await getUserList({ name });
+
     setUserInfo(res.data);
     setUserList(res.list);
   };

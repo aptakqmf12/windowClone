@@ -10,9 +10,6 @@ import { url } from "inspector";
  * 4. 기존의 stale한 토큰을 보내는것같음.
  */
 
-let accessToken = "";
-let refreshToken = "";
-
 const Instance = () => {
   return axios.create({
     timeout: 5000,
@@ -24,13 +21,20 @@ export const api = Instance();
 api.interceptors.request.use(
   (request) => {
     const parsedURL = request.url;
+
     if (parsedURL?.includes("getAccessToken")) {
+      request.headers.Authorization = `Bearer ${localStorage.getItem(
+        "refresh_token"
+      )}`;
+      return request;
+    } else {
+      if (parsedURL?.startsWith("/api/auth")) return request;
+
+      request.headers.Authorization = `Bearer ${localStorage.getItem(
+        "access_token"
+      )}`;
       return request;
     }
-
-    //request.headers = {Authorization: }
-
-    return request;
   },
   (error) => {}
 );
@@ -51,6 +55,8 @@ api.interceptors.response.use(
         // 에러
         return Promise.reject(err);
       }
+    } else if (response.data.message === ResponseCode.EXPIRED_REFRESH_TOKEN) {
+      window.location.href = "/signin";
     }
   }
 );
