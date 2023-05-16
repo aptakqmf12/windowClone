@@ -9,7 +9,7 @@ export interface WindowType {
   isFullScreen: boolean;
   isShow: boolean;
   zIndex: number;
-  directory: string;
+  directory: string[];
   x: number;
   y: number;
   w: number;
@@ -37,7 +37,7 @@ interface WindowStore {
   toggleShowWindow: (uuid: string) => void;
   focusWindow: (uuid: string) => void;
   resizeWindow: (uuid: string, w: number, h: number) => void;
-  setDirectory: (uuid: string, dir: string) => void;
+  setDirectory: (uuid: string, dir: string[]) => void;
 }
 
 export const useWindowStore = create<WindowStore>()(
@@ -72,7 +72,7 @@ export const useWindowStore = create<WindowStore>()(
                   isFullScreen: false,
                   isShow: true,
                   zIndex: 2,
-                  directory: "",
+                  directory: [],
                   x:
                     props.x ||
                     window.innerWidth / 2 -
@@ -173,7 +173,7 @@ export const useWindowStore = create<WindowStore>()(
           "[window] resize"
         );
       },
-      setDirectory: (uuid: string, dir: string) => {
+      setDirectory: (uuid: string, dir: string[]) => {
         set(
           (state) => ({
             currentWindows: state.currentWindows.map((window) => {

@@ -16,9 +16,9 @@ interface NestedAccordionProps {
   list: {
     name: string;
     path: any;
+    icon?: any;
     onClick: (v: any) => void;
 
-    icon?: any;
     childList?: {
       name: string;
       path: any;
@@ -33,7 +33,6 @@ export default function NestedAccordion({
   list,
   currentPath,
 }: NestedAccordionProps) {
-  console.log(list);
   return (
     <List>
       {list.map((accrd, i) => {

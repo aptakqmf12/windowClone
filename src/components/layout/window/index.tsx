@@ -161,21 +161,19 @@ export default function Window(props: WindowType) {
   );
 }
 
-const BreadCrumbs = ({ directory }: { directory: string }) => {
-  const directoryArr = directory.split("/");
-
+const BreadCrumbs = ({ directory }: { directory: string[] }) => {
   return (
     <div.breadCrumb>
       {directory.length > 0 && (
         <>
           <Typography fontSize={12} color={"white"}>
-            {directoryArr.slice(0, directoryArr.length - 1).join(" / ")}
+            {directory.slice(0, directory.length - 1).join(" / ")}
           </Typography>
 
           <Typography fontSize={12} fontWeight={600} color={"white"}>
-            {directoryArr.length > 1 && <>&nbsp;/&nbsp;</>}
+            {directory.length > 1 && <>&nbsp;/&nbsp;</>}
 
-            {directoryArr[directoryArr.length - 1]}
+            {directory[directory.length - 1]}
           </Typography>
         </>
       )}

@@ -22,6 +22,7 @@ import { requestLogout, testApi } from "@api/sign";
 import { useWidgetStore } from "@store/widget";
 import Mypage from "@components/mypage";
 import { ModeType, useCommonStore } from "@store/common";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -69,6 +70,7 @@ export default function Header() {
             // onClick={() => setOpenMypage(!openMypage)}
             onClick={() => {
               appendWindow({
+                uuid: uuidv4(),
                 component: <Mypage />,
                 icon: <People />,
                 name: "마이 페이지",

@@ -12,7 +12,7 @@ interface ControlPanelProps {
 
 export default function ControlPanel({ uuid }: ControlPanelProps) {
   const { setDirectory } = useWindowStore();
-  const [currentPath, setCurrentPath] = useState<Paths>(Paths.HOME);
+  const [currentPath, setCurrentPath] = useState<string[]>(Paths.HOME);
 
   useEffect(() => {
     setDirectory(uuid, currentPath);
@@ -73,8 +73,8 @@ export default function ControlPanel({ uuid }: ControlPanelProps) {
       onClick: () => setCurrentPath(Paths.PARTNER_MANAGE),
     },
     {
-      name: Paths.CODE_MANAGE,
-      path: "코드관리",
+      name: "코드관리",
+      path: Paths.CODE_MANAGE,
       onClick: () => setCurrentPath(Paths.CODE_MANAGE),
     },
   ];
@@ -103,7 +103,7 @@ const ControlPanelMain = ({
   setCurrentPath,
 }: {
   list: any[];
-  setCurrentPath: (v: Paths) => void;
+  setCurrentPath: (v: string[]) => void;
 }) => {
   return (
     <div.wrap>
