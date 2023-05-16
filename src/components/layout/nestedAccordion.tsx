@@ -21,6 +21,7 @@ interface NestedAccordionProps {
     icon?: any;
     childList?: {
       name: string;
+      path: any;
       icon?: any;
       onClick: (v: any) => void;
     }[];
@@ -32,6 +33,7 @@ export default function NestedAccordion({
   list,
   currentPath,
 }: NestedAccordionProps) {
+  console.log(list);
   return (
     <List>
       {list.map((accrd, i) => {
@@ -44,6 +46,7 @@ export default function NestedAccordion({
               name={name}
               icon={icon}
               childList={childList}
+              currentPath={currentPath}
               key={i}
             />
           );
@@ -76,6 +79,7 @@ export default function NestedAccordion({
 interface AccordionProps {
   name: string;
   icon?: any;
+  path: any;
   onClick: (v: any) => void;
 }
 
@@ -83,10 +87,12 @@ const FoldableList = ({
   name,
   icon,
   childList,
+  currentPath,
 }: {
   name: string;
   icon: any;
   childList: AccordionProps[];
+  currentPath: any;
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -105,7 +111,8 @@ const FoldableList = ({
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {childList.map((child, i) => {
-            const { name, icon, onClick } = child;
+            const { name, icon, path, onClick } = child;
+            const isCurrentPath = path === currentPath;
             return (
               <ListItem onClick={onClick} key={i}>
                 <ListItemButton sx={{ pl: 4 }}>
@@ -114,7 +121,12 @@ const FoldableList = ({
                       {icon}
                     </ListItemIcon>
                   )}
-                  <Typography>{name}</Typography>
+                  <Typography
+                    color={isCurrentPath ? "primary.main" : "font"}
+                    fontWeight={isCurrentPath ? 600 : 400}
+                  >
+                    {name}
+                  </Typography>
                 </ListItemButton>
               </ListItem>
             );
