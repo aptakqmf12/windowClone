@@ -1,6 +1,17 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { requestAccessToken } from "./sign";
 import { ResponseStatus, ResponseCode, ResponseData } from "../types";
+import { url } from "inspector";
+
+/**
+ * 1. TOKEN_EXPIRED 응답 받음
+ * 2. requestAccessToken 요청 후 신선한 토큰을 받음
+ * 3. 신선한 토큰을 api.request(config)로 보내야하는데?
+ * 4. 기존의 stale한 토큰을 보내는것같음.
+ */
+
+let accessToken = "";
+let refreshToken = "";
 
 const Instance = () => {
   return axios.create({
@@ -10,12 +21,19 @@ const Instance = () => {
 
 export const api = Instance();
 
-/**
- * 1. TOKEN_EXPIRED 응답 받음
- * 2. requestAccessToken 요청 후 신선한 토큰을 받음
- * 3. 신선한 토큰을 api.request(config)로 보내야하는데?
- * 4. 기존의 stale한 토큰을 보내는것같음.
- */
+api.interceptors.request.use(
+  (request) => {
+    const parsedURL = request.url;
+    if (parsedURL?.includes("getAccessToken")) {
+      return request;
+    }
+
+    //request.headers = {Authorization: }
+
+    return request;
+  },
+  (error) => {}
+);
 
 api.interceptors.response.use(
   (response) => {
@@ -23,14 +41,16 @@ api.interceptors.response.use(
   },
   async (err) => {
     const { response, config } = err;
-    if (response.data.message !== ResponseCode.TOKEN_EXPIRED) return;
 
-    const res = await requestAccessToken();
+    if (response.data.message === ResponseCode.TOKEN_EXPIRED) {
+      const res = await requestAccessToken();
 
-    if (res.success === true) {
-      await api.request(config);
-    } else {
-      return Promise.reject(err);
+      if (res.success === true) {
+        await api.request(config);
+      } else {
+        // 에러
+        return Promise.reject(err);
+      }
     }
   }
 );

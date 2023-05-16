@@ -33,7 +33,12 @@ export const getUserList = async (props: getUserProps) => {
   const url = generateQueryParamUrl("/api/v1/userMgr/getUserList", props);
 
   return await api
-    .get(url, { headers })
+    .get(url, {
+      headers: {
+        //TODO: null 찍히는 원인 파악
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    })
     .then((res: AxiosResponse<ResponseData<UserResponse[]>>) => {
       return res.data;
     });

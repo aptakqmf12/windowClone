@@ -132,17 +132,21 @@ const UserListView = ({ setTab, setRows }: UserListViewProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [pagePerView, setPagePerView] = useState(5);
 
-  const { isLoading, data: userList } = useQuery(
-    ["userList"],
-    () => {
-      return getUserList({ name });
-    },
-    {
-      refetchInterval: 5000,
-    }
-  );
+  const [userList, setUserList] = useState<any[]>([]);
 
-  if (!userList) return <></>;
+  const record = async () => {
+    const res = await getUserList({ name });
+    setUserInfo(res.data);
+    setUserList(res.list);
+  };
+
+  useEffect(() => {
+    record();
+  }, []);
+
+  // const { isLoading, data: userList } = useQuery(["userList"], () => {
+  //   return getUserList({ name });
+  // });
 
   return (
     <div>
@@ -189,7 +193,7 @@ const UserListView = ({ setTab, setRows }: UserListViewProps) => {
         checkboxSelection={false}
         pageSizeOptions={[5, 10, 15]}
         paginationModel={{ page: currentPage, pageSize: pagePerView }}
-        rows={userList.list}
+        rows={userList}
         columns={columns}
         onPaginationModelChange={(model, detail) => {
           setCurrentPage(model.page);

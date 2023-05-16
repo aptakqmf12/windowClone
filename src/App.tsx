@@ -15,7 +15,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { ModeType, useCommonStore } from "@store/common";
 
 function App() {
-  const { isLogin, setLogin } = useLoginStore();
+  const { isLogin, setLogin, setAccessToken, setRefreshToken } =
+    useLoginStore();
   const { mode } = useCommonStore();
   const display = useDisplay();
   const theme = { colors: mode === ModeType.DARK ? darkColors : lightColors };
@@ -30,6 +31,14 @@ function App() {
       setLogin(true);
     }
   }, [isLogin]);
+
+  useEffect(() => {
+    const access_token = localStorage.getItem("access_token");
+    const refresh_token = localStorage.getItem("refresh_token");
+
+    setAccessToken(access_token || "");
+    setRefreshToken(refresh_token || "");
+  }, []);
 
   return (
     <StyledThemeProvider theme={themes}>

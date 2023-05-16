@@ -29,9 +29,11 @@ import { useLoginStore } from "@store/login";
 import { generatePhoneNumber } from "@lib/inputRule";
 import { ResponseCode } from "../types/index";
 import LogoIcon from "@components/icons/logo";
+import { useCommonStore } from "@store/common";
 
 export default function Signin() {
-  const { isLogin, setLogin } = useLoginStore();
+  const { isLogin, setLogin, setAccessToken, setRefreshToken } =
+    useLoginStore();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState(localStorage.getItem("id") || "");
@@ -49,8 +51,12 @@ export default function Signin() {
 
     requestLogin({ username: email, password: password })
       .then((res) => {
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+
         localStorage.setItem("access_token", res.data.accessToken);
         localStorage.setItem("refresh_token", res.data.refreshToken);
+
         setLogin(true);
 
         if (!remember) return;

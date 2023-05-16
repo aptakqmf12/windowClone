@@ -4,6 +4,11 @@ import { devtools } from "zustand/middleware";
 interface LoginStore {
   isLogin: boolean;
   setLogin: (bool: boolean) => void;
+
+  accessToken: string;
+  setAccessToken: (token: string) => void;
+  refreshToken: string;
+  setRefreshToken: (token: string) => void;
 }
 
 export const useLoginStore = create<LoginStore>()(
@@ -16,6 +21,26 @@ export const useLoginStore = create<LoginStore>()(
         }),
         undefined,
         "[Login] setLogin"
+      );
+    },
+    accessToken: "",
+    setAccessToken: (token: string) => {
+      set(
+        (state) => ({
+          accessToken: token,
+        }),
+        undefined,
+        "[Common] setAccessToken"
+      );
+    },
+    refreshToken: "",
+    setRefreshToken: (token: string) => {
+      set(
+        (state) => ({
+          refreshToken: token,
+        }),
+        undefined,
+        "[Common] setRefreshToken"
       );
     },
   }))
