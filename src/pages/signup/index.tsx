@@ -29,9 +29,9 @@ import { useNavigate } from "react-router-dom";
 import { useLoginStore } from "@store/login";
 
 import LogoIcon from "@components/icons/logo";
-import SignUpAgree from "./component/agree";
-import SignUpInput from "./component/input";
-import SignUpComplete from "./component/complete";
+import SignUpAgree from "./agree";
+import SignUpInput from "./input";
+import SignUpComplete from "./complete";
 
 export default function SignUp() {
   const { isLogin, setLogin } = useLoginStore();

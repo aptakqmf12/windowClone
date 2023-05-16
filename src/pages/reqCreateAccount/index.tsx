@@ -40,7 +40,7 @@ export default function RequestCreateAccount() {
     });
   }, []);
 
-  const handleChange = (e: ChangeEvent<any>) => {
+  const onChangePhoneNum = (e: ChangeEvent<any>) => {
     const generatedNum = generatePhoneNumber(e.target.value);
     setPhoneNum(generatedNum);
   };
@@ -76,7 +76,7 @@ export default function RequestCreateAccount() {
         variant="outlined"
         fullWidth
         value={phoneNum}
-        onChange={handleChange}
+        onChange={onChangePhoneNum}
         placeholder="000-0000-0000"
         inputProps={{ maxLength: 13, pattern: "\\d{3}-\\d{3,4}-\\d{4}" }}
       />
