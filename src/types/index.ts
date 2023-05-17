@@ -5,6 +5,14 @@ interface BaseResponse {
   success: boolean;
 }
 
+export interface PaginationData {
+  lastIndex: number;
+  pageIndex: number;
+  pagePerSize: number;
+  startIndex: number;
+  totalCount: number;
+}
+
 export interface DataResponse<T> extends BaseResponse {
   data: T;
 }

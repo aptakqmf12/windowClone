@@ -9,7 +9,7 @@ import {
 } from "@mui/x-data-grid";
 
 interface DataGridCustomProps {
-  rows: Record<string, string>[];
+  rows: any[];
   columns: GridColDef[];
   onRowClick: (params: GridRowParams<any>) => void; // row클릭
   getRowId: (row: any) => string; // id설정
@@ -48,6 +48,7 @@ export default function DataGridCustom({
         transform: "skew(-0.05deg)",
         ".--unstable_DataGrid-radius": 0,
       }}
+      density="compact"
       rows={rows}
       columns={columns}
       onRowClick={onRowClick}

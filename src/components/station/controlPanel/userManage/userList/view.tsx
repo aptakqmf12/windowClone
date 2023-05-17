@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import styled from "styled-components";
 import { Search } from "@mui/icons-material";
-import { getUserList, UserListType } from "@api/userManage";
+import { getUserList, UserDataType, UserListType } from "@api/userManage";
 import { UserRole } from "../../../../../types/index";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import dayjs from "dayjs";
@@ -127,16 +127,21 @@ interface UserListViewProps {
 }
 
 const UserListView = ({ setTab, setRows }: UserListViewProps) => {
-  const [name, setName] = useState<string>();
+  const [searchText, setSearchText] = useState<string>();
   // pagination
   const [currentPage, setCurrentPage] = useState(0);
   const [pagePerView, setPagePerView] = useState(5);
+  const [pageIndex, setPageIndex] = useState(1);
 
-  const [userInfo, setUserInfo] = useState<any>();
-  const [userList, setUserList] = useState<any[]>([]);
+  const [userInfo, setUserInfo] = useState<UserDataType>();
+  const [userList, setUserList] = useState<UserListType[]>([]);
 
   const record = async () => {
-    const res = await getUserList({ name });
+    const res = await getUserList({
+      searchText,
+      pagePerSize: pagePerView,
+      pageIndex: pageIndex,
+    });
 
     setUserInfo(res.data);
     setUserList(res.list);
@@ -169,19 +174,19 @@ const UserListView = ({ setTab, setRows }: UserListViewProps) => {
             alignItems: "center",
             width: 200,
           }}
+          onSubmit={(e) => {
+            e.preventDefault();
+
+            record();
+          }}
         >
           <InputBase
             sx={{ ml: 1, flex: 1 }}
-            placeholder=""
+            placeholder="search"
             size="small"
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setSearchText(e.target.value)}
           />
-          <IconButton
-            type="button"
-            aria-label="search"
-            size="small"
-            //  onClick={getUserList}
-          >
+          <IconButton type="button" aria-label="search" size="small">
             <Search />
           </IconButton>
         </Paper>

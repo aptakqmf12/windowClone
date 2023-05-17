@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Paper,
   IconButton,
@@ -23,12 +23,42 @@ import { Search, PostAdd } from "@mui/icons-material";
 import styled from "styled-components";
 import SelectCustom from "@components/common/SelectForm";
 
+import { LibraryType, getLibraryList } from "@api/libraryRoom";
+import { PaginationData } from "../../../types/index";
+import DataGridCustom from "@components/common/dataGrid";
+import { GridColDef } from "@mui/x-data-grid";
+
 interface LibraryRoomProps {
   uuid: string;
 }
 
+const columns: GridColDef[] = [
+  {
+    field: "title",
+    headerName: "자료명",
+    headerAlign: "center",
+    align: "center",
+  },
+  {
+    field: "useYn",
+    headerName: "useYn",
+    headerAlign: "center",
+    align: "center",
+  },
+];
+
 export default function LibraryRoom({ uuid }: LibraryRoomProps) {
   const [filter, setFilter] = useState<string>("");
+  const [libraryData, setLibraryData] = useState<PaginationData>();
+  const [libraryList, setLibraryList] = useState<LibraryType[]>([]);
+
+  useEffect(() => {
+    getLibraryList({ useYn: "Y", title: "te" }).then((res) => {
+      res.data;
+      setLibraryList(res.list);
+    });
+  }, []);
+
   return (
     <div.wrap>
       <div.title>
@@ -87,7 +117,7 @@ export default function LibraryRoom({ uuid }: LibraryRoomProps) {
       </div.search>
 
       <div.table>
-        <TableContainer component={Paper}>
+        {/* <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
@@ -112,12 +142,27 @@ export default function LibraryRoom({ uuid }: LibraryRoomProps) {
               </TableRow>
             </TableBody>
           </Table>
-        </TableContainer>
-      </div.table>
+        </TableContainer> */}
 
-      <div.pagination>
-        <Pagination count={10} color="primary" />
-      </div.pagination>
+        <DataGridCustom
+          rows={libraryList}
+          columns={columns}
+          pageSizeOptions={[5, 10, 15]}
+          paginationModel={{ page: 0, pageSize: 10 }}
+          onPaginationModelChange={(model, detail) => {
+            // setCurrentPage(model.page);
+            // setPagePerView(model.pageSize);
+          }}
+          onRowClick={(params) => {
+            // setRows(params.row);
+            // setTab("edit");
+          }}
+          getRowId={(row) => row.siteDataId}
+          useCheckbox={false}
+          useToolbar={true}
+          fileName="사용자 목록"
+        />
+      </div.table>
     </div.wrap>
   );
 }
@@ -150,10 +195,7 @@ const div = {
   `,
 
   table: styled.div`
+    width: 100%;
     margin-bottom: 20px;
-  `,
-  pagination: styled.div`
-    display: flex;
-    align-items: center;
   `,
 };
