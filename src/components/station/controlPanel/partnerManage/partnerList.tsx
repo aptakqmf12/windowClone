@@ -99,23 +99,29 @@ export default function PartnerList() {
   const [view, setView] = useState<ViewType>(ViewType.LIST);
 
   const [partnerInfo, setPartnerInfo] = useState<PartnerInfo>({
-    partnerId: "string",
-    partnerName: "string",
-    phone: "string",
-    partnerLicense: "string",
-    CEOName: "string",
-    createDate: "string",
-    constructionName: "string",
+    partnerId: "",
+    partnerName: "",
+    phone: "",
+    partnerLicense: "",
+    CEOName: "",
+    createDate: "",
+    constructionName: "",
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [pagePerView, setPagePerView] = useState(15);
+  const [partnerName, setPartnerName] = useState("");
 
-  const { isLoading, data: partnerList } = useQuery(
+  const {
+    isLoading,
+    data: partnerList,
+    refetch,
+  } = useQuery(
     ["partnerList"],
     () => {
       return getPartnerList({
         pageIndex: currentPage,
         pagePerSize: pagePerView,
+        partnerName: partnerName,
       });
     },
     {
@@ -154,8 +160,16 @@ export default function PartnerList() {
               sx={{ ml: 1, flex: 1 }}
               placeholder="협력사 검색"
               size="small"
+              onChange={(e) => setPartnerName(e.target.value)}
             />
-            <IconButton type="button" aria-label="search" size="small">
+            <IconButton
+              type="button"
+              aria-label="search"
+              size="small"
+              onClick={() => {
+                refetch();
+              }}
+            >
               <Search />
             </IconButton>
           </Paper>
