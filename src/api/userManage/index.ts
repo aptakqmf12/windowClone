@@ -116,6 +116,7 @@ export const requestCreateAccount = async (
 };
 
 export const addRetiree = async ({ retirees }: { retirees: string }) => {
+  console.log("api addRetirees : " + retirees);
   return await api
     .post("/api/v1/userMgr/addRetiree", { retirees })
     .then((res: AxiosResponse<ListResponse<any, any>>) => {

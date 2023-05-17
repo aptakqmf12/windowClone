@@ -189,13 +189,16 @@ export default function PartnerList() {
           columns={columns}
           pageSizeOptions={[25, 50, 100]}
           paginationModel={{ page: 0, pageSize: 25 }}
-          onPaginationModelChange={() => {}}
+          onPaginationModelChange={(model, detail) => {
+            setCurrentPage(model.page);
+            setPagePerView(model.pageSize);
+          }}
           onRowClick={(params) => {
             setPartnerInfo(params.row);
             setView(ViewType.DETAIL);
           }}
           getRowId={(row) => row.partnerId}
-          useCheckbox={true}
+          useCheckbox={false}
           useToolbar={true}
         />
       </div>
@@ -204,34 +207,6 @@ export default function PartnerList() {
   return <div>{renderCompontntByPath(view)}</div>;
 }
 
-function CustomToolbar() {
-  return (
-    <GridToolbarContainer>
-      <GridToolbarExport
-        csvOptions={{
-          fileName: "협력사 목록",
-          delimiter: ",",
-          utf8WithBom: true,
-        }}
-        printOptions={{
-          hideFooter: true,
-          hideToolbar: true,
-          pageStyle:
-            ".MuiDataGrid-root .MuiDataGrid-main { color: rgba(0, 0, 0, 0.87); }",
-          copyStyles: true,
-          fields: [
-            "partnerName",
-            "partnerLicense",
-            "CEOName",
-            "phone",
-            "constructionName",
-            "createDate",
-          ],
-        }}
-      />
-    </GridToolbarContainer>
-  );
-}
 /*
 const columns: GridColDef[] = [
   {

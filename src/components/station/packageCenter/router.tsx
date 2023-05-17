@@ -1,7 +1,7 @@
 import React from "react";
 import NestedAccordion from "@components/layout/nestedAccordion";
-import RetireesManagement from "./sub/retireesList";
-import RetireesList from "./sub/retireesList";
+import RetireesManagement from "./retireesList/retireesList";
+import RetireesList from "./retireesList/retireesList";
 
 export const Paths: Record<string, string[]> = {
   DASHBOARD: ["대시보드 관리"],

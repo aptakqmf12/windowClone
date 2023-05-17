@@ -11,8 +11,8 @@ import {
 } from "@mui/material";
 import { Apps, ArrowForward, Home, People } from "@mui/icons-material";
 import NestedAccordion from "@components/layout/nestedAccordion";
-import RetireesManagement from "./sub/retireesList";
-import RetireesList from "./sub/retireesList";
+import RetireesManagement from "./retireesList/retireesList";
+import RetireesList from "./retireesList/retireesList";
 import { Paths, renderCompontntByPath } from "./router";
 
 interface PackageCenterProps {
@@ -56,7 +56,7 @@ export default function PackageCenter({ uuid }: PackageCenterProps) {
       childList: [
         {
           name: "근로자 목록",
-          icon: <People />,
+
           path: Paths.WORKER_LIST,
           onClick: () => {
             setCurrentPath(Paths.WORKER_LIST);
@@ -64,7 +64,7 @@ export default function PackageCenter({ uuid }: PackageCenterProps) {
         },
         {
           name: "근로자 출역관리",
-          icon: <People />,
+
           path: Paths.WORKER_ENTERANCE_MANAGE,
           onClick: () => {
             setCurrentPath(Paths.WORKER_ENTERANCE_MANAGE);
