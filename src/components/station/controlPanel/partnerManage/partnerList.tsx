@@ -20,6 +20,8 @@ import {
 import styled from "styled-components";
 import PartnerDetail from "./partnerDetail";
 import PartnerCreate from "./partnerCreate";
+import { useQuery } from "@tanstack/react-query";
+import { getPartnerList } from "@api/sitePartners";
 
 export enum ViewType {
   LIST = "협력사 목록",
@@ -27,14 +29,69 @@ export enum ViewType {
   CREATE = "협력사 등록",
 }
 export interface PartnerInfo {
-  partnerId: string;
+  partnerId?: string;
   partnerName: string;
   phone: string;
   partnerLicense: string;
-  CEOName: string;
+  CEOName?: string;
   createDate: string;
   constructionName: string;
 }
+
+const columns: GridColDef[] = [
+  {
+    field: "partnerId",
+    headerName: "NO",
+    headerAlign: "center",
+    align: "center",
+    flex: 0.1,
+    renderCell: (params) => {
+      return params.api.getRowIndexRelativeToVisibleRows(params.id) + 1;
+    },
+  },
+  {
+    field: "partnerName",
+    headerName: "업체명",
+    headerAlign: "center",
+    align: "center",
+    flex: 0.5,
+  },
+  {
+    field: "partnerLicense",
+    headerName: "사업자등록번호",
+    headerAlign: "center",
+    align: "center",
+    flex: 1,
+  },
+  {
+    field: "companyCode",
+    headerName: "대표자명",
+    headerAlign: "center",
+    align: "center",
+    flex: 0.5,
+  },
+  {
+    field: "useYn",
+    headerName: "연락처",
+    headerAlign: "center",
+    align: "center",
+    flex: 0.5,
+  },
+  {
+    field: "updateDate",
+    headerName: "투입공종",
+    headerAlign: "center",
+    align: "center",
+    flex: 1,
+  },
+  {
+    field: "createDate",
+    headerName: "등록일",
+    headerAlign: "center",
+    align: "center",
+    flex: 0.5,
+  },
+];
 
 export default function PartnerList() {
   const [rowSelectionWorker, setRowSelectionWorker] =
@@ -50,7 +107,21 @@ export default function PartnerList() {
     createDate: "string",
     constructionName: "string",
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pagePerView, setPagePerView] = useState(15);
 
+  const { isLoading, data: partnerList } = useQuery(
+    ["partnerList"],
+    () => {
+      return getPartnerList({
+        pageIndex: currentPage,
+        pagePerSize: pagePerView,
+      });
+    },
+    {
+      refetchInterval: 5000,
+    }
+  );
   const renderCompontntByPath = (viewPath: ViewType) => {
     switch (viewPath) {
       case ViewType.DETAIL:
@@ -103,7 +174,8 @@ export default function PartnerList() {
             width: "100%",
             transform: "skew(-0.05deg)",
           }}
-          rows={rows}
+          getRowId={(row) => row.partnerId}
+          rows={partnerList?.data.list ? partnerList.data.list : []}
           columns={columns}
           pageSizeOptions={[25, 50, 100]}
           paginationModel={{ page: 0, pageSize: 25 }}
@@ -152,6 +224,7 @@ function CustomToolbar() {
     </GridToolbarContainer>
   );
 }
+/*
 const columns: GridColDef[] = [
   {
     field: "partnerId",
@@ -206,39 +279,7 @@ const columns: GridColDef[] = [
     flex: 0.5,
   },
 ];
-
-const rows = [
-  {
-    id: "12",
-    partnerId: "12312",
-    partnerName: "리스크제로",
-    partnerLicense: "102-213-141231",
-    CEOName: "김근로",
-    phone: "010-1234-1234",
-    constructionName: "터파기 공사",
-    createDate: "2023-03-15",
-  },
-  {
-    id: "1331232",
-    partnerId: "345132",
-    partnerName: "유엔이",
-    phone: "010-1234-1234",
-    partnerLicense: "102-213-141231",
-    CEOName: "김근로",
-    createDate: "2022-03-15",
-    constructionName: "전기 공사",
-  },
-  {
-    id: "1212222",
-    partnerId: "7889797",
-    partnerName: "무사고",
-    phone: "010-1234-1234",
-    partnerLicense: "102-213-141231",
-    CEOName: "김근로",
-    createDate: "2021-03-15",
-    constructionName: "터널 공사",
-  },
-];
+*/
 
 const div = {
   btween: styled.div`

@@ -70,7 +70,7 @@ export default function RetireesList() {
       refetchInterval: 5000,
     }
   );
-  if (!retireesList) return <></>;
+
   return (
     <div>
       <Typography fontSize={20} fontWeight={600}>
@@ -116,7 +116,7 @@ export default function RetireesList() {
           // },
         }}
         checkboxSelection
-        rows={retireesList.list}
+        rows={retireesList?.data.list ? retireesList.data.list : []}
         columns={columns}
         pageSizeOptions={[25, 50, 100]}
         paginationModel={{ page: 0, pageSize: 25 }}
@@ -218,43 +218,6 @@ const columns: GridColDef[] = [
         </Button>
       );
     },
-  },
-];
-
-const rows = [
-  {
-    id: "12312",
-    workerName: "김근로",
-    phone: "010-1234-1234",
-    job: "배관공",
-    workingDays: "20일",
-    teamName:
-      "난방코일슬리브난방코일슬리브난방코일슬리브난방코일슬리브난방코일슬리브",
-    enteranceStartDate: "2023-03-15",
-    retireedDate: "2023-04-11 18:16",
-    workerId: "test1",
-  },
-  {
-    id: "345132",
-    workerName: "김기동",
-    phone: "010-1234-1234",
-    job: "안전관리자",
-    workingDays: "250일",
-    teamName: "난방코일슬리브",
-    enteranceStartDate: "2022-03-15",
-    retireedDate: "2023-04-11 18:16",
-    workerId: "test2",
-  },
-  {
-    id: "7889797",
-    workerName: "홍길동",
-    phone: "010-1234-1234",
-    job: "난방코일슬리브난방코일슬리브난방코일슬리브난방코일슬리브",
-    workingDays: "1300일",
-    teamName: "난방코일슬리브",
-    enteranceStartDate: "2021-03-15",
-    retireedDate: "2023-04-11 18:16",
-    workerId: "test3",
   },
 ];
 

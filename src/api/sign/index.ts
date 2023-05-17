@@ -7,7 +7,7 @@ import { encrypt, decrypt } from "../../lib/encrypt";
 import { api, dispatchError } from "..";
 
 interface LoginRequest {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -42,9 +42,9 @@ const setStorageAndHeaderByToken = (
 };
 
 // api
-export const requestLogin = async ({ username, password }: LoginRequest) => {
+export const requestLogin = async ({ email, password }: LoginRequest) => {
   return await api
-    .post(`/api/auth/authenticate`, { username, password })
+    .post(`/api/auth/authenticate`, { email, password })
     .then((res: AxiosResponse<ResponseData<LoginResponse>>) => {
       return res.data;
     });
