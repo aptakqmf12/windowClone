@@ -21,7 +21,7 @@ import {
 } from "@mui/material";
 import { Search, PostAdd } from "@mui/icons-material";
 import styled from "styled-components";
-import SelectForm from "@components/common/SelectForm";
+import SelectCustom from "@components/common/SelectForm";
 
 interface LibraryRoomProps {
   uuid: string;
@@ -38,7 +38,7 @@ export default function LibraryRoom({ uuid }: LibraryRoomProps) {
 
       <div.search>
         <div>
-          <SelectForm
+          <SelectCustom
             value={filter}
             setValue={(v) => setFilter(v)}
             menuList={["전체", "자료명", "확장자"]}

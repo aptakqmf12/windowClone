@@ -16,7 +16,7 @@ import {
 import { CheckCircleOutlined } from "@mui/icons-material";
 import styled from "styled-components";
 
-import SelectForm from "@components/common/SelectForm";
+import SelectCustom from "@components/common/SelectForm";
 import LabelComponent from "@components/common/labelComponent";
 
 import { ViewType } from "./partnerList";
@@ -124,7 +124,7 @@ export default function PartnerCreate({
               label="투입공종"
               value={
                 <>
-                  <SelectForm
+                  <SelectCustom
                     value={construction}
                     defaultValue={"터파기 공사"}
                     setValue={setConstruction}

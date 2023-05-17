@@ -14,7 +14,7 @@ import {
   Grid,
 } from "@mui/material";
 import styled from "styled-components";
-import SelectForm from "@components/common/SelectForm";
+import SelectCustom from "@components/common/SelectForm";
 import LabelComponent from "@components/common/labelComponent";
 import { PartnerInfo } from "./partnerList";
 import { ViewType } from "./partnerList";
@@ -130,7 +130,7 @@ export default function PartnerDetail({
               label="투입공종"
               value={
                 <>
-                  <SelectForm
+                  <SelectCustom
                     value={construction}
                     defaultValue={"터파기 공사"}
                     setValue={setConstruction}

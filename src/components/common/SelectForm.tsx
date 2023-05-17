@@ -17,7 +17,7 @@ interface SelectFormProps {
   height?: number;
 }
 
-export default function SelectForm({
+export default function SelectCustom({
   value,
   defaultValue,
   setValue,
