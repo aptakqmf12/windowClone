@@ -187,40 +187,23 @@ const UserListView = ({ setTab, setRows }: UserListViewProps) => {
         </Paper>
       </div>
 
-      {/* <DataGrid
-        checkboxSelection={false}
-        pageSizeOptions={[5, 10, 15]}
-        paginationModel={{ page: currentPage, pageSize: pagePerView }}
+      <DataGridCustom
         rows={userList}
         columns={columns}
+        pageSizeOptions={[5, 10, 15]}
+        paginationModel={{ page: currentPage, pageSize: pagePerView }}
         onPaginationModelChange={(model, detail) => {
           setCurrentPage(model.page);
           setPagePerView(model.pageSize);
         }}
-        onRowSelectionModelChange={(checkdIds, detail) => {}}
-        onRowClick={(params) => {
-          setRows(params.row);
-          setTab("edit");
-        }}
-        sx={{
-          width: "100%",
-          transform: "skew(-0.05deg)",
-          ".--unstable_DataGrid-radius": 0,
-        }}
-      /> */}
-      <DataGridCustom
-        rows={userList}
-        columns={columns}
-        pageSizeOptions={[25, 50, 100]}
-        paginationModel={{ page: 0, pageSize: 25 }}
         onRowClick={(params) => {
           setRows(params.row);
           setTab("edit");
         }}
         getRowId={(row) => row.id}
-        useCheckbox={true}
-        //rowSelectionModel={rowSelectionWorker}
+        useCheckbox={false}
         useToolbar={true}
+        fileName="사용자 목록"
       />
     </div>
   );

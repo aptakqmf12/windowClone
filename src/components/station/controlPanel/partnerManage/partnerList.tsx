@@ -175,6 +175,7 @@ export default function PartnerList() {
           columns={columns}
           pageSizeOptions={[25, 50, 100]}
           paginationModel={{ page: 0, pageSize: 25 }}
+          onPaginationModelChange={() => {}}
           onRowClick={(params) => {
             setPartnerInfo(params.row);
             setView(ViewType.DETAIL);

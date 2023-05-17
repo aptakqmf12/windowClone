@@ -11,15 +11,15 @@ import {
 interface DataGridCustomProps {
   rows: Record<string, string>[];
   columns: GridColDef[];
-  onRowClick: (params: GridRowParams<any>) => void;
-  getRowId: (row: any) => string;
+  onRowClick: (params: GridRowParams<any>) => void; // row클릭
+  getRowId: (row: any) => string; // id설정
   //pagination
   pageSizeOptions: number[];
   paginationModel: {
     page: number;
     pageSize: number;
   };
-
+  onPaginationModelChange: (model: any, detail: any) => void;
   // checkbox
   useCheckbox: boolean;
   rowSelectionModel?: GridRowSelectionModel;
@@ -34,6 +34,7 @@ export default function DataGridCustom({
   onRowClick,
   getRowId,
   pageSizeOptions,
+  onPaginationModelChange,
   paginationModel,
   rowSelectionModel,
   useCheckbox,
@@ -52,42 +53,41 @@ export default function DataGridCustom({
       onRowClick={onRowClick}
       pageSizeOptions={pageSizeOptions}
       paginationModel={paginationModel}
+      onPaginationModelChange={onPaginationModelChange}
       checkboxSelection={useCheckbox}
       getRowId={getRowId} // id 생성 ?
       rowSelectionModel={rowSelectionModel} // 체크박스 체크된 rows
       slots={{
-        toolbar: useToolbar ? CustomToolbar : null,
+        toolbar: useToolbar
+          ? () => (
+              <GridToolbarContainer>
+                <GridToolbarExport
+                  csvOptions={{
+                    fileName: fileName || "download",
+                    delimiter: ",",
+                    utf8WithBom: true,
+                  }}
+                  printOptions={{
+                    hideFooter: true,
+                    hideToolbar: true,
+                    pageStyle:
+                      ".MuiDataGrid-root .MuiDataGrid-main { color: rgba(0, 0, 0, 0.87); }",
+                    copyStyles: true,
+                    fields: [
+                      "partnerName",
+                      "partnerLicense",
+                      "CEOName",
+                      "phone",
+                      "constructionName",
+                      "createDate",
+                    ],
+                  }}
+                />
+              </GridToolbarContainer>
+            )
+          : null,
       }}
       disableRowSelectionOnClick
     />
-  );
-}
-
-function CustomToolbar() {
-  return (
-    <GridToolbarContainer>
-      <GridToolbarExport
-        csvOptions={{
-          fileName: "협력사 목록",
-          delimiter: ",",
-          utf8WithBom: true,
-        }}
-        printOptions={{
-          hideFooter: true,
-          hideToolbar: true,
-          pageStyle:
-            ".MuiDataGrid-root .MuiDataGrid-main { color: rgba(0, 0, 0, 0.87); }",
-          copyStyles: true,
-          fields: [
-            "partnerName",
-            "partnerLicense",
-            "CEOName",
-            "phone",
-            "constructionName",
-            "createDate",
-          ],
-        }}
-      />
-    </GridToolbarContainer>
   );
 }
