@@ -49,7 +49,7 @@ export default function Signin() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    requestLogin({ username: email, password: password })
+    requestLogin({ email: email, password })
       .then((res) => {
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
