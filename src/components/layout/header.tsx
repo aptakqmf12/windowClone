@@ -56,7 +56,7 @@ export default function Header() {
     <header.wrap>
       <div.head>
         <div className="btns">
-          <div>
+          {/* <div>
             <Typography>{mode}</Typography>
             <Switch
               value={mode === ModeType.DARK}
@@ -64,7 +64,7 @@ export default function Header() {
                 changeMode(e.target.checked ? ModeType.DARK : ModeType.LIGHT)
               }
             />
-          </div>
+          </div> */}
           <div
             style={{ cursor: "pointer" }}
             // onClick={() => setOpenMypage(!openMypage)}

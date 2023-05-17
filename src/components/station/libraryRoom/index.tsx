@@ -49,14 +49,19 @@ const columns: GridColDef[] = [
 
 export default function LibraryRoom({ uuid }: LibraryRoomProps) {
   const [filter, setFilter] = useState<string>("");
+  const [searchText, setSearchText] = useState("");
+
   const [libraryData, setLibraryData] = useState<PaginationData>();
   const [libraryList, setLibraryList] = useState<LibraryType[]>([]);
 
+  const record = async () => {
+    const res = await getLibraryList({ useYn: "Y", title: "te" });
+
+    setLibraryList(res.list);
+  };
+
   useEffect(() => {
-    getLibraryList({ useYn: "Y", title: "te" }).then((res) => {
-      res.data;
-      setLibraryList(res.list);
-    });
+    record();
   }, []);
 
   return (
@@ -88,6 +93,10 @@ export default function LibraryRoom({ uuid }: LibraryRoomProps) {
                 width: 400,
                 height: 40,
               }}
+              onSubmit={(e) => {
+                e.preventDefault();
+                record();
+              }}
             >
               <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
                 <Search />
@@ -97,10 +106,16 @@ export default function LibraryRoom({ uuid }: LibraryRoomProps) {
                 sx={{ ml: 1, flex: 1 }}
                 placeholder="Search"
                 inputProps={{ "aria-label": "search google maps" }}
+                onChange={(e) => setSearchText(e.target.value)}
               />
             </Paper>
 
-            <Button variant="contained" size="small" sx={{ paddingX: 3 }}>
+            <Button
+              variant="contained"
+              size="small"
+              sx={{ paddingX: 3 }}
+              onClick={record}
+            >
               검색
             </Button>
           </div.input>

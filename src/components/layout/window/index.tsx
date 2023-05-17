@@ -127,6 +127,7 @@ export default function Window(props: WindowType) {
           ref={handleRef}
         >
           <div className="title">
+            <Typography color={"primary.main"}>|</Typography>
             <Typography fontSize={20} fontWeight={600}>
               {name}
             </Typography>
@@ -217,7 +218,7 @@ const div = {
 
     .title {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       gap: 4px;
     }
     .btns {
