@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
-import { ResponseData, ResponseCode } from "../../types";
+import { DataResponse, ListResponse } from "../../types";
 import { ResponseStatus } from "../../types";
-import { api, dispatchError, generateQueryParamUrl } from "..";
+import { api, generateQueryParamUrl } from "..";
 
 interface getSiteOrganizationProps {
   companyCode: string;
@@ -14,9 +14,11 @@ interface getSiteOrganizationProps {
 export const getSiteOrganization = async (props: getSiteOrganizationProps) => {
   const url = generateQueryParamUrl("/api/site/org/getSiteOrganization", props);
 
-  return await api.get(url).then((res: AxiosResponse<ResponseData<any>>) => {
-    return res.data;
-  });
+  return await api
+    .get(url)
+    .then((res: AxiosResponse<ListResponse<any, any>>) => {
+      return res.data;
+    });
 };
 
 // FIXME: body로 바꿔야할듯
@@ -45,7 +47,7 @@ export const getSiteOrganization = async (props: getSiteOrganizationProps) => {
 
 //   return await api
 //     .post(url, { headers })
-//     .then((res: AxiosResponse<ResponseData<any>>) => {
+//     .then((res: AxiosResponse<ListResponse<any, any>>) => {
 //       return res.data;
 //     });
 // };

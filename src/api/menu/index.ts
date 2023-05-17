@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { ResponseData, ResponseCode } from "../../types";
+import { DataResponse, ListResponse } from "../../types";
 import { api, generateQueryParamUrl } from "..";
 
 export interface PackageMenuType {
@@ -21,7 +21,7 @@ export const getPackageMenuList = async (props: PackageMenuListRequest) => {
 
   return await api
     .get(url)
-    .then((res: AxiosResponse<ResponseData<PackageMenuType[]>>) => {
+    .then((res: AxiosResponse<ListResponse<any, PackageMenuType[]>>) => {
       return res.data;
     });
 };

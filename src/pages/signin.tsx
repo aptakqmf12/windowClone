@@ -49,11 +49,11 @@ export default function Signin() {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    if (!emailValid) {
-      setOpenDialog(true);
-      setDialogText("아이디 비밀번호 형식을 맞춰주세요");
-      return;
-    }
+    // if (!emailValid) {
+    //   setOpenDialog(true);
+    //   setDialogText("아이디 비밀번호 형식을 맞춰주세요");
+    //   return;
+    // }
 
     requestLogin({ email: email, password })
       .then((res) => {

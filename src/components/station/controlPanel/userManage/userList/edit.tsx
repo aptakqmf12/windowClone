@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Avatar, Button, Typography } from "@mui/material";
 import LabelComponent from "@components/common/labelComponent";
 import SelectForm from "@components/common/SelectForm";
-import { UserResponse } from "@api/userManage";
+import { UserListType } from "@api/userManage";
 
 interface EditUserProps {
   setTab: (v: "view" | "edit") => void;
-  rows: UserResponse | undefined;
+  rows: UserListType | undefined;
 }
 
 export default function UserListEdit({ setTab, rows }: EditUserProps) {

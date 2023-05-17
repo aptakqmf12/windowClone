@@ -22,6 +22,7 @@ import PartnerDetail from "./partnerDetail";
 import PartnerCreate from "./partnerCreate";
 import { useQuery } from "@tanstack/react-query";
 import { getPartnerList } from "@api/sitePartners";
+import DataGridCustom from "@components/common/dataGrid";
 
 export enum ViewType {
   LIST = "협력사 목록",
@@ -183,26 +184,18 @@ export default function PartnerList() {
           </Button>
         </div.search>
 
-        <DataGrid
-          sx={{
-            width: "100%",
-            transform: "skew(-0.05deg)",
-          }}
-          getRowId={(row) => row.partnerId}
+        <DataGridCustom
           rows={partnerList?.data.list ? partnerList.data.list : []}
           columns={columns}
           pageSizeOptions={[25, 50, 100]}
           paginationModel={{ page: 0, pageSize: 25 }}
           onRowClick={(params) => {
-            console.log("params", params.row);
-
             setPartnerInfo(params.row);
             setView(ViewType.DETAIL);
           }}
-          rowSelectionModel={rowSelectionWorker}
-          slots={{
-            toolbar: CustomToolbar,
-          }}
+          getRowId={(row) => row.partnerId}
+          useCheckbox={true}
+          useToolbar={true}
         />
       </div>
     );

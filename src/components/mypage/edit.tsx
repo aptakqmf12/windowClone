@@ -39,6 +39,7 @@ export default function MypageEdit({
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [name, setName] = useState("");
   const [team, setTeam] = useState("");
   const [newPass, setNewPass] = useState("");
   const [oldPass, setOldPass] = useState("");
@@ -48,7 +49,7 @@ export default function MypageEdit({
   };
 
   const onSubmit = () => {
-    updateMypageInfo({ name: "" });
+    updateMypageInfo({ name: "test" });
     setTab("view");
   };
 
@@ -62,7 +63,15 @@ export default function MypageEdit({
 
         <LabelComponent
           label="이름"
-          value={<TextField fullWidth variant="standard" />}
+          value={
+            <TextField
+              fullWidth
+              variant="standard"
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
+          }
         />
         <LabelComponent
           label="아이디"

@@ -59,7 +59,6 @@ export default function PartnerDetail({
     setConstruction(event.target.value as string);
   };
 
-  console.log("partnerInfo", partnerInfo);
   return (
     <div>
       <div.wrap>

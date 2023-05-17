@@ -122,7 +122,6 @@ export default function RetireesList() {
         paginationModel={{ page: 0, pageSize: 25 }}
         onRowSelectionModelChange={(newRowSelectionWorker) => {
           setRowSelectionWorker(newRowSelectionWorker);
-          console.log(newRowSelectionWorker);
         }}
         rowSelectionModel={rowSelectionWorker}
         slots={{
@@ -204,8 +203,8 @@ const columns: GridColDef[] = [
     renderCell: (params) => {
       const onClick = (e: any) => {
         e.stopPropagation();
-        console.log(e);
-        console.log(params.api.getRowIndexRelativeToVisibleRows(params.id));
+        // console.log(e);
+        // console.log(params.api.getRowIndexRelativeToVisibleRows(params.id));
       };
 
       return (

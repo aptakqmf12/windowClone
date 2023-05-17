@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { requestAccessToken } from "./sign";
-import { ResponseStatus, ResponseCode, ResponseData } from "../types";
+import { ResponseStatus, ResponseCode, ListResponse } from "../types";
 
 const Instance = () => {
   return axios.create({
@@ -43,20 +43,38 @@ api.interceptors.response.use(
     if (response.data.message === ResponseCode.TOKEN_EXPIRED) {
       const res = await requestAccessToken();
 
-      if (res.success === true) {
-        return await api.request(config);
-      } else {
-        // 에러
-        return Promise.reject(err);
-      }
+      return res.success === true
+        ? await api.request(config)
+        : Promise.reject(err);
     } else if (response.data.message === ResponseCode.EXPIRED_REFRESH_TOKEN) {
       window.location.href = "/signin";
     }
   }
 );
 
+// query params
+export const generateQueryParamUrl = (
+  url: string,
+  params: Record<string, any>
+) => {
+  const queryParam = Object.entries(params)
+    .filter(([_, value]) => value !== undefined)
+    .map(([key, value]) => `${key}=${value}`)
+    .join("&");
+
+  return `${url}${queryParam ? `?${queryParam}` : ""}`;
+};
+
+// form data
+export const genereateFormData = (props: Record<string, any>) => {
+  const formData = new FormData();
+  Object.entries(props).map((entry) => formData.append(entry[0], entry[1]));
+
+  return formData;
+};
+
 // error
-export const dispatchError = (error: AxiosError<ResponseData<any>>) => {
+export const dispatchError = (error: AxiosError<ListResponse<any, any>>) => {
   switch (error.response?.data.message) {
     case ResponseCode.INVALID_CREDENTIALS:
       return console.log("인증 실패");
@@ -93,25 +111,4 @@ export const dispatchError = (error: AxiosError<ResponseData<any>>) => {
     case ResponseCode.UNKNOWN_EXCEPTION:
       return console.log("알 수 없는 오류");
   }
-};
-
-// query params
-export const generateQueryParamUrl = (
-  url: string,
-  params: Record<string, any>
-) => {
-  const queryParam = Object.entries(params)
-    .filter(([_, value]) => value !== undefined)
-    .map(([key, value]) => `${key}=${value}`)
-    .join("&");
-
-  return `${url}${queryParam ? `?${queryParam}` : ""}`;
-};
-
-// form data
-export const genereateFormData = (props: Record<string, any>) => {
-  const formData = new FormData();
-  Object.entries(props).map((entry) => formData.append(entry[0], entry[1]));
-
-  return formData;
 };
