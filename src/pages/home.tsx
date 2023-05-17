@@ -17,11 +17,13 @@ import Widget from "@components/layout/widget";
 import { useWidgetStore } from "@store/widget";
 import { Avatar, Chip, SvgIconTypeMap } from "@mui/material";
 import Logo from "@components/layout/logo";
+import { ModeType, useCommonStore } from "@store/common";
 
 export default function MyHome() {
   const { showWidget } = useWidgetStore();
   const { currentWindows, toggleShowWindow } = useWindowStore();
   const { isLogin } = useLoginStore();
+  const { mode } = useCommonStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,7 +38,7 @@ export default function MyHome() {
 
       <Header />
 
-      <div.body className="station">
+      <div.body mode={mode} className="station">
         <Sidebar />
       </div.body>
 
@@ -77,17 +79,20 @@ const div = {
     width: 100vw;
     height: 100vh;
   `,
-  body: styled.div`
+  body: styled.div<{ mode: ModeType }>`
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     width: 100%;
     height: 100%;
-    background: url("/images/bg_hero.png") no-repeat;
+    background: ${({ mode }) =>
+      mode === ModeType.DARK
+        ? "black"
+        : `url("/images/bg_hero.png") no-repeat`};
+
     background-size: cover;
     object-fit: cover;
 
-    background-color: #ddd7e6;
     overflow: hidden;
   `,
 

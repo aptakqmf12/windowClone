@@ -46,8 +46,14 @@ export default function Signin() {
   const [dialogText, setDialogText] = useState("");
   const [remember, setRemember] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
+
+    if (!emailValid) {
+      setOpenDialog(true);
+      setDialogText("아이디 비밀번호 형식을 맞춰주세요");
+      return;
+    }
 
     requestLogin({ email: email, password })
       .then((res) => {
@@ -73,6 +79,7 @@ export default function Signin() {
           setOpenDialog(true);
           setDialogText("아이디 비밀번호를 입력해주세요");
         }
+        console.log({ error });
       });
   };
 
@@ -95,7 +102,7 @@ export default function Signin() {
         </div>
 
         <div className="body">
-          <Box component="form" onSubmit={handleSubmit} noValidate>
+          <Box component="form" noValidate>
             <TextField
               margin="normal"
               required
@@ -107,7 +114,7 @@ export default function Signin() {
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              // onBlur={(e) => setEmailValid(emailRule(email))}
+              onBlur={(e) => setEmailValid(emailRule(email))}
               error={emailValid === false}
               helperText={
                 emailValid === false ? "이메일 형식에 맞게 입력" : null
@@ -125,7 +132,7 @@ export default function Signin() {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              // onBlur={(e) => setPasswordValid(passwordRule(password))}
+              onBlur={(e) => setPasswordValid(passwordRule(password))}
               error={passwordValid === false}
               helperText={
                 passwordValid === false
@@ -156,10 +163,11 @@ export default function Signin() {
             />
 
             <Button
-              type="submit"
+              type="button"
               fullWidth
               variant="contained"
               color="primary"
+              onClick={handleSubmit}
               sx={{ mt: 2, mb: 2 }}
             >
               LOG IN
@@ -175,7 +183,11 @@ export default function Signin() {
         </div>
       </div.sign>
 
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+      <Dialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        hideBackdrop
+      >
         <DialogTitle>로그인 실패</DialogTitle>
         <DialogContent>{dialogText}</DialogContent>
 

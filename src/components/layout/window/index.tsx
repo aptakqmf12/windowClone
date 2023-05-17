@@ -15,6 +15,7 @@ import type { WindowType } from "@store/window";
 import Resizer from "./Resizer";
 import { useTranslation } from "react-i18next";
 import { Typography } from "@mui/material";
+import { ModeType, useCommonStore } from "@store/common";
 
 export const Direction = {
   Top: "top",
@@ -29,6 +30,7 @@ export const Direction = {
 
 export default function Window(props: WindowType) {
   const { t } = useTranslation();
+  const { mode } = useCommonStore();
 
   const windowRef = useRef<HTMLDivElement>(null);
   const handleRef = useRef<HTMLDivElement>(null);
@@ -113,6 +115,7 @@ export default function Window(props: WindowType) {
       <div.wrap
         className={isDragging ? "transparent" : ""}
         style={{ width, height, zIndex }}
+        mode={mode}
         ref={windowRef}
       >
         <div.head
@@ -142,7 +145,7 @@ export default function Window(props: WindowType) {
 
         <BreadCrumbs directory={directory} />
 
-        <div.body>
+        <div.body mode={mode}>
           <Resizer
             target={windowRef}
             currX={currX}
@@ -182,14 +185,13 @@ const BreadCrumbs = ({ directory }: { directory: string[] }) => {
 };
 
 const div = {
-  wrap: styled.div`
+  wrap: styled.div<{ mode: ModeType }>`
     position: fixed;
     left: 0;
     top: 0;
     color: black;
     margin: auto;
     user-select: none;
-    background: #ffffff;
     border: 1px #777777 solid;
     background-color: white;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
@@ -231,8 +233,9 @@ const div = {
     background-color: #7b7b7b;
   `,
 
-  body: styled.div`
-    background-color: white;
+  body: styled.div<{ mode: ModeType }>`
+    background: ${({ mode }) =>
+      mode === ModeType.DARK ? "#918d8d" : "#ffffff"};
     height: calc(100% - 60px);
     overflow: auto;
   `,

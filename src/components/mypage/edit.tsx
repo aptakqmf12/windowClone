@@ -26,7 +26,7 @@ import { MypageInfoResponse, getMypageInfo } from "@api/mypage";
 import styled from "styled-components";
 import { SelectChangeEventType } from "@mui/base";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import PopUpWrap from "@components/common/popup";
+import AlertCustom, { AlertCustomType } from "@components/common/alert";
 import { changePassword, updateMypageInfo } from "@api/mypage";
 import LabelComponent from "@components/common/labelComponent";
 import SelectForm from "@components/common/SelectForm";
@@ -126,22 +126,15 @@ export default function MypageEdit({
       </div.wrap>
 
       {openModal && (
-        <PopUpWrap>
-          <div.modal>
-            <WarningAmberRoundedIcon
-              sx={{ width: 30, height: 30 }}
-              color="warning"
-            />
-            <div>비밀번호가 일치하지 않습니다.</div>
-            <Button
-              variant="contained"
-              color="warning"
-              onClick={() => setOpenModal(false)}
-            >
-              확인
-            </Button>
-          </div.modal>
-        </PopUpWrap>
+        <AlertCustom
+          type={AlertCustomType.WARNING}
+          color="warning"
+          onClose={() => setOpenModal(false)}
+        >
+          <div>
+            <Typography fontSize={14}>비밀번호가 일치하지 않습니다.</Typography>
+          </div>
+        </AlertCustom>
       )}
     </>
   );
