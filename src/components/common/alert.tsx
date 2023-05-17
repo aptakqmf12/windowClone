@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { WarningAmber, WarningAmberOutlined } from "@mui/icons-material";
+import { WarningAmber, CheckCircle } from "@mui/icons-material";
 import { Button } from "@mui/material";
 export enum AlertCustomType {
   WARNING,
@@ -20,6 +20,7 @@ export default function AlertCustom({
   children,
   width = 250,
   height = 200,
+  type,
   color = "primary",
   onClose,
 }: AlertCustomProps) {
@@ -28,7 +29,11 @@ export default function AlertCustom({
   return (
     <div.wrap style={{ width, height }}>
       <div.body>
-        <WarningAmber sx={iconSx} color={color} />
+        {type === AlertCustomType.WARNING ? (
+          <WarningAmber sx={iconSx} color={color} />
+        ) : (
+          <CheckCircle sx={iconSx} color={color} />
+        )}
 
         <div className="content">{children}</div>
 

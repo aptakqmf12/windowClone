@@ -30,6 +30,7 @@ import { generatePhoneNumber } from "@lib/inputRule";
 import { ResponseCode } from "../types/index";
 import LogoIcon from "@components/icons/logo";
 import { useCommonStore } from "@store/common";
+import PhoneInput from "@components/common/phoneInput";
 
 export default function Signin() {
   const { isLogin, setLogin, setAccessToken, setRefreshToken } =
@@ -140,16 +141,8 @@ export default function Signin() {
                   : null
               }
             />
-            {/* <TextField
-              margin="normal"
-              label="phone number"
-              variant="outlined"
-              fullWidth
-              value={phoneNum}
-              onChange={handleChange}
-              placeholder="000-0000-0000"
-              inputProps={{ maxLength: 13, pattern: "\\d{3}-\\d{3,4}-\\d{4}" }}
-            /> */}
+
+            <PhoneInput value={phoneNum} setValue={setPhoneNum} />
 
             <FormControlLabel
               control={

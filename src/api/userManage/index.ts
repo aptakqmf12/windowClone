@@ -4,12 +4,12 @@ import { ResponseStatus } from "../../types";
 import { api, generateQueryParamUrl } from "..";
 
 interface getUserProps {
-  name?: string;
+  searchText?: string;
+  pagePerSize: number;
+  pageIndex: number;
 }
-
 // api
-
-interface UserDataType {
+export interface UserDataType {
   lastIndex: number;
   pageIndex: number;
   pagePerSize: number;

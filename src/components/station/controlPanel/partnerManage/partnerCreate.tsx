@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import styled from "styled-components";
 
-import SelectForm from "@components/common/SelectForm";
+import SelectCustom from "@components/common/SelectForm";
 import LabelComponent from "@components/common/labelComponent";
 
 import { savePartnerInfo } from "@api/sitePartners";
@@ -120,7 +120,7 @@ export default function PartnerCreate({
               label="투입공종"
               value={
                 <>
-                  <SelectForm
+                  <SelectCustom
                     value={construction}
                     defaultValue={""}
                     setValue={setConstruction}

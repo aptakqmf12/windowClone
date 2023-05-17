@@ -73,9 +73,11 @@ export default function Window(props: WindowType) {
   const onHide = () => toggleShowWindow(uuid);
 
   useEffect(() => {
+    const threshold = 50;
+
     if (isFullScreen) {
-      setPosition({ currX: 0, currY: 0 });
-      setSize({ width: "100vw", height: "100vh" });
+      setPosition({ currX: 0, currY: threshold });
+      setSize({ width: "100vw", height: `calc(100vh - ${threshold * 2}px)` });
     } else {
       setPosition({ currX: x, currY: y });
       setSize({ width: w, height: h });
@@ -125,6 +127,7 @@ export default function Window(props: WindowType) {
           ref={handleRef}
         >
           <div className="title">
+            <Typography color={"primary.main"}>|</Typography>
             <Typography fontSize={20} fontWeight={600}>
               {name}
             </Typography>
@@ -155,6 +158,7 @@ export default function Window(props: WindowType) {
             uuid={uuid}
             setPosition={setPosition}
             setSize={setSize}
+            disabled={isFullScreen}
           />
 
           {component}
@@ -214,7 +218,7 @@ const div = {
 
     .title {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       gap: 4px;
     }
     .btns {

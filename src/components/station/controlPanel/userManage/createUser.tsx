@@ -1,5 +1,5 @@
 import { useState } from "react";
-import SelectForm from "@components/common/SelectForm";
+import SelectCustom from "@components/common/SelectForm";
 import LabelComponent from "@components/common/labelComponent";
 import { TextField, Button, FormControl, Select, Input } from "@mui/material";
 import PasswordInput from "@components/common/passwordInput";
@@ -63,7 +63,7 @@ export default function CreateUser() {
         label="소속회사"
         value={
           <>
-            <SelectForm
+            <SelectCustom
               value={team}
               defaultValue={"민정건설"}
               setValue={setTeam}
@@ -77,7 +77,7 @@ export default function CreateUser() {
         label="담당부서"
         value={
           <>
-            <SelectForm
+            <SelectCustom
               value={dept}
               defaultValue={"기술연구소"}
               setValue={setDept}

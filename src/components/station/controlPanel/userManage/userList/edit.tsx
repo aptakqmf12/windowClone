@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Avatar, Button, Typography } from "@mui/material";
 import LabelComponent from "@components/common/labelComponent";
-import SelectForm from "@components/common/SelectForm";
+import SelectCustom from "@components/common/SelectForm";
 import { UserListType } from "@api/userManage";
 
 interface EditUserProps {
@@ -29,7 +29,7 @@ export default function UserListEdit({ setTab, rows }: EditUserProps) {
       <LabelComponent
         label="담당부서"
         value={
-          <SelectForm
+          <SelectCustom
             value={team}
             defaultValue={"기술연구소"}
             setValue={setTeam}
@@ -41,7 +41,7 @@ export default function UserListEdit({ setTab, rows }: EditUserProps) {
       <LabelComponent
         label="직급"
         value={
-          <SelectForm
+          <SelectCustom
             value={level}
             defaultValue={"주임"}
             setValue={setLevel}
@@ -62,7 +62,7 @@ export default function UserListEdit({ setTab, rows }: EditUserProps) {
       <LabelComponent
         label="계정타입"
         value={
-          <SelectForm
+          <SelectCustom
             value={level}
             defaultValue={"MASTER"}
             setValue={setLevel}
