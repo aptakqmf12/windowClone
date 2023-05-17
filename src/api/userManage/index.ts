@@ -1,14 +1,22 @@
 import axios, { AxiosResponse } from "axios";
-import { ResponseData, ResponseCode, UserRole } from "../../types";
+import { ListResponse, ResponseCode, UserRole } from "../../types";
 import { ResponseStatus } from "../../types";
-import { api, dispatchError, generateQueryParamUrl } from "..";
+import { api, generateQueryParamUrl } from "..";
 
 interface getUserProps {
   name?: string;
 }
 
 // api
-export interface UserResponse {
+
+interface UserDataType {
+  lastIndex: number;
+  pageIndex: number;
+  pagePerSize: number;
+  startIndex: number;
+  totalCount: number;
+}
+export interface UserListType {
   auth: UserRole;
   companyCode: string;
   companyName: string;
@@ -31,7 +39,7 @@ export const getUserList = async (props: getUserProps) => {
 
   return await api
     .get(url)
-    .then((res: AxiosResponse<ResponseData<UserResponse[]>>) => {
+    .then((res: AxiosResponse<ListResponse<UserDataType, UserListType[]>>) => {
       return res.data;
     });
 };
@@ -41,9 +49,11 @@ export const getWorkerList = async ({ searchText }: { searchText: string }) => {
     searchText,
   });
 
-  return await api.get(url).then((res: AxiosResponse<ResponseData<any>>) => {
-    return res.data;
-  });
+  return await api
+    .get(url)
+    .then((res: AxiosResponse<ListResponse<any, any>>) => {
+      return res.data;
+    });
 };
 
 interface getRetireeProps {
@@ -59,9 +69,11 @@ export const getRetireeList = async ({
     searchText,
   });
 
-  return await api.get(url).then((res: AxiosResponse<ResponseData<any>>) => {
-    return res.data;
-  });
+  return await api
+    .get(url)
+    .then((res: AxiosResponse<ListResponse<any, any>>) => {
+      return res.data;
+    });
 };
 
 interface SaveSiteRoleInfoProps {
@@ -77,7 +89,7 @@ export const saveSiteRoleInfo = async (props: SaveSiteRoleInfoProps) => {
 
   return await api
     .post("/api/v1/site/role/saveSiteRoleInfo", { body })
-    .then((res: AxiosResponse<ResponseData<any>>) => {
+    .then((res: AxiosResponse<ListResponse<any, any>>) => {
       return res.data;
     });
 };
@@ -98,7 +110,7 @@ export const requestCreateAccount = async (
 
   return await api
     .post(url, props)
-    .then((res: AxiosResponse<ResponseData<any>>) => {
+    .then((res: AxiosResponse<ListResponse<any, any>>) => {
       return res.data;
     });
 };
@@ -106,7 +118,7 @@ export const requestCreateAccount = async (
 export const addRetiree = async ({ retirees }: { retirees: string }) => {
   return await api
     .post("/api/v1/userMgr/addRetiree", { retirees })
-    .then((res: AxiosResponse<ResponseData<any>>) => {
+    .then((res: AxiosResponse<ListResponse<any, any>>) => {
       return res.data;
     });
 };
@@ -120,7 +132,7 @@ interface CreateAccountSelfProps {
 export const createAccountSelf = async (props: CreateAccountSelfProps) => {
   return await api
     .post("/api/v1/userMgr/createAccountSelf", props)
-    .then((res: AxiosResponse<ResponseData<any>>) => {
+    .then((res: AxiosResponse<ListResponse<any, any>>) => {
       return res.data;
     });
 };
@@ -133,7 +145,7 @@ export const createAccountSelf = async (props: CreateAccountSelfProps) => {
 //   export const createUserInfo = async (props: CreateUserInfoProps) => {
 //     return await api
 //       .post("/api/v1/userMgr/createAccountSelf", props, { headers })
-//       .then((res: AxiosResponse<ResponseData<any>>) => {
+//       .then((res: AxiosResponse<ListResponse<any, any>>) => {
 //         return res.data;
 //       });
 //   };

@@ -1,16 +1,24 @@
-import { useState, useEffect } from "react";
-import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
+import { getMypageInfo } from "@api/mypage";
+import { Avatar, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useQuery } from "@tanstack/react-query";
-import { MypageInfoResponse, getMypageInfo } from "@api/mypage";
 
-import MypageView from "./view";
 import MypageEdit from "./edit";
+import MypageView from "./view";
 
 export default function Mypage() {
   const [tab, setTab] = useState<"view" | "edit">("view");
+  const [mypageInfo, setMypageInfo] = useState<any>();
 
-  const { isLoading, data } = useQuery(["queryKey"], getMypageInfo);
+  const record = async () => {
+    const res = await getMypageInfo();
+
+    setMypageInfo(res.data);
+  };
+
+  useEffect(() => {
+    record();
+  }, []);
 
   return (
     <div.wrap>

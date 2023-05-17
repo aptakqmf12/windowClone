@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
-import { ResponseData, ResponseCode } from "../../types";
+import { DataResponse, ListResponse } from "../../types";
 import { ResponseStatus } from "../../types";
-import { api, dispatchError, generateQueryParamUrl } from "..";
+import { api, generateQueryParamUrl } from "..";
 
 interface getSitRoleProps {
   companyCode: string;
@@ -14,9 +14,11 @@ interface getSitRoleProps {
 export const getSitRole = async (props: getSitRoleProps) => {
   const url = generateQueryParamUrl("/api/site/role/getSiteRole", props);
 
-  return await api.get(url).then((res: AxiosResponse<ResponseData<any>>) => {
-    return res.data;
-  });
+  return await api
+    .get(url)
+    .then((res: AxiosResponse<ListResponse<any, any>>) => {
+      return res.data;
+    });
 };
 
 interface SaveSiteRoleInfoProps {
@@ -31,7 +33,7 @@ export const saveSiteRoleInfo = async (props: SaveSiteRoleInfoProps) => {
 
   return await api
     .post("/api/site/role/saveSiteRoleInfo", { body })
-    .then((res: AxiosResponse<ResponseData<any>>) => {
+    .then((res: AxiosResponse<ListResponse<any, any>>) => {
       return res.data;
     });
 };

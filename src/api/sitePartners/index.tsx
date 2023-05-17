@@ -1,12 +1,7 @@
 import axios, { AxiosResponse } from "axios";
-import { ResponseData, ResponseCode } from "../../types";
+import { DataResponse, ListResponse } from "../../types";
 import { ResponseStatus } from "../../types";
-import {
-  api,
-  dispatchError,
-  generateQueryParamUrl,
-  genereateFormData,
-} from "..";
+import { api, generateQueryParamUrl, genereateFormData } from "..";
 import { PartnerInfo } from "@components/station/controlPanel/partnerManage/partnerList";
 
 interface getPartnerProps {
@@ -37,7 +32,7 @@ export const getPartnerList = async (props: getPartnerProps) => {
 
   return await api
     .get(url)
-    .then((res: AxiosResponse<ResponseData<PartnerResponse[]>>) => {
+    .then((res: AxiosResponse<ListResponse<any, PartnerResponse[]>>) => {
       return res.data;
     });
 };
@@ -50,12 +45,11 @@ interface SavePartnerInfoProps {
 }
 
 export const savePartnerInfo = async (props: SavePartnerInfoProps) => {
-  console.log(props);
   const body = genereateFormData(props);
   return await api
 
     .post("/api/v1/site/partners/saveSitePartnersInfo", body)
-    .then((res: AxiosResponse<ResponseData<any>>) => {
+    .then((res: AxiosResponse<ListResponse<any, any>>) => {
       return res.data;
     });
 };

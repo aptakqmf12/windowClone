@@ -63,9 +63,7 @@ export default function Spreadjs() {
       (blob) => {
         saveAs(blob, fileName);
       },
-      (error) => {
-        console.log(error);
-      },
+      (error) => {},
       { password: pwRef.current.value }
     );
 

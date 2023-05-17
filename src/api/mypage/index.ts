@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
-import { ResponseData, ResponseCode } from "../../types";
+import { DataResponse, ListResponse } from "../../types";
 import { ResponseStatus } from "../../types";
-import { api, dispatchError } from "..";
+import { api } from "..";
 
 // api
 export interface MypageInfoResponse {
@@ -21,7 +21,7 @@ export interface MypageInfoResponse {
 export const getMypageInfo = async () => {
   return await api
     .get("/api/v1/myPage/info")
-    .then((res: AxiosResponse<ResponseData<MypageInfoResponse>>) => {
+    .then((res: AxiosResponse<ListResponse<any, MypageInfoResponse>>) => {
       return res.data;
     });
 };
@@ -44,7 +44,7 @@ export const changePassword = async ({
 
   return await api
     .post("/api/v1/myPage/changePass", formData)
-    .then((res: AxiosResponse<ResponseData<any>>) => {
+    .then((res: AxiosResponse<ListResponse<any, any>>) => {
       return res.data;
     });
 };
@@ -52,7 +52,7 @@ export const changePassword = async ({
 export const updateMypageInfo = async (props: { name: string }) => {
   return await api
     .post("/api/v1/myPage/updateMyPage", props)
-    .then((res: AxiosResponse<ResponseData<any>>) => {
+    .then((res: AxiosResponse<ListResponse<any, any>>) => {
       return res.data;
     });
 };
