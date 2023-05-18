@@ -14,7 +14,7 @@ import {
   Grid,
 } from "@mui/material";
 import styled from "styled-components";
-import SelectForm from "@components/common/SelectForm";
+import SelectCustom from "@components/common/SelectForm";
 import LabelComponent from "@components/common/labelComponent";
 import { PartnerInfo } from "./partnerList";
 import { ViewType } from "./partnerList";
@@ -46,10 +46,12 @@ export default function PartnerDetail({
       partnerId: partnerInfo.partnerId,
       partnerName: partnerName,
       partnerLicense: partnerLicense,
-      useYN: "Y",
+      useYn: "Y",
       saveType: saveType,
     })
-      .then((res) => {})
+      .then((res) => {
+        setView(ViewType.LIST);
+      })
       .catch((error) => {});
   };
 
@@ -57,7 +59,6 @@ export default function PartnerDetail({
     setConstruction(event.target.value as string);
   };
 
-  console.log("partnerInfo", partnerInfo);
   return (
     <div>
       <div.wrap>
@@ -131,7 +132,7 @@ export default function PartnerDetail({
               label="투입공종"
               value={
                 <>
-                  <SelectForm
+                  <SelectCustom
                     value={construction}
                     defaultValue={"터파기 공사"}
                     setValue={setConstruction}

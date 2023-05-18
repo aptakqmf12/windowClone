@@ -21,37 +21,12 @@ import {
 import styled from "styled-components";
 import { getRetireeList } from "@api/userManage";
 import { useQuery } from "@tanstack/react-query";
+import DataGridCustom from "@components/common/dataGrid";
+import AddRetirees from "./addRetirees";
 
-function CustomToolbar() {
-  return (
-    <GridToolbarContainer>
-      <GridToolbarExport
-        csvOptions={{
-          fileName: "퇴직자 목록",
-          delimiter: ",",
-          utf8WithBom: true,
-        }}
-        printOptions={{
-          hideFooter: true,
-          hideToolbar: true,
-          pageStyle:
-            ".MuiDataGrid-root .MuiDataGrid-main { color: rgba(0, 0, 0, 0.87); }",
-          copyStyles: true,
-          fields: [
-            "workerName",
-            "phone",
-            "job",
-            "workingDays",
-            "teamName",
-            "enteranceStartDate",
-            "retireedDate",
-          ],
-        }}
-      />
-    </GridToolbarContainer>
-  );
-}
 export default function RetireesList() {
+  const [tab, setTab] = useState<"view" | "add">("view");
+
   const [date, setDate] = useState<Dayjs | null>(dayjs());
 
   const [rowSelectionWorker, setRowSelectionWorker] =
@@ -70,6 +45,7 @@ export default function RetireesList() {
       refetchInterval: 5000,
     }
   );
+  if (tab === "add") return <AddRetirees setTab={setTab} />;
 
   return (
     <div>
@@ -102,36 +78,29 @@ export default function RetireesList() {
             <Search />
           </IconButton>
         </Paper>
-        <Button variant="contained">퇴직자 추가</Button>
+        <Button variant="contained" onClick={() => setTab("add")}>
+          퇴직자 추가
+        </Button>
       </div.search>
 
-      <DataGrid
-        sx={{
-          width: "100%",
-          transform: "skew(-0.05deg)",
-
-          //  column header 스타일
-          // "& .super-app-theme--header": {
-          //   backgroundColor: "rgba(255, 7, 0, 0.55)",
-          // },
-        }}
-        checkboxSelection
+      <DataGridCustom
         rows={retireesList?.data.list ? retireesList.data.list : []}
         columns={columns}
         pageSizeOptions={[25, 50, 100]}
         paginationModel={{ page: 0, pageSize: 25 }}
-        onRowSelectionModelChange={(newRowSelectionWorker) => {
-          setRowSelectionWorker(newRowSelectionWorker);
-          console.log(newRowSelectionWorker);
-        }}
-        rowSelectionModel={rowSelectionWorker}
-        slots={{
-          toolbar: CustomToolbar,
+        useCheckbox={false}
+        useToolbar={true}
+        getRowId={(row) => row.id}
+        onRowClick={(params) => {}}
+        onPaginationModelChange={(model, detail) => {
+          setCurrentPage(model.page);
+          setPagePerView(model.pageSize);
         }}
       />
     </div>
   );
 }
+
 const columns: GridColDef[] = [
   {
     field: "id",
@@ -204,8 +173,8 @@ const columns: GridColDef[] = [
     renderCell: (params) => {
       const onClick = (e: any) => {
         e.stopPropagation();
-        console.log(e);
-        console.log(params.api.getRowIndexRelativeToVisibleRows(params.id));
+        // console.log(e);
+        // console.log(params.api.getRowIndexRelativeToVisibleRows(params.id));
       };
 
       return (

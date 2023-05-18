@@ -1,10 +1,26 @@
 import { AxiosResponse } from "axios";
-export interface ResponseData<T> {
-  data: any;
-  list: any;
-  message: string;
+
+interface BaseResponse {
+  message: string | null;
   success: boolean;
 }
+
+export interface PaginationData {
+  lastIndex: number;
+  pageIndex: number;
+  pagePerSize: number;
+  startIndex: number;
+  totalCount: number;
+}
+
+export interface DataResponse<T> extends BaseResponse {
+  data: T;
+}
+export interface ListResponse<T, L> extends BaseResponse {
+  data: T;
+  list: L;
+}
+
 export enum ResponseStatus {
   SUCCESS = 200,
   LOGIN_FAIL = 401,

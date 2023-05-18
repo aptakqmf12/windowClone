@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
-import { ResponseData, ResponseCode } from "../../types";
+import { DataResponse, ListResponse } from "../../types";
 import { ResponseStatus } from "../../types";
-import { api, dispatchError, generateQueryParamUrl } from "..";
+import { api, generateQueryParamUrl } from "..";
 
 // interface getSiteOrganizationProps {
 //   companyCode: string;
@@ -16,7 +16,7 @@ import { api, dispatchError, generateQueryParamUrl } from "..";
 
 //   return await api
 //     .get(url)
-//     .then((res: AxiosResponse<ResponseData<any>>) => {
+//     .then((res: AxiosResponse<ListResponse<any, any>>) => {
 //       return res.data;
 //     });
 // };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Paper,
   IconButton,
@@ -21,14 +21,49 @@ import {
 } from "@mui/material";
 import { Search, PostAdd } from "@mui/icons-material";
 import styled from "styled-components";
-import SelectForm from "@components/common/SelectForm";
+import SelectCustom from "@components/common/SelectForm";
+
+import { LibraryType, getLibraryList } from "@api/libraryRoom";
+import { PaginationData } from "../../../types/index";
+import DataGridCustom from "@components/common/dataGrid";
+import { GridColDef } from "@mui/x-data-grid";
 
 interface LibraryRoomProps {
   uuid: string;
 }
 
+const columns: GridColDef[] = [
+  {
+    field: "title",
+    headerName: "자료명",
+    headerAlign: "center",
+    align: "center",
+  },
+  {
+    field: "useYn",
+    headerName: "useYn",
+    headerAlign: "center",
+    align: "center",
+  },
+];
+
 export default function LibraryRoom({ uuid }: LibraryRoomProps) {
   const [filter, setFilter] = useState<string>("");
+  const [searchText, setSearchText] = useState("");
+
+  const [libraryData, setLibraryData] = useState<PaginationData>();
+  const [libraryList, setLibraryList] = useState<LibraryType[]>([]);
+
+  const record = async () => {
+    const res = await getLibraryList({ useYn: "Y", title: "te" });
+
+    setLibraryList(res.list);
+  };
+
+  useEffect(() => {
+    record();
+  }, []);
+
   return (
     <div.wrap>
       <div.title>
@@ -38,7 +73,7 @@ export default function LibraryRoom({ uuid }: LibraryRoomProps) {
 
       <div.search>
         <div>
-          <SelectForm
+          <SelectCustom
             value={filter}
             setValue={(v) => setFilter(v)}
             menuList={["전체", "자료명", "확장자"]}
@@ -58,6 +93,10 @@ export default function LibraryRoom({ uuid }: LibraryRoomProps) {
                 width: 400,
                 height: 40,
               }}
+              onSubmit={(e) => {
+                e.preventDefault();
+                record();
+              }}
             >
               <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
                 <Search />
@@ -67,10 +106,16 @@ export default function LibraryRoom({ uuid }: LibraryRoomProps) {
                 sx={{ ml: 1, flex: 1 }}
                 placeholder="Search"
                 inputProps={{ "aria-label": "search google maps" }}
+                onChange={(e) => setSearchText(e.target.value)}
               />
             </Paper>
 
-            <Button variant="contained" size="small" sx={{ paddingX: 3 }}>
+            <Button
+              variant="contained"
+              size="small"
+              sx={{ paddingX: 3 }}
+              onClick={record}
+            >
               검색
             </Button>
           </div.input>
@@ -87,7 +132,7 @@ export default function LibraryRoom({ uuid }: LibraryRoomProps) {
       </div.search>
 
       <div.table>
-        <TableContainer component={Paper}>
+        {/* <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
@@ -112,12 +157,27 @@ export default function LibraryRoom({ uuid }: LibraryRoomProps) {
               </TableRow>
             </TableBody>
           </Table>
-        </TableContainer>
-      </div.table>
+        </TableContainer> */}
 
-      <div.pagination>
-        <Pagination count={10} color="primary" />
-      </div.pagination>
+        <DataGridCustom
+          rows={libraryList}
+          columns={columns}
+          pageSizeOptions={[5, 10, 15]}
+          paginationModel={{ page: 0, pageSize: 10 }}
+          onPaginationModelChange={(model, detail) => {
+            // setCurrentPage(model.page);
+            // setPagePerView(model.pageSize);
+          }}
+          onRowClick={(params) => {
+            // setRows(params.row);
+            // setTab("edit");
+          }}
+          getRowId={(row) => row.siteDataId}
+          useCheckbox={false}
+          useToolbar={true}
+          fileName="사용자 목록"
+        />
+      </div.table>
     </div.wrap>
   );
 }
@@ -150,10 +210,7 @@ const div = {
   `,
 
   table: styled.div`
+    width: 100%;
     margin-bottom: 20px;
-  `,
-  pagination: styled.div`
-    display: flex;
-    align-items: center;
   `,
 };

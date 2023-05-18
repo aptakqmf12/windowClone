@@ -30,6 +30,8 @@ type AppendWindowProps = {
 
 interface WindowStore {
   currentWindows: WindowType[];
+  addX: number;
+  addY: number;
   appendWindow: (props: AppendWindowProps) => void;
   removeWindow: (uuid: string) => void;
   setWindowPosition: (uuid: string, position: { x: number; y: number }) => void;
@@ -44,18 +46,23 @@ export const useWindowStore = create<WindowStore>()(
   devtools(
     (set) => ({
       currentWindows: [],
+      addX: 0,
+      addY: 0,
       appendWindow: (props) => {
         const isExistingWindow = useWindowStore
           .getState()
           .currentWindows.some((window) => window.name === props.name);
+
         const isMaxSize = useWindowStore.getState().currentWindows.length === 5;
 
-        // zIndex 초기화
+        if (isExistingWindow || isMaxSize) return;
+
         useWindowStore
           .getState()
           .currentWindows.map((window) => (window.zIndex = 1));
 
-        if (isExistingWindow || isMaxSize) return;
+        const positionAcc =
+          useWindowStore.getState().currentWindows.length * 25;
 
         const [defaultWidth, defaultHeight] = [1000, 600];
 
@@ -76,11 +83,13 @@ export const useWindowStore = create<WindowStore>()(
                   x:
                     props.x ||
                     window.innerWidth / 2 -
-                      (props.w ? props.w / 2 : defaultWidth / 2),
+                      (props.w ? props.w / 2 : defaultWidth / 2) +
+                      positionAcc,
                   y:
                     props.y ||
                     window.innerHeight / 2 -
-                      (props.h ? props.h / 2 : defaultHeight / 2),
+                      (props.h ? props.h / 2 : defaultHeight / 2) +
+                      positionAcc,
                   w: props.w || defaultWidth,
                   h: props.h || defaultHeight,
                 },

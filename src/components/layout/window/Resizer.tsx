@@ -11,6 +11,7 @@ interface ResizerProps {
   width: number;
   height: number;
   uuid: string;
+  disabled: boolean;
   setSize: (v: { width: string | number; height: string | number }) => void;
   setPosition: (v: { currX: number; currY: number }) => void;
 }
@@ -22,6 +23,7 @@ const Resizer = ({
   width,
   height,
   uuid,
+  disabled,
   setSize,
   setPosition,
 }: ResizerProps) => {
@@ -125,6 +127,8 @@ const Resizer = ({
     setDirection(direction);
     setMouseDown(true);
   };
+
+  if (disabled) return <></>;
 
   return (
     <>

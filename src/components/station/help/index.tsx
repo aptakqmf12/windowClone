@@ -63,7 +63,7 @@ export default function Help() {
                 p: "2px 4px",
                 display: "flex",
                 alignItems: "center",
-                width: 400,
+                width: "100%",
                 height: 40,
               }}
             >
@@ -140,6 +140,7 @@ const div = {
   `,
   input: styled.div`
     display: flex;
+    width: 100%;
     gap: 10px;
   `,
   chips: styled.div`

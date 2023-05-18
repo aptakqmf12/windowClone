@@ -30,6 +30,7 @@ import { generatePhoneNumber } from "@lib/inputRule";
 import { ResponseCode } from "../types/index";
 import LogoIcon from "@components/icons/logo";
 import { useCommonStore } from "@store/common";
+import PhoneInput from "@components/common/phoneInput";
 
 export default function Signin() {
 
@@ -50,11 +51,11 @@ export default function Signin() {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    if (!emailValid) {
-      setOpenDialog(true);
-      setDialogText("아이디 비밀번호 형식을 맞춰주세요");
-      return;
-    }
+    // if (!emailValid) {
+    //   setOpenDialog(true);
+    //   setDialogText("아이디 비밀번호 형식을 맞춰주세요");
+    //   return;
+    // }
 
     requestLogin({ email: email, password })
       .then((res) => {
@@ -141,16 +142,8 @@ export default function Signin() {
                   : null
               }
             />
-            {/* <TextField
-              margin="normal"
-              label="phone number"
-              variant="outlined"
-              fullWidth
-              value={phoneNum}
-              onChange={handleChange}
-              placeholder="000-0000-0000"
-              inputProps={{ maxLength: 13, pattern: "\\d{3}-\\d{3,4}-\\d{4}" }}
-            /> */}
+
+            <PhoneInput value={phoneNum} setValue={setPhoneNum} />
 
             <FormControlLabel
               control={

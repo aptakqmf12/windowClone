@@ -1,26 +1,20 @@
-import { useState } from "react";
-import dayjs, { Dayjs } from "dayjs";
 import {
-  Button,
-  InputLabel,
-  IconButton,
-  Paper,
-  Typography,
   Box,
-  TextField,
-  Select,
-  MenuItem,
+  Button,
   SelectChangeEvent,
-  Grid,
+  TextField,
+  Typography,
 } from "@mui/material";
-import { CheckCircleOutlined } from "@mui/icons-material";
+import dayjs from "dayjs";
+import { useState } from "react";
 import styled from "styled-components";
 
-import SelectForm from "@components/common/SelectForm";
+import SelectCustom from "@components/common/SelectForm";
 import LabelComponent from "@components/common/labelComponent";
 
-import { ViewType } from "./partnerList";
 import { savePartnerInfo } from "@api/sitePartners";
+import { ViewType } from "./partnerList";
+import AlertCustom, { AlertCustomType } from "@components/common/alert";
 
 export default function PartnerCreate({
   setView,
@@ -40,10 +34,12 @@ export default function PartnerCreate({
     savePartnerInfo({
       partnerName: partnerName,
       partnerLicense: partnerLicense,
-      useYN: "Y",
+      useYn: "Y",
       saveType: "I",
     })
-      .then((res) => {})
+      .then((res) => {
+        setView(ViewType.LIST);
+      })
       .catch((error) => {});
   };
 
@@ -124,9 +120,9 @@ export default function PartnerCreate({
               label="투입공종"
               value={
                 <>
-                  <SelectForm
+                  <SelectCustom
                     value={construction}
-                    defaultValue={"터파기 공사"}
+                    defaultValue={""}
                     setValue={setConstruction}
                     menuList={["터파기 공사", "전기 공사", "터널 공사"]}
                   />
@@ -181,16 +177,23 @@ export default function PartnerCreate({
             />
           </div.info>
           <div.buttons>
-            <Button
-              variant="contained"
-              type="submit"
-              onClick={() => setOpenModal(true)}
-            >
+            <Button variant="contained" type="submit" onClick={() => {}}>
               등록
             </Button>
           </div.buttons>
         </Box>
       </div.wrap>
+      {openModal && (
+        <AlertCustom
+          type={AlertCustomType.WARNING}
+          color="warning"
+          onClose={() => setOpenModal(false)}
+        >
+          <div>
+            <Typography fontSize={14}>업체명을 입력해주세요.</Typography>
+          </div>
+        </AlertCustom>
+      )}
     </div>
   );
 }

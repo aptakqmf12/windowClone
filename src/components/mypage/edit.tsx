@@ -29,7 +29,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import AlertCustom, { AlertCustomType } from "@components/common/alert";
 import { changePassword, updateMypageInfo } from "@api/mypage";
 import LabelComponent from "@components/common/labelComponent";
-import SelectForm from "@components/common/SelectForm";
+import SelectCustom from "@components/common/SelectForm";
 import PasswordInput from "@components/common/passwordInput";
 
 export default function MypageEdit({
@@ -39,6 +39,7 @@ export default function MypageEdit({
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [name, setName] = useState("");
   const [team, setTeam] = useState("");
   const [newPass, setNewPass] = useState("");
   const [oldPass, setOldPass] = useState("");
@@ -48,7 +49,7 @@ export default function MypageEdit({
   };
 
   const onSubmit = () => {
-    updateMypageInfo({ name: "" });
+    updateMypageInfo({ name: "test" });
     setTab("view");
   };
 
@@ -62,7 +63,15 @@ export default function MypageEdit({
 
         <LabelComponent
           label="이름"
-          value={<TextField fullWidth variant="standard" />}
+          value={
+            <TextField
+              fullWidth
+              variant="standard"
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
+          }
         />
         <LabelComponent
           label="아이디"
@@ -77,7 +86,7 @@ export default function MypageEdit({
         <LabelComponent
           label="소속"
           value={
-            <SelectForm
+            <SelectCustom
               fullWidth
               defaultValue="기술연구소1"
               value={team}

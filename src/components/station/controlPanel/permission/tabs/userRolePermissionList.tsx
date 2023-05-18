@@ -70,7 +70,6 @@ export default function UserRolePermissionList({
         pageSizeOptions={[25, 50, 100]}
         paginationModel={{ page: 0, pageSize: 25 }}
         onRowClick={(params) => {
-          console.log("params", params.row);
           setUserInfo(params.row);
 
           setUserView("edit");
