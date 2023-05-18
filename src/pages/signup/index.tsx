@@ -1,11 +1,5 @@
 import { useState, useEffect, useRef, ChangeEvent } from "react";
-import {
-  Stepper,
-  Step,
-  StepLabel,
-  Button,
-  Typography,
-} from "@mui/material";
+import { Stepper, Step, StepLabel, Button, Typography } from "@mui/material";
 import { Person, Edit, Check } from "@mui/icons-material";
 
 import styled from "styled-components";
@@ -19,47 +13,53 @@ import SignUpComplete from "./complete";
 import { CheckCreateAccount, ReqCreateAccountRegiPwd } from "@api/sign";
 
 export interface SignUpInputProps {
-  agree: {},
-  companyCode: string,
-  toId: string,
-  loginId: string,
-  occupation: string,
-  gender: string,
-  auth: string,
-  uuid: string,
-  nonce: string,
-  createdAt: string,
-  phone: string,
-  contents: string,
-  createId: string,
-  name: string,
-  workType: string,
-  siteId: string,
-  expireDate: string,
-  id: string,
-  userType: string,
-  isExpired: "t" | "f",
-  email: string,
-  deptCode: string
+  agree: {};
+  companyCode: string;
+  toId: string;
+  loginId: string;
+  occupation: string;
+  gender: string;
+  auth: string;
+  uuid: string;
+  nonce: string;
+  createdAt: string;
+  phone: string;
+  contents: string;
+  createId: string;
+  name: string;
+  workType: string;
+  siteId: string;
+  expireDate: string;
+  id: string;
+  userType: string;
+  isExpired: "t" | "f";
+  email: string;
+  deptCode: string;
 }
 
 interface AgreeType {
-  TOU:boolean, PIA:boolean, POPI:boolean
+  TOU: boolean;
+  PIA: boolean;
+  POPI: boolean;
 }
 
 export default function SignUp() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const uuid = searchParams.get('uuid');
-  const nonce = searchParams.get('nonce');
+  const uuid = searchParams.get("uuid");
+  const nonce = searchParams.get("nonce");
 
   const [userInfo, setUserInfo] = useState<SignUpInputProps>();
 
-  const [ isBlock, setBlock ] = useState(true);
-  const [ agree, setAgree ] = useState<AgreeType>({TOU:false, PIA:false, POPI:false});
+  const [isBlock, setBlock] = useState(true);
+  const [agree, setAgree] = useState<AgreeType>({
+    TOU: false,
+    PIA: false,
+    POPI: false,
+  });
   const navigate = useNavigate();
 
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
 
   const [currentStep, setCurrentStep] = useState(0);
   const MAX_STEP = 3;
@@ -76,12 +76,12 @@ export default function SignUp() {
       title: "정보입력",
       component: <SignUpInput {...userInfo!} setPwd={setPassword} />,
       icon: <Edit />,
-    }
+    },
   ];
 
   const handleNext = () => {
-    if(!agree.TOU || !agree.PIA) {
-      alert('필수 약관에 동의해주세요.');
+    if (!agree.TOU || !agree.PIA) {
+      alert("필수 약관에 동의해주세요.");
       return;
     }
 
@@ -89,47 +89,48 @@ export default function SignUp() {
   };
 
   const handleRegiPwd = () => {
-    ReqCreateAccountRegiPwd({uuid, nonce, password}).then((res) => {
-      const success = res.success;
-      if(success) {
-        alert('가입이 완료되었습니다.\n로그인 페이지로 이동합니다.');
-        navigate('/signin');
-      }
-    }).catch((err) =>{
-      alert('서버에서 오류가 발생하였습니다.');
-    });
+    ReqCreateAccountRegiPwd({ uuid, nonce, password })
+      .then((res) => {
+        const success = res.success;
+        if (success) {
+          alert("가입이 완료되었습니다.\n로그인 페이지로 이동합니다.");
+          navigate("/signin");
+        }
+      })
+      .catch((err) => {
+        alert("서버에서 오류가 발생하였습니다.");
+      });
   };
 
   useEffect(() => {
     // http://127.0.0.1:5173/signup?uuid=7d7449a2-4d5d-4413-b033-cc05e78a9b52&nonce=tb1QiQIaOcoFDPiBXk48d3nXoTZFUo
-    if(!uuid || !nonce) {
-      alert('유효한 경로로 접근하세요.');
+    if (!uuid || !nonce) {
+      alert("유효한 경로로 접근하세요.");
       navigate(-1);
       return;
     }
 
-    CheckCreateAccount({uuid, nonce}).then((res) => {
+    CheckCreateAccount({ uuid, nonce }).then((res) => {
       const data = res.data;
-      if(data.isExpired == 't') {
-        alert('해당 요청은 만료되었습니다.');
+      if (data.isExpired == "t") {
+        alert("해당 요청은 만료되었습니다.");
         navigate(-1);
         return;
       }
 
-      if(data.isComplete == 't') {
-        alert('해당 요청은 만료되었습니다.');
+      if (data.isComplete == "t") {
+        alert("해당 요청은 만료되었습니다.");
         navigate(-1);
         return;
       }
 
       setUserInfo(data);
-      
+
       setBlock(false);
     });
-    
   }, []);
 
-  if(!isBlock) {
+  if (!isBlock) {
     return (
       <div.wrap>
         <div.sign>
@@ -185,6 +186,8 @@ export default function SignUp() {
         </div.sign>
       </div.wrap>
     );
+  } else {
+    return <></>;
   }
 }
 
