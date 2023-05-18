@@ -177,11 +177,7 @@ export default function PartnerCreate({
             />
           </div.info>
           <div.buttons>
-            <Button
-              variant="contained"
-              type="submit"
-              onClick={() => setOpenModal(true)}
-            >
+            <Button variant="contained" type="submit" onClick={() => {}}>
               등록
             </Button>
           </div.buttons>

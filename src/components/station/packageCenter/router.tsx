@@ -2,6 +2,7 @@ import React from "react";
 import NestedAccordion from "@components/layout/nestedAccordion";
 import RetireesManagement from "./retireesList/retireesList";
 import RetireesList from "./retireesList/retireesList";
+import MemoList from "./memo/memoList";
 
 export const Paths: Record<string, string[]> = {
   DASHBOARD: ["대시보드 관리"],
@@ -43,7 +44,7 @@ export const renderCompontntByPath = (path: string[]) => {
     case Paths.SCHEDULER:
       return <div>스케쥴러</div>;
     case Paths.MEMO:
-      return <div>MEMO</div>;
+      return <MemoList />;
     case Paths.TO_DO_LIST_MANAGE:
       return <div>TO DO LIST 관리</div>;
     case Paths.EMERGENCY_CALL:
