@@ -130,18 +130,14 @@ const UserListView = ({ setTab, setRows }: UserListViewProps) => {
   const [searchText, setSearchText] = useState<string>();
   // pagination
   const [currentPage, setCurrentPage] = useState(0);
-  const [pagePerView, setPagePerView] = useState(5);
+  const [pagePerSize, setPagePerSize] = useState(5);
   const [pageIndex, setPageIndex] = useState(1);
 
   const [userInfo, setUserInfo] = useState<UserDataType>();
   const [userList, setUserList] = useState<UserListType[]>([]);
 
   const record = async () => {
-    const res = await getUserList({
-      searchText,
-      pagePerSize: pagePerView,
-      pageIndex: pageIndex,
-    });
+    const res = await getUserList({ searchText, pagePerSize, pageIndex });
 
     setUserInfo(res.data);
     setUserList(res.list);
@@ -149,7 +145,7 @@ const UserListView = ({ setTab, setRows }: UserListViewProps) => {
 
   useEffect(() => {
     record();
-  }, []);
+  }, [pagePerSize]);
 
   return (
     <div>
@@ -196,10 +192,10 @@ const UserListView = ({ setTab, setRows }: UserListViewProps) => {
         rows={userList}
         columns={columns}
         pageSizeOptions={[5, 10, 15]}
-        paginationModel={{ page: currentPage, pageSize: pagePerView }}
+        paginationModel={{ page: currentPage, pageSize: pagePerSize }}
         onPaginationModelChange={(model, detail) => {
           setCurrentPage(model.page);
-          setPagePerView(model.pageSize);
+          setPagePerSize(model.pageSize);
         }}
         onRowClick={(params) => {
           setRows(params.row);

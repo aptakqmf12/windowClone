@@ -162,6 +162,8 @@ const div = {
       transform: translateY(-50%);
       display: flex;
       align-items: center;
+
+      z-index: 99999;
     `,
   },
 
@@ -173,7 +175,8 @@ const div = {
     width: 100px;
     height: 668px;
     border-radius: 0 80px 80px 0;
-    background-color: rgba(255, 255, 255, 0.7);
+    border: 1px #939393 solid;
+    background-color: rgba(255, 255, 255, 1);
 
     ul {
       display: flex;
@@ -221,6 +224,7 @@ const div = {
       align-items: center;
       background-color: #fff;
       border-radius: 0 10px 10px 0;
+      border: 1px #c3c3c3 solid;
     }
   `,
 };

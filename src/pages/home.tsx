@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useWindowStore } from "@store/window";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +25,7 @@ import {
 } from "@mui/material";
 import Logo from "@components/layout/logo";
 import { ModeType, useCommonStore } from "@store/common";
+import useOutsideClick from "@hook/useOutsideClick";
 
 export default function MyHome() {
   const { showWidget } = useWidgetStore();
@@ -33,11 +34,11 @@ export default function MyHome() {
   const { mode } = useCommonStore();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (isLogin === false) {
-      navigate("/signin");
-    }
-  }, [isLogin]);
+  // useEffect(() => {
+  //   if (isLogin === false) {
+  //     navigate("/signin");
+  //   }
+  // }, [isLogin]);
 
   return (
     <div.wrap>
@@ -89,45 +90,52 @@ export default function MyHome() {
 }
 
 const BackgroundItem = () => {
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [clicked, setClicked] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const handleClick = (event: React.MouseEvent<any>) => {
-    event.preventDefault();
+  const itemRef = useRef<HTMLDivElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
+  useOutsideClick(itemRef, () => setClicked(false));
+  useOutsideClick(popoverRef, () => setOpen(false));
 
-    setAnchorEl(event.currentTarget);
+  const click = () => {
+    setClicked(true);
   };
-
-  const handleClose = () => {
-    setAnchorEl(null);
+  const doubleClick = () => {
+    console.log("open window");
   };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+  const rightClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    // 다른 item의 open을 false로 처리
+    setOpen(true);
+  };
 
   return (
-    <>
-      <div className="item" onContextMenu={handleClick}>
-        <Apps sx={{ width: 50, height: 50 }} color="secondary" />
-      </div>
-
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
+    <div>
+      <div
+        className="item"
+        onClick={click}
+        onDoubleClick={doubleClick}
+        onContextMenu={rightClick}
+        style={{
+          border: clicked ? "1px dashed white" : "none",
         }}
+        ref={itemRef}
       >
-        <div>
-          <Button>열기</Button>
-        </div>
-        <div>
-          <Button>바로가기 제거</Button>
-        </div>
-      </Popover>
-    </>
+        <Apps sx={{ width: 50, height: 50 }} color="secondary" />
+
+        {open && (
+          <div.popOver ref={popoverRef}>
+            <div>
+              <Button>열기</Button>
+            </div>
+            <div>
+              <Button>바로가기 제거</Button>
+            </div>
+          </div.popOver>
+        )}
+      </div>
+    </div>
   );
 };
 
@@ -155,9 +163,7 @@ const div = {
   background: styled.div`
     width: 100%;
     height: calc(100% - 200px);
-    margin: 100px 220px 100px 150px;
-    border: 1px white dashed;
-    overflow: hidden;
+    margin: 100px 220px 100px 40px;
 
     .parent {
       display: flex;
@@ -170,6 +176,7 @@ const div = {
       gap: 10px;
 
       .item {
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -177,7 +184,7 @@ const div = {
         height: 50px;
         cursor: pointer;
         &:hover {
-          background-color: rgba(0, 0, 0, 0.2);
+          background-color: rgba(0, 0, 0, 0.1);
         }
       }
     }
@@ -191,6 +198,16 @@ const div = {
     display: flex;
     flex-direction: row-reverse;
     gap: 20px;
+  `,
+
+  popOver: styled.div`
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 150px;
+    background-color: white;
+    border-radius: 4px;
+    z-index: 99999;
   `,
 };
 
