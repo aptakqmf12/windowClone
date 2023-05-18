@@ -23,6 +23,7 @@ interface DataGridCustomProps {
   // checkbox
   useCheckbox: boolean;
   rowSelectionModel?: GridRowSelectionModel;
+  onRowSelectionModelChange?: (model: any) => void;
   // toolbar
   useToolbar: boolean;
   fileName?: string;
@@ -37,6 +38,7 @@ export default function DataGridCustom({
   onPaginationModelChange,
   paginationModel,
   rowSelectionModel,
+  onRowSelectionModelChange,
   useCheckbox,
   useToolbar,
   fileName,
@@ -58,6 +60,7 @@ export default function DataGridCustom({
       checkboxSelection={useCheckbox}
       getRowId={getRowId} // id 생성 ?
       rowSelectionModel={rowSelectionModel} // 체크박스 체크된 rows
+      onRowSelectionModelChange={onRowSelectionModelChange}
       slots={{
         toolbar: useToolbar
           ? () => (

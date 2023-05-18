@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from "axios";
 import jwt from "jsonwebtoken";
 import { parseAccessToken } from "../../lib/token";
-import { DataResponse, ListResponse } from "../../types";
+import { ResponseData, ResponseCode } from "../../types";
 import { ResponseStatus } from "../../types";
 import { encrypt, decrypt } from "../../lib/encrypt";
-import { api } from "..";
+import { api, generateQueryParamUrl } from "..";
 
 interface LoginRequest {
   email: string;
@@ -45,7 +45,7 @@ const setStorageAndHeaderByToken = (
 export const requestLogin = async ({ email, password }: LoginRequest) => {
   return await api
     .post(`/api/auth/authenticate`, { email, password })
-    .then((res: AxiosResponse<ListResponse<any, LoginResponse>>) => {
+    .then((res: AxiosResponse<ResponseData<LoginResponse>>) => {
       return res.data;
     });
 };
@@ -57,7 +57,7 @@ export const requestAccessToken = async () => {
 
   return await api
     .post(`/api/auth/getAccessToken`, undefined, { headers })
-    .then((res: AxiosResponse<ListResponse<any, RefreshResponse>>) => {
+    .then((res: AxiosResponse<ResponseData<RefreshResponse>>) => {
       if (res.data.success) {
         const { accessToken, refreshToken } = res.data.data;
         setStorageAndHeaderByToken(accessToken, refreshToken);
@@ -74,7 +74,7 @@ export const requestLogout = async () => {
 
   return await api
     .post(`/api/auth/logout`, undefined, { headers })
-    .then((res: AxiosResponse<ListResponse<any, any>>) => {
+    .then((res: AxiosResponse<ResponseData<any>>) => {
       return res.data;
     });
 };
@@ -88,5 +88,23 @@ export const testApi = async () => {
     .get(`/api/api/test/test`, {
       headers,
     })
-    .then((res: AxiosResponse<ListResponse<any, any>>) => {});
+    .then((res: AxiosResponse<ResponseData<any>>) => {
+      console.log("test 완료");
+    });
+};
+
+export const CheckCreateAccount = async (props: any) => {
+  return await api
+    .post("/api/v1/userMgr/reqCreateAccountCheck", props)
+    .then((res: AxiosResponse<ResponseData<any>>) => {
+      return res.data;
+  });
+};
+
+export const ReqCreateAccountRegiPwd = async (props: any) => {
+  return await api
+    .post("/api/v1/userMgr/reqCreateAccountPwdRegi", props)
+    .then((res: AxiosResponse<ResponseData<any>>) => {
+      return res.data;
+  });
 };

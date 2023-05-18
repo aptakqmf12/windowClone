@@ -46,10 +46,12 @@ export default function PartnerDetail({
       partnerId: partnerInfo.partnerId,
       partnerName: partnerName,
       partnerLicense: partnerLicense,
-      useYN: "Y",
+      useYn: "Y",
       saveType: saveType,
     })
-      .then((res) => {})
+      .then((res) => {
+        setView(ViewType.LIST);
+      })
       .catch((error) => {});
   };
 

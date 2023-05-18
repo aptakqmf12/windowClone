@@ -100,23 +100,29 @@ export default function PartnerList() {
   const [view, setView] = useState<ViewType>(ViewType.LIST);
 
   const [partnerInfo, setPartnerInfo] = useState<PartnerInfo>({
-    partnerId: "string",
-    partnerName: "string",
-    phone: "string",
-    partnerLicense: "string",
-    CEOName: "string",
-    createDate: "string",
-    constructionName: "string",
+    partnerId: "",
+    partnerName: "",
+    phone: "",
+    partnerLicense: "",
+    CEOName: "",
+    createDate: "",
+    constructionName: "",
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [pagePerView, setPagePerView] = useState(15);
+  const [partnerName, setPartnerName] = useState("");
 
-  const { isLoading, data: partnerList } = useQuery(
+  const {
+    isLoading,
+    data: partnerList,
+    refetch,
+  } = useQuery(
     ["partnerList"],
     () => {
       return getPartnerList({
         pageIndex: currentPage,
         pagePerSize: pagePerView,
+        partnerName: partnerName,
       });
     },
     {
@@ -155,8 +161,16 @@ export default function PartnerList() {
               sx={{ ml: 1, flex: 1 }}
               placeholder="협력사 검색"
               size="small"
+              onChange={(e) => setPartnerName(e.target.value)}
             />
-            <IconButton type="button" aria-label="search" size="small">
+            <IconButton
+              type="button"
+              aria-label="search"
+              size="small"
+              onClick={() => {
+                refetch();
+              }}
+            >
               <Search />
             </IconButton>
           </Paper>
@@ -175,13 +189,16 @@ export default function PartnerList() {
           columns={columns}
           pageSizeOptions={[25, 50, 100]}
           paginationModel={{ page: 0, pageSize: 25 }}
-          onPaginationModelChange={() => {}}
+          onPaginationModelChange={(model, detail) => {
+            setCurrentPage(model.page);
+            setPagePerView(model.pageSize);
+          }}
           onRowClick={(params) => {
             setPartnerInfo(params.row);
             setView(ViewType.DETAIL);
           }}
           getRowId={(row) => row.partnerId}
-          useCheckbox={true}
+          useCheckbox={false}
           useToolbar={true}
         />
       </div>
@@ -190,34 +207,6 @@ export default function PartnerList() {
   return <div>{renderCompontntByPath(view)}</div>;
 }
 
-function CustomToolbar() {
-  return (
-    <GridToolbarContainer>
-      <GridToolbarExport
-        csvOptions={{
-          fileName: "협력사 목록",
-          delimiter: ",",
-          utf8WithBom: true,
-        }}
-        printOptions={{
-          hideFooter: true,
-          hideToolbar: true,
-          pageStyle:
-            ".MuiDataGrid-root .MuiDataGrid-main { color: rgba(0, 0, 0, 0.87); }",
-          copyStyles: true,
-          fields: [
-            "partnerName",
-            "partnerLicense",
-            "CEOName",
-            "phone",
-            "constructionName",
-            "createDate",
-          ],
-        }}
-      />
-    </GridToolbarContainer>
-  );
-}
 /*
 const columns: GridColDef[] = [
   {

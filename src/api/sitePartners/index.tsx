@@ -5,9 +5,10 @@ import { api, generateQueryParamUrl, genereateFormData } from "..";
 import { PartnerInfo } from "@components/station/controlPanel/partnerManage/partnerList";
 
 interface getPartnerProps {
-  name?: string;
+  partnerName?: string;
   pageIndex?: number;
   pagePerSize?: number;
+  useYn?: string;
 }
 
 export interface PartnerResponse {
@@ -40,7 +41,7 @@ interface SavePartnerInfoProps {
   partnerId?: string;
   partnerName: string;
   partnerLicense: string;
-  useYN: string;
+  useYn: string;
   saveType: string;
 }
 
