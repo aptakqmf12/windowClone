@@ -1,27 +1,45 @@
-import { Button, Radio, Typography } from "@mui/material";
+import {
+  Button,
+  FormControlLabel,
+  Input,
+  Radio,
+  RadioGroup,
+  Typography,
+} from "@mui/material";
+import { ModeType, useCommonStore } from "@store/common";
 import React from "react";
 import styled from "styled-components";
 export default function SettingDisplay() {
+  const { mode, changeMode } = useCommonStore();
+
   return (
     <div.wrap>
       <div.mode>
-        <div>스타일 설정(모드 설정)</div>
-
         <div>
-          <div>
-            <div>
-              <Radio /> <Typography>Light</Typography>
-            </div>
-            <div>img</div>
-          </div>
-
-          <div>
-            <div>
-              <Radio /> <Typography>Dark</Typography>
-            </div>
-            <div>img</div>
-          </div>
+          <Typography fontWeight={600}>스타일 설정(모드 설정)</Typography>
         </div>
+
+        <>
+          <RadioGroup
+            onChange={(e, value) => {
+              changeMode(value as ModeType);
+            }}
+          >
+            <div>
+              <div>
+                <Radio value={ModeType.LIGHT} /> <Typography>Light</Typography>
+              </div>
+              <div>img</div>
+            </div>
+
+            <div>
+              <div>
+                <Radio value={ModeType.DARK} /> <Typography>Dark</Typography>
+              </div>
+              <div>img</div>
+            </div>
+          </RadioGroup>
+        </>
       </div.mode>
 
       <div.background>
@@ -30,6 +48,7 @@ export default function SettingDisplay() {
         <div>
           <div>img</div>
           <div>
+            <Input color="secondary" type="file" />
             <Button variant="contained">찾아보기</Button>
           </div>
 

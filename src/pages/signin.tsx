@@ -33,7 +33,6 @@ import { useCommonStore } from "@store/common";
 import PhoneInput from "@components/common/phoneInput";
 
 export default function Signin() {
-
   const { isLogin, setLogin, setAccessToken, setRefreshToken } =
     useLoginStore();
   const navigate = useNavigate();
@@ -142,8 +141,6 @@ export default function Signin() {
                   : null
               }
             />
-
-            <PhoneInput value={phoneNum} setValue={setPhoneNum} />
 
             <FormControlLabel
               control={
