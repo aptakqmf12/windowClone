@@ -36,6 +36,7 @@ export const GlobalStyle = createGlobalStyle`
     &::-webkit-scrollbar-track  {
       background: #eee;
     }
+
   }
   
   article, aside, details, figcaption, figure, 
@@ -91,5 +92,6 @@ export const GlobalStyle = createGlobalStyle`
   .MuiDataGrid-columnHeaderCheckbox{
     padding-right: 0px !important;
   }
+  
  
 `;

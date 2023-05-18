@@ -46,7 +46,7 @@ export default function DataGridCustom({
       sx={{
         width: "100%",
         transform: "skew(-0.05deg)",
-        ".--unstable_DataGrid-radius": 0,
+        "--unstable_DataGrid-radius": `0 !important`,
       }}
       density="compact"
       rows={rows}

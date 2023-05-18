@@ -24,6 +24,7 @@ import LibraryRoom from "@components/station/libraryRoom";
 import Help from "@components/station/help";
 
 import { v4 as uuidv4 } from "uuid";
+import Setting from "@components/station/setting";
 
 export default function Sidebar() {
   const { appendWindow } = useWindowStore();
@@ -95,7 +96,7 @@ export default function Sidebar() {
           uuid: uuid,
           name: "설정",
           icon: <Settings sx={iconSx} />,
-          component: <div>설정</div>,
+          component: <Setting />,
         });
       },
     },
@@ -159,7 +160,6 @@ const div = {
       top: 50%;
       left: 0;
       transform: translateY(-50%);
-
       display: flex;
       align-items: center;
     `,
@@ -170,10 +170,8 @@ const div = {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     width: 100px;
     height: 668px;
-
     border-radius: 0 80px 80px 0;
     background-color: rgba(255, 255, 255, 0.7);
 

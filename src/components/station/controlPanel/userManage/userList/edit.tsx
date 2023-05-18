@@ -57,8 +57,6 @@ export default function UserListEdit({ setTab, rows }: EditUserProps) {
         value={<Typography>{rows?.loginId}</Typography>}
       />
 
-      {/* <LabelComponent label="연락처" value={<TextField />} /> */}
-
       <LabelComponent
         label="계정타입"
         value={
