@@ -4,7 +4,7 @@ import { parseAccessToken } from "../../lib/token";
 import { ResponseData, ResponseCode } from "../../types";
 import { ResponseStatus } from "../../types";
 import { encrypt, decrypt } from "../../lib/encrypt";
-import { api, dispatchError } from "..";
+import { api, generateQueryParamUrl } from "..";
 
 interface LoginRequest {
   email: string;
@@ -91,4 +91,20 @@ export const testApi = async () => {
     .then((res: AxiosResponse<ResponseData<any>>) => {
       console.log("test 완료");
     });
+};
+
+export const CheckCreateAccount = async (props: any) => {
+  return await api
+    .post("/api/v1/userMgr/reqCreateAccountCheck", props)
+    .then((res: AxiosResponse<ResponseData<any>>) => {
+      return res.data;
+  });
+};
+
+export const ReqCreateAccountRegiPwd = async (props: any) => {
+  return await api
+    .post("/api/v1/userMgr/reqCreateAccountPwdRegi", props)
+    .then((res: AxiosResponse<ResponseData<any>>) => {
+      return res.data;
+  });
 };
