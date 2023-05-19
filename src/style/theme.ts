@@ -32,9 +32,8 @@ export const darkColors = {
     main: "#FFA726",
     light: "#FFB74D",
   },
-  font: {
-    main: "#fff",
-  },
+  font: "#fff",
+  border: "#e8e8e8",
 };
 
 export const lightColors = {
@@ -68,9 +67,8 @@ export const lightColors = {
     main: "#ED6C02",
     light: "#FF9800",
   },
-  font: {
-    main: "#000",
-  },
+  font: "#000",
+  border: "#e8e8e8",
 };
 
 const colors = {

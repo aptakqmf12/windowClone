@@ -40,6 +40,12 @@ function App() {
     setRefreshToken(refresh_token || "");
   }, []);
 
+  useEffect(() => {
+    window.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+    });
+  }, []);
+
   return (
     <StyledThemeProvider theme={themes}>
       <MuiThemeProvider theme={muiTheme}>

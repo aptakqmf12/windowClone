@@ -33,7 +33,6 @@ export default function Header() {
   const { i18n } = useTranslation();
 
   const [site, setSite] = useState<string>();
-  const [openMypage, setOpenMypage] = useState(false);
 
   const onSiteChange = (e: SelectChangeEvent) => {
     setSite(e.target.value as string);
@@ -56,18 +55,8 @@ export default function Header() {
     <header.wrap>
       <div.head>
         <div className="btns">
-          {/* <div>
-            <Typography>{mode}</Typography>
-            <Switch
-              value={mode === ModeType.DARK}
-              onChange={(e) =>
-                changeMode(e.target.checked ? ModeType.DARK : ModeType.LIGHT)
-              }
-            />
-          </div> */}
           <div
             style={{ cursor: "pointer" }}
-            // onClick={() => setOpenMypage(!openMypage)}
             onClick={() => {
               appendWindow({
                 uuid: uuidv4(),
@@ -83,12 +72,6 @@ export default function Header() {
             <Person sx={{ width: 40, height: 40 }} style={{ color: "white" }} />
             <Typography color={"white"}>마이페이지</Typography>
           </div>
-
-          {/* {openMypage && (
-            <div.modal>
-              <Mypage />
-            </div.modal>
-          )} */}
 
           <div onClick={onLogout} style={{ cursor: "pointer" }} className="btn">
             <ExitToApp
@@ -152,20 +135,6 @@ const div = {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-  `,
-
-  modal: styled.div`
-    position: absolute;
-    right: 60px;
-    top: 10px;
-    width: 500px;
-    background-color: white;
-    z-index: 100;
-
-    .close {
-      display: inline-flex;
-      background-color: red;
-    }
   `,
 };
 

@@ -128,7 +128,7 @@ export default function Sidebar() {
   return (
     <div.motion.wrap
       initial={{ x: 0, y: "-50%" }}
-      animate={{ x: isFold ? 15 - 100 : 0, y: "-50%" }}
+      animate={{ x: isFold ? -100 : 0, y: "-50%" }}
       transition={{ ease: "linear" }}
     >
       <div.sidebar>
@@ -163,7 +163,7 @@ const div = {
       display: flex;
       align-items: center;
 
-      z-index: 99999;
+      z-index: 10;
     `,
   },
 
@@ -175,7 +175,7 @@ const div = {
     width: 100px;
     height: 668px;
     border-radius: 0 80px 80px 0;
-    border: 1px #939393 solid;
+    border: ${(p) => `1px ${p.theme.colors.border} solid;`};
     background-color: rgba(255, 255, 255, 1);
 
     ul {
@@ -224,7 +224,7 @@ const div = {
       align-items: center;
       background-color: #fff;
       border-radius: 0 10px 10px 0;
-      border: 1px #c3c3c3 solid;
+      border: ${(p) => `1px ${p.theme.colors.border} solid;`};
     }
   `,
 };

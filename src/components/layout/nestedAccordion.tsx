@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import {
   Collapse,
@@ -94,6 +94,14 @@ const FoldableList = ({
   currentPath: any;
 }) => {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const isNestedActive = childList.some((list) => list.path === currentPath);
+
+    if (isNestedActive) {
+      setOpen(true);
+    }
+  }, []);
 
   return (
     <>

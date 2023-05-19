@@ -204,7 +204,7 @@ const div = {
 
     border-radius: 5px;
     overflow: hidden;
-    border: 1px #dfdfdf solid;
+    border: ${(p) => `1px ${p.theme.colors.border} solid;`};
 
     .head {
       display: flex;

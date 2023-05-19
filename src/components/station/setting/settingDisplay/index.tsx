@@ -7,14 +7,35 @@ import {
   Typography,
 } from "@mui/material";
 import { ModeType, useCommonStore } from "@store/common";
-import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
+
 export default function SettingDisplay() {
   const { mode, changeMode } = useCommonStore();
 
+  const [file, setfile] = useState<File | null>(null);
+  const [previewImg, setPreviewImg] = useState<string | null>(null);
+
+  const onFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files![0];
+    setfile(file);
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const result = reader.result;
+
+      if (typeof result === "string") {
+        setPreviewImg(result);
+      }
+    };
+
+    reader.readAsDataURL(file);
+  };
+
   return (
     <div.wrap>
-      <div.mode>
+      <div.mode.wrap>
         <div>
           <Typography fontWeight={600}>스타일 설정(모드 설정)</Typography>
         </div>
@@ -25,34 +46,74 @@ export default function SettingDisplay() {
               changeMode(value as ModeType);
             }}
           >
-            <div>
-              <div>
-                <Radio value={ModeType.LIGHT} /> <Typography>Light</Typography>
-              </div>
-              <div>img</div>
-            </div>
+            <div.mode.optionWrap>
+              <div.mode.option>
+                <div className="radio">
+                  <FormControlLabel
+                    label={<Typography>Light</Typography>}
+                    control={
+                      <Radio
+                        checked={mode === ModeType.LIGHT}
+                        value={ModeType.LIGHT}
+                      />
+                    }
+                  />
+                </div>
+                <div className="img">img</div>
+              </div.mode.option>
 
-            <div>
-              <div>
-                <Radio value={ModeType.DARK} /> <Typography>Dark</Typography>
-              </div>
-              <div>img</div>
-            </div>
+              <div.mode.option>
+                <div className="radio">
+                  <FormControlLabel
+                    label={<Typography>Dark</Typography>}
+                    control={
+                      <Radio
+                        checked={mode === ModeType.DARK}
+                        value={ModeType.DARK}
+                      />
+                    }
+                  />
+                </div>
+                <div className="img">img</div>
+              </div.mode.option>
+            </div.mode.optionWrap>
           </RadioGroup>
         </>
-      </div.mode>
+      </div.mode.wrap>
 
-      <div.background>
+      <div.bg.wrap>
         <Typography>배경(사진)</Typography>
 
-        <div>
-          <div>img</div>
-          <div>
-            <Input color="secondary" type="file" />
-            <Button variant="contained">찾아보기</Button>
+        <div.bg.content>
+          <div className="img">
+            {previewImg && (
+              <div>
+                <img
+                  src={previewImg}
+                  alt="Preview"
+                  style={{ maxWidth: "100%", maxHeight: "100%" }}
+                />
+              </div>
+            )}
           </div>
 
-          <div>
+          <div className="fileInput">
+            <input
+              accept="*"
+              style={{ display: "none" }}
+              id="file-input"
+              multiple
+              type="file"
+              onChange={onFileSelect}
+            />
+            <label htmlFor="file-input">
+              <Button variant="contained" component="span">
+                파일 선택
+              </Button>
+            </label>
+          </div>
+
+          <div className="palette">
             <Typography>배경색 선택</Typography>
 
             <ul style={{ display: "flex", gap: 4 }}>
@@ -80,14 +141,58 @@ export default function SettingDisplay() {
               ))}
             </ul>
           </div>
-        </div>
-      </div.background>
+        </div.bg.content>
+      </div.bg.wrap>
     </div.wrap>
   );
 }
 
 const div = {
   wrap: styled.div``,
-  mode: styled.div``,
-  background: styled.div``,
+  mode: {
+    wrap: styled.div``,
+    optionWrap: styled.div`
+      display: flex;
+      gap: 20px;
+    `,
+    option: styled.div`
+      width: 250px;
+      height: 150px;
+      border: 1px black solid;
+      .radio {
+        display: flex;
+        align-items: center;
+      }
+
+      .img {
+        background-color: #c6c6c6;
+        height: 100px;
+      }
+    `,
+  },
+  bg: {
+    wrap: styled.div``,
+    content: styled.div`
+      display: flex;
+      align-items: flex-end;
+      gap: 20px;
+
+      .img {
+        width: 300px;
+        height: 200px;
+        border: 1px black solid;
+
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          object-position: center;
+        }
+      }
+      .fileInput {
+      }
+      .palette {
+      }
+    `,
+  },
 };

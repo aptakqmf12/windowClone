@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 
 export enum ModeType {
   DARK = "dark",
@@ -19,22 +19,29 @@ interface CommonStore {
 }
 
 export const useCommonStore = create<CommonStore>()(
-  devtools((set) => ({
-    mode: ModeType.LIGHT,
-    changeMode: (mode: ModeType) => {
-      set(
-        (state) => ({
-          mode: mode,
-        }),
-        undefined,
-        "[Common] setMode"
-      );
-    },
-    language: LanguageType.KO,
-    changeLanguage: (lang: LanguageType) => {
-      set((state) => ({
-        language: lang,
-      }));
-    },
-  }))
+  devtools(
+    persist(
+      (set) => ({
+        mode: ModeType.LIGHT,
+        changeMode: (mode: ModeType) => {
+          set(
+            (state) => ({
+              mode: mode,
+            }),
+            undefined,
+            "[Common] setMode"
+          );
+        },
+        language: LanguageType.KO,
+        changeLanguage: (lang: LanguageType) => {
+          set((state) => ({
+            language: lang,
+          }));
+        },
+      }),
+      {
+        name: "common persist",
+      }
+    )
+  )
 );

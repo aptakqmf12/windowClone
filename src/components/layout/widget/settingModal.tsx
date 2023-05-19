@@ -1,8 +1,9 @@
+import { useState, useRef } from "react";
 import { Button, Fab, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { useState } from "react";
 import ReactDOM from "react-dom";
 import styled from "styled-components";
+import useOutsideClick from "@hook/useOutsideClick";
 
 export default function SettingModal({ onClose }: { onClose: () => void }) {
   return ReactDOM.createPortal(
@@ -13,6 +14,11 @@ export default function SettingModal({ onClose }: { onClose: () => void }) {
 
 const SettingModalWrap = ({ onClose }: { onClose: () => void }) => {
   const [open, setOpen] = useState(false);
+
+  const widgetListRef = useRef<HTMLDivElement>(null);
+
+  // useOutsideClick(widgetListRef, () => setOpen(false));
+
   const save = () => {
     onClose();
   };
@@ -31,7 +37,7 @@ const SettingModalWrap = ({ onClose }: { onClose: () => void }) => {
       </div.add>
 
       {open && (
-        <div.widgetList>
+        <div.widgetList ref={widgetListRef}>
           <div className="head">
             <Typography>위젯</Typography>
             <Button onClick={() => setOpen(false)}>X</Button>

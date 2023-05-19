@@ -196,7 +196,7 @@ const div = {
     color: black;
     margin: auto;
     user-select: none;
-    border: 1px #777777 solid;
+    border: ${(p) => `1px ${p.theme.colors.border} solid;`};
     background-color: white;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
     border-radius: 10px;

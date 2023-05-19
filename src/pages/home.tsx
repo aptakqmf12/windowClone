@@ -105,13 +105,12 @@ const BackgroundItem = () => {
     console.log("open window");
   };
   const rightClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    // 다른 item의 open을 false로 처리
+    //TODO: 다른 item의 open을 false로 처리
     setOpen(true);
   };
 
   return (
-    <div>
+    <div.item>
       <div
         className="item"
         onClick={click}
@@ -123,19 +122,19 @@ const BackgroundItem = () => {
         ref={itemRef}
       >
         <Apps sx={{ width: 50, height: 50 }} color="secondary" />
-
-        {open && (
-          <div.popOver ref={popoverRef}>
-            <div>
-              <Button>열기</Button>
-            </div>
-            <div>
-              <Button>바로가기 제거</Button>
-            </div>
-          </div.popOver>
-        )}
       </div>
-    </div>
+
+      {open && (
+        <div.popOver ref={popoverRef}>
+          <div>
+            <Button>열기</Button>
+          </div>
+          <div>
+            <Button>바로가기 제거</Button>
+          </div>
+        </div.popOver>
+      )}
+    </div.item>
   );
 };
 
@@ -200,14 +199,19 @@ const div = {
     gap: 20px;
   `,
 
+  item: styled.div`
+    position: relative;
+  `,
+
   popOver: styled.div`
     position: absolute;
     left: 0;
     right: 0;
     width: 150px;
     background-color: white;
+    border: ${(p) => `1px ${p.theme.colors.border} solid`};
     border-radius: 4px;
-    z-index: 99999;
+    z-index: 5;
   `,
 };
 

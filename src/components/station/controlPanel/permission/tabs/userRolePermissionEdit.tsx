@@ -166,7 +166,7 @@ const div = {
   content: styled.div`
     border-radius: 10px;
     width: 100%;
-    border: 2px solid gray;
+    border: ${(p) => `2px ${p.theme.colors.border} solid;`};
     margin-top: 3%;
   `,
   header: styled.div`

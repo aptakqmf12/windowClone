@@ -82,7 +82,7 @@ const div = {
     width: 80%;
     margin: 5% auto;
     .tab {
-      border: 1px solid black;
+      border: ${(p) => `1px ${p.theme.colors.border} solid;`};
       width: 100%;
     }
   `,

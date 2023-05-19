@@ -23,7 +23,11 @@ import { Search, PostAdd } from "@mui/icons-material";
 import styled from "styled-components";
 import SelectCustom from "@components/common/SelectForm";
 
-import { LibraryType, getLibraryList } from "@api/libraryRoom";
+import {
+  LibraryType,
+  getLibraryList,
+  getLibraryDetail,
+} from "@api/libraryRoom";
 import { PaginationData } from "../../../types/index";
 import DataGridCustom from "@components/common/dataGrid";
 import { GridColDef } from "@mui/x-data-grid";
@@ -44,6 +48,13 @@ const columns: GridColDef[] = [
     headerName: "useYn",
     headerAlign: "center",
     align: "center",
+  },
+  {
+    field: "siteDataId",
+    headerName: "siteDataId",
+    headerAlign: "center",
+    align: "center",
+    width: 200,
   },
 ];
 
@@ -132,33 +143,6 @@ export default function LibraryRoom({ uuid }: LibraryRoomProps) {
       </div.search>
 
       <div.table>
-        {/* <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">No</TableCell>
-                <TableCell align="center">자료명</TableCell>
-                <TableCell align="center">작성자</TableCell>
-                <TableCell align="center">업로드</TableCell>
-                <TableCell align="center">조회수</TableCell>
-                <TableCell align="center">파일형식</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell align="center">1</TableCell>
-                <TableCell align="center">안전보고자료1</TableCell>
-                <TableCell align="center">김민정</TableCell>
-                <TableCell align="center">2023-05-09</TableCell>
-                <TableCell align="center">13</TableCell>
-                <TableCell align="center">hwp</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer> */}
-
         <DataGridCustom
           rows={libraryList}
           columns={columns}
@@ -169,8 +153,9 @@ export default function LibraryRoom({ uuid }: LibraryRoomProps) {
             // setPagePerView(model.pageSize);
           }}
           onRowClick={(params) => {
-            // setRows(params.row);
-            // setTab("edit");
+            const siteDataId = params.row.siteDataId;
+
+            getLibraryDetail({ siteDataId });
           }}
           getRowId={(row) => row.siteDataId}
           useCheckbox={false}

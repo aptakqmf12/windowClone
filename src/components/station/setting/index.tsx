@@ -12,23 +12,53 @@ export default function Setting() {
 
   const FIXED_LIST_DATA = [
     {
-      name: "Home",
-      icon: <Home />,
+      name: "STATION설정",
+
       path: Paths.HOME,
       onClick: () => setCurrentPath(Paths.HOME),
     },
     {
       name: "디스플레이 설정",
+      icon: (
+        <span
+          style={{
+            width: 14,
+            height: 14,
+            backgroundColor: "#880000",
+            borderRadius: "50%",
+          }}
+        ></span>
+      ),
       path: Paths.DISPLAY,
       onClick: () => setCurrentPath(Paths.DISPLAY),
     },
     {
       name: "위젯 설정",
+      icon: (
+        <span
+          style={{
+            width: 14,
+            height: 14,
+            backgroundColor: "#880000",
+            borderRadius: "50%",
+          }}
+        ></span>
+      ),
       path: Paths.WIDGET,
       onClick: () => setCurrentPath(Paths.WIDGET),
     },
     {
       name: "업데이트",
+      icon: (
+        <span
+          style={{
+            width: 14,
+            height: 14,
+            backgroundColor: "#880000",
+            borderRadius: "50%",
+          }}
+        ></span>
+      ),
       path: Paths.UPDATE,
       onClick: () => setCurrentPath(Paths.UPDATE),
     },
