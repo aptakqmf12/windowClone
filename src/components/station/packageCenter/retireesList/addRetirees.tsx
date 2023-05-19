@@ -19,12 +19,14 @@ import {
   GridRowSelectionModel,
 } from "@mui/x-data-grid";
 import { addRetiree } from "@api/userManage";
+import AlertCustom, { AlertCustomType } from "@components/common/alert";
 
 export default function AddRetirees({
   setTab,
 }: {
   setTab: (v: "view" | "add") => void;
 }) {
+  const [openModal, setOpenModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [pagePerView, setPagePerView] = useState(5);
   const [rowSelectionWorker, setRowSelectionWorker] =
@@ -75,8 +77,7 @@ export default function AddRetirees({
         <Button
           variant="contained"
           onClick={() => {
-            const retirees = rowSelectionWorker.join(";") + ";";
-            addRetiree({ retirees: retirees });
+            setOpenModal(true);
           }}
         >
           퇴직
@@ -102,6 +103,26 @@ export default function AddRetirees({
           setPagePerView(model.pageSize);
         }}
       />
+      {openModal && (
+        <AlertCustom
+          type={AlertCustomType.WARNING}
+          color="warning"
+          onClose={() => {
+            const retirees = rowSelectionWorker.join(";") + ";";
+            addRetiree({ retirees: retirees }).then(() => {
+              setTab("view");
+            });
+          }}
+        >
+          <div>
+            <Typography fontSize={14} textAlign={"center"}>
+              선택한 근로자를
+              <br /> 퇴직처리하시겠습니까?
+              <br /> 총{rowSelectionWorker.length}명
+            </Typography>
+          </div>
+        </AlertCustom>
+      )}
     </div>
   );
 }
