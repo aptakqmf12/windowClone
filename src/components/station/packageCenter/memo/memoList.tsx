@@ -10,24 +10,67 @@ import {
 import { useState } from "react";
 import styled from "styled-components";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+
 import MemoEdit from "./memoEdit";
+import { MemoInfo, getSiteMemoList } from "@api/siteMemo";
+import MemoAdd from "./momeAdd";
+import { useQuery } from "@tanstack/react-query";
 
 export default function MemoList() {
-  const [tab, setTab] = useState<"list" | "edit">("list");
+  const [tab, setTab] = useState<"list" | "edit" | "add">("list");
+  const [memoInfo, setMemoInfo] = useState<MemoInfo>({
+    memoId: "",
+    title: "",
+    content: "",
+    userId: "",
+    createDate: "",
+  });
+  const renderCompontntByPath = (userView: string) => {
+    switch (userView) {
+      case "list":
+        return <MemoListView setTab={setTab} setMemoInfo={setMemoInfo} />;
+      case "add":
+        return <MemoAdd setTab={setTab} />;
+      case "edit":
+        return <MemoEdit setTab={setTab} memoInfoProps={memoInfo} />;
+      default:
+        return <MemoListView setTab={setTab} setMemoInfo={setMemoInfo} />;
+    }
+  };
 
-  return tab === "list" ? (
-    <MemoListView setTab={setTab} />
-  ) : (
-    <MemoEdit setTab={setTab} />
-  );
+  return renderCompontntByPath(tab);
 }
 
-const MemoListView = ({ setTab }: { setTab: (v: "list" | "edit") => void }) => {
+const MemoListView = ({
+  setTab,
+  setMemoInfo,
+}: {
+  setTab: (v: "list" | "edit" | "add") => void;
+  setMemoInfo: (v: MemoInfo) => void;
+}) => {
   const [searchText, setSearchText] = useState<string>();
   // pagination
   const [currentPage, setCurrentPage] = useState(0);
   const [pagePerView, setPagePerView] = useState(5);
   const [pageIndex, setPageIndex] = useState(1);
+  const {
+    isLoading,
+    data: memoList,
+    refetch,
+  } = useQuery(
+    ["memoList"],
+    () => {
+      return getSiteMemoList({
+        title: "",
+        pageIndex: currentPage,
+        pagePerSize: pagePerView,
+        useYn: "Y",
+      });
+    },
+    {
+      refetchInterval: 5000,
+    }
+  );
 
   return (
     <div>
@@ -64,7 +107,7 @@ const MemoListView = ({ setTab }: { setTab: (v: "list" | "edit") => void }) => {
         <Button
           variant="contained"
           onClick={() => {
-            setTab("edit");
+            setTab("add");
           }}
         >
           등록
@@ -72,8 +115,8 @@ const MemoListView = ({ setTab }: { setTab: (v: "list" | "edit") => void }) => {
       </div.search>
 
       <DataGridCustom
-        // rows={partnerList?.data.list ? partnerList.data.list : []}
-        rows={rows}
+        rows={memoList?.data.list ? memoList.data.list : []}
+        // rows={rows}
         columns={columns}
         pageSizeOptions={[25, 50, 100]}
         paginationModel={{ page: 0, pageSize: 25 }}
@@ -82,6 +125,14 @@ const MemoListView = ({ setTab }: { setTab: (v: "list" | "edit") => void }) => {
           setPagePerView(model.pageSize);
         }}
         onRowClick={(params) => {
+          const row = params.row;
+          setMemoInfo({
+            memoId: row.id,
+            title: row.title,
+            content: row.content,
+            userId: row.createId,
+            createDate: row.createDate,
+          });
           setTab("edit");
         }}
         getRowId={(row) => row.id}
@@ -117,7 +168,7 @@ const columns: GridColDef[] = [
     flex: 0.5,
   },
   {
-    field: "createDt",
+    field: "createDate",
     headerName: "작성일",
     headerAlign: "center",
     align: "center",
@@ -140,6 +191,7 @@ const rows = [
   {
     id: "3",
     title: "test3",
+    content: "sasdasd",
     createId: "tt",
     createDt: "2020-11-11",
   },
