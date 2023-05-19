@@ -6,15 +6,17 @@ interface LabelComponentProps {
   label: string;
   value: React.ReactNode;
   labelWidth?: number;
+  direction?: "row" | "column";
 }
 
 export default function LabelComponent({
   label,
   value,
   labelWidth,
+  direction = "row",
 }: LabelComponentProps) {
   return (
-    <div.info>
+    <div.info direction={direction}>
       <Typography
         sx={{ width: labelWidth || 120 }}
         color={"primary.main"}
@@ -29,10 +31,11 @@ export default function LabelComponent({
 }
 
 const div = {
-  info: styled.div`
+  info: styled.div<{ direction: "row" | "column" }>`
     display: flex;
-    align-items: center;
-    gap: 10px;
+    flex-direction: ${(p) => p.direction};
+    align-items: ${(p) => (p.direction === "row" ? "center" : "flex-start")};
+    gap: ${(p) => (p.direction === "row" ? "10px" : "0px")};
     width: 100%;
     padding-right: 10px;
 

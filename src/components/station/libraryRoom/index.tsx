@@ -31,38 +31,105 @@ import {
 import { PaginationData } from "../../../types/index";
 import DataGridCustom from "@components/common/dataGrid";
 import { GridColDef } from "@mui/x-data-grid";
+import LibraryRoomDetail from "./detail";
+import LibraryRoomEdit from "./edit";
 
 interface LibraryRoomProps {
   uuid: string;
 }
 
+type TabType = "view" | "detail" | "edit";
+
+export default function LibraryRoom({ uuid }: LibraryRoomProps) {
+  const [tab, setTab] = useState<TabType>("view");
+  const [data, setData] = useState<LibraryType>();
+
+  const goBack = () => setTab("view");
+
+  switch (tab) {
+    case "view":
+      return <LibraryRoomView setData={setData} setTab={setTab} />;
+    case "detail":
+      return <LibraryRoomDetail data={data!} goBack={goBack} />;
+    case "edit":
+      return <LibraryRoomEdit goBack={goBack} />;
+  }
+}
+
+interface LibraryRoomViewProps {
+  setData: (v: LibraryType) => void;
+  setTab: (tab: TabType) => void;
+}
+
 const columns: GridColDef[] = [
+  {
+    field: "",
+    headerName: "No",
+    headerAlign: "center",
+    align: "center",
+    renderCell: (params) => {
+      return params.api.getRowIndexRelativeToVisibleRows(params.id) + 1;
+    },
+    width: 50,
+  },
+  // {
+  //   field: "",
+  //   headerName: "구분",
+  //   headerAlign: "center",
+  //   align: "center",
+  // },
   {
     field: "title",
     headerName: "자료명",
     headerAlign: "center",
     align: "center",
+    flex: 0.1,
   },
+  // {
+  //   field: "title",
+  //   headerName: "등록자",
+  //   headerAlign: "center",
+  //   align: "center",
+  // },
   {
-    field: "useYn",
-    headerName: "useYn",
-    headerAlign: "center",
-    align: "center",
-  },
-  {
-    field: "siteDataId",
-    headerName: "siteDataId",
+    field: "createdAt",
+    headerName: "등록일",
     headerAlign: "center",
     align: "center",
     width: 200,
   },
+  {
+    field: "useYn",
+    headerName: "파일첨부",
+    headerAlign: "center",
+    align: "center",
+    width: 100,
+  },
+  {
+    field: "fileId",
+    headerName: "다운로드",
+    headerAlign: "center",
+    align: "center",
+    width: 100,
+    renderCell: (params) => {
+      return (
+        <Button
+          size="small"
+          variant="contained"
+          //onClick={() => console.log(params)}
+        >
+          다운로드
+        </Button>
+      );
+    },
+  },
 ];
 
-export default function LibraryRoom({ uuid }: LibraryRoomProps) {
+const LibraryRoomView = ({ setData, setTab }: LibraryRoomViewProps) => {
   const [filter, setFilter] = useState<string>("");
   const [searchText, setSearchText] = useState("");
 
-  const [libraryData, setLibraryData] = useState<PaginationData>();
+  const [libraryPagination, setLibraryPagination] = useState<PaginationData>();
   const [libraryList, setLibraryList] = useState<LibraryType[]>([]);
 
   const record = async () => {
@@ -142,6 +209,19 @@ export default function LibraryRoom({ uuid }: LibraryRoomProps) {
         </div>
       </div.search>
 
+      <div.add>
+        <SelectCustom
+          defaultValue="1"
+          value=""
+          setValue={() => {}}
+          menuList={["1"]}
+        />
+
+        <Button variant="contained" onClick={() => setTab("edit")}>
+          등록
+        </Button>
+      </div.add>
+
       <div.table>
         <DataGridCustom
           rows={libraryList}
@@ -153,9 +233,14 @@ export default function LibraryRoom({ uuid }: LibraryRoomProps) {
             // setPagePerView(model.pageSize);
           }}
           onRowClick={(params) => {
+            console.log(params.row);
             const siteDataId = params.row.siteDataId;
 
-            getLibraryDetail({ siteDataId });
+            setData(params.row);
+
+            setTab("detail");
+
+            // getLibraryDetail({ siteDataId });
           }}
           getRowId={(row) => row.siteDataId}
           useCheckbox={false}
@@ -165,7 +250,7 @@ export default function LibraryRoom({ uuid }: LibraryRoomProps) {
       </div.table>
     </div.wrap>
   );
-}
+};
 
 const div = {
   wrap: styled.div`
@@ -178,6 +263,12 @@ const div = {
 
   title: styled.div`
     margin-bottom: 20px;
+  `,
+  add: styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
   `,
   search: styled.div`
     display: flex;
