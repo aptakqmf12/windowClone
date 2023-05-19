@@ -59,6 +59,14 @@ export default function RetireesList() {
           value={date}
           onChange={(newDate) => setDate(newDate)}
           slotProps={{ textField: { size: "small" } }}
+          format="YYYY-MM-DD"
+        />
+        <DatePicker
+          label="퇴직일"
+          value={date}
+          onChange={(newDate) => setDate(newDate)}
+          slotProps={{ textField: { size: "small" } }}
+          format="YYYY-MM-DD"
         />
         <Paper
           component="form"
@@ -84,7 +92,8 @@ export default function RetireesList() {
       </div.search>
 
       <DataGridCustom
-        rows={retireesList?.data.list ? retireesList.data.list : []}
+        // rows={retireesList?.data.list ? retireesList.data.list : []}
+        rows={rows}
         columns={columns}
         pageSizeOptions={[25, 50, 100]}
         paginationModel={{ page: 0, pageSize: 25 }}
@@ -173,8 +182,6 @@ const columns: GridColDef[] = [
     renderCell: (params) => {
       const onClick = (e: any) => {
         e.stopPropagation();
-        // console.log(e);
-        // console.log(params.api.getRowIndexRelativeToVisibleRows(params.id));
       };
 
       return (
@@ -189,7 +196,7 @@ const columns: GridColDef[] = [
     },
   },
 ];
-
+const rows = [{ id: "123132", worerId: "asdmlasd" }];
 const div = {
   btween: styled.div`
     display: flex;

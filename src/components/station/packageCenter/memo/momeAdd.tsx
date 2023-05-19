@@ -13,25 +13,23 @@ import styled from "styled-components";
 import LabelComponent from "@components/common/labelComponent";
 import { MemoInfo, saveSiteMemoInfo } from "@api/siteMemo";
 
-export default function MemoEdit({
+export default function MemoAdd({
   setTab,
-  memoInfoProps,
 }: {
   setTab: (v: "list" | "edit" | "add") => void;
-  memoInfoProps: MemoInfo;
 }) {
-  const [memoInfo, setMemoInfo] = useState<MemoInfo>(memoInfoProps);
-  const [saveType, setSaveType] = useState("");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     saveSiteMemoInfo({
-      title: memoInfo.title,
-      content: memoInfo.content,
+      title: title,
+      content: content,
       userId: "",
       createDate: "",
       useYn: "Y",
-      saveType: saveType,
+      saveType: "I",
     })
       .then((res) => {
         setTab("list");
@@ -70,13 +68,12 @@ export default function MemoEdit({
                   placeholder="제목"
                   size="small"
                   fullWidth
-                  value={memoInfo.title}
                 />
               </>
             }
           />
-          <LabelComponent label={"작성자"} value={<>{memoInfo.userId}</>} />
-          <LabelComponent label={"작성일"} value={<>{memoInfo.createDate}</>} />
+          <LabelComponent label={"작성자"} value={<></>} />
+          <LabelComponent label={"작성일"} value={<></>} />
           <LabelComponent
             label={"내용"}
             value={
@@ -86,29 +83,13 @@ export default function MemoEdit({
                   placeholder="내용"
                   multiline
                   fullWidth
-                  value={memoInfo.content}
                 />
               </>
             }
           />
           <div.buttons>
-            <Button
-              variant="contained"
-              type="submit"
-              onClick={() => {
-                setSaveType("U");
-              }}
-            >
-              수정
-            </Button>
-            <Button
-              variant="contained"
-              type="submit"
-              onClick={() => {
-                setSaveType("D");
-              }}
-            >
-              삭제
+            <Button variant="contained" type="submit" onClick={() => {}}>
+              등록
             </Button>
           </div.buttons>
         </Box>
