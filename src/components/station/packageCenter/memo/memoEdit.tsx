@@ -28,8 +28,6 @@ export default function MemoEdit({
     saveSiteMemoInfo({
       title: memoInfo.title,
       content: memoInfo.content,
-      userId: "",
-      createDate: "",
       useYn: "Y",
       saveType: saveType,
     })

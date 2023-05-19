@@ -14,8 +14,8 @@ export interface MemoInfo {
   memoId?: string;
   title: string;
   content?: string;
-  userId: string;
-  createDate: string;
+  userId?: string;
+  createDate?: string;
   saveType?: string;
   useYn?: string;
 }

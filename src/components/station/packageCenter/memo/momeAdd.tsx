@@ -26,8 +26,6 @@ export default function MemoAdd({
     saveSiteMemoInfo({
       title: title,
       content: content,
-      userId: "",
-      createDate: "",
       useYn: "Y",
       saveType: "I",
     })
