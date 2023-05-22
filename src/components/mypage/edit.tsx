@@ -27,15 +27,17 @@ import styled from "styled-components";
 import { SelectChangeEventType } from "@mui/base";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import AlertCustom, { AlertCustomType } from "@components/common/alert";
-import { changePassword, updateMypageInfo } from "@api/mypage";
+import { updateMypageInfo } from "@api/mypage";
 import LabelComponent from "@components/common/labelComponent";
 import SelectCustom from "@components/common/SelectForm";
 import PasswordInput from "@components/common/passwordInput";
 
 export default function MypageEdit({
   setTab,
+  mypageInfo,
 }: {
   setTab: (v: "view" | "edit") => void;
+  mypageInfo: MypageInfoResponse;
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -44,21 +46,31 @@ export default function MypageEdit({
   const [newPass, setNewPass] = useState("");
   const [oldPass, setOldPass] = useState("");
 
-  const onChangePassword = () => {
-    changePassword({ newPass, oldPass });
-  };
-
   const onSubmit = () => {
-    updateMypageInfo({ name: "test" });
+    updateMypageInfo({});
     setTab("view");
   };
+
+  const { companyCode, deptName, email, phone, userTypeName } = mypageInfo;
 
   return (
     <>
       <div.wrap>
+        <div>
+          <div>
+            <Avatar sx={{ width: 145, height: 145 }} />
+          </div>
+
+          <div>
+            <Typography fontSize={20} fontWeight={600}>
+              {userTypeName}
+            </Typography>
+          </div>
+        </div>
+
         <div.between>
-          <Typography color={"white"}>민정건설</Typography>
-          <Typography color={"white"}>김민정(alswjd7711)님</Typography>
+          <Typography color={"white"}>{companyCode}</Typography>
+          <Typography color={"white"}>???({email})님</Typography>
         </div.between>
 
         <LabelComponent
@@ -75,12 +87,12 @@ export default function MypageEdit({
         />
         <LabelComponent
           label="아이디"
-          value={<Input fullWidth disabled defaultValue={"김민정"} />}
+          value={<Input fullWidth disabled defaultValue={""} />}
         />
 
         <LabelComponent
           label="연락처"
-          value={<TextField fullWidth variant="standard" />}
+          value={<TextField value={phone} fullWidth variant="standard" />}
         />
 
         <LabelComponent
@@ -88,16 +100,16 @@ export default function MypageEdit({
           value={
             <SelectCustom
               fullWidth
-              defaultValue="기술연구소1"
+              defaultValue={deptName}
               value={team}
               setValue={(e) => setTeam(e)}
-              menuList={["기술연구소1", "기술연구소2"]}
+              menuList={[deptName]}
             />
           }
         />
         <LabelComponent
           label="이메일"
-          value={<TextField fullWidth variant="standard" />}
+          value={<TextField value={email} fullWidth variant="standard" />}
         />
         <LabelComponent
           label="기존 패스워드"
@@ -121,7 +133,7 @@ export default function MypageEdit({
           완료
         </Button>
 
-        <Button variant="contained" color="info" onClick={onChangePassword}>
+        <Button variant="contained" color="info" onClick={() => {}}>
           비밀번호 체크
         </Button>
 
@@ -156,6 +168,8 @@ const div = {
     justify-content: flex-start;
     align-items: flex-start;
     gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
   `,
   info: styled.div`
     display: flex;

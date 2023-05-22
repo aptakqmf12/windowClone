@@ -145,7 +145,7 @@ const UserListView = ({ setTab, setRows }: UserListViewProps) => {
 
   useEffect(() => {
     record();
-  }, [pagePerSize]);
+  }, [pagePerSize, pageIndex]);
 
   return (
     <div>
@@ -193,7 +193,10 @@ const UserListView = ({ setTab, setRows }: UserListViewProps) => {
         columns={columns}
         pageSizeOptions={[5, 10, 15]}
         paginationModel={{ page: currentPage, pageSize: pagePerSize }}
+        rowCount={userInfo?.totalCount}
         onPaginationModelChange={(model, detail) => {
+          console.log(model);
+          setPageIndex(model.page + 1);
           setCurrentPage(model.page);
           setPagePerSize(model.pageSize);
         }}

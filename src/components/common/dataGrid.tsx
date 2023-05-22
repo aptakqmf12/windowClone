@@ -19,6 +19,7 @@ interface DataGridCustomProps {
     page: number;
     pageSize: number;
   };
+  rowCount?: number; // totalCount
   onPaginationModelChange: (model: any, detail: any) => void;
   // checkbox
   useCheckbox: boolean;
@@ -35,6 +36,7 @@ export default function DataGridCustom({
   onRowClick,
   getRowId,
   pageSizeOptions,
+  rowCount,
   onPaginationModelChange,
   paginationModel,
   rowSelectionModel,
@@ -58,6 +60,7 @@ export default function DataGridCustom({
       onPaginationModelChange={onPaginationModelChange}
       checkboxSelection={useCheckbox}
       getRowId={getRowId} // id 생성 ?
+      rowCount={rowCount}
       rowSelectionModel={rowSelectionModel} // 체크박스 체크된 rows
       onRowSelectionModelChange={onRowSelectionModelChange}
       slots={{

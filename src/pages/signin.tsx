@@ -50,11 +50,11 @@ export default function Signin() {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    // if (!emailValid) {
-    //   setOpenDialog(true);
-    //   setDialogText("아이디 비밀번호 형식을 맞춰주세요");
-    //   return;
-    // }
+    if (!emailValid) {
+      setOpenDialog(true);
+      setDialogText("아이디 비밀번호 형식을 맞춰주세요");
+      return;
+    }
 
     requestLogin({ email: email, password })
       .then((res) => {
@@ -95,6 +95,14 @@ export default function Signin() {
     }
   }, [isLogin]);
 
+  useEffect(() => {
+    setEmailValid(emailRule(email));
+  }, [email]);
+
+  useEffect(() => {
+    setPasswordValid(passwordRule(password));
+  }, [password]);
+
   return (
     <div.wrap>
       <div.sign>
@@ -110,12 +118,13 @@ export default function Signin() {
               fullWidth
               id="email"
               // label="Email Address"
-              placeholder="Email Address"
+              placeholder="이메일 주소를 입력하세요."
               name="email"
               autoComplete="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onBlur={(e) => setEmailValid(emailRule(email))}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
               error={emailValid === false}
               helperText={
                 emailValid === false ? "이메일 형식에 맞게 입력" : null
@@ -127,13 +136,12 @@ export default function Signin() {
               fullWidth
               name="password"
               // label="Password"
-              placeholder="Password"
+              placeholder="비밀번호를 입력하세요."
               type="password"
               id="password"
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              onBlur={(e) => setPasswordValid(passwordRule(password))}
               error={passwordValid === false}
               helperText={
                 passwordValid === false

@@ -131,9 +131,9 @@ export default function PackageCenter({ uuid }: PackageCenterProps) {
     {
       name: "비상연락망",
       icon: <ArrowForward />,
-      path: Paths.EMERGENCY_CALL,
+      path: Paths.EMERGENCY_CONTACT,
       onClick: () => {
-        setCurrentPath(Paths.EMERGENCY_CALL);
+        setCurrentPath(Paths.EMERGENCY_CONTACT);
       },
     },
     {

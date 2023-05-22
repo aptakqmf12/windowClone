@@ -1,14 +1,19 @@
-import { getMypageInfo } from "@api/mypage";
-import { Avatar, Typography } from "@mui/material";
+import { getMypageInfo, MypageInfoResponse } from "@api/mypage";
+import { Avatar, Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { People } from "@mui/icons-material";
+import { useWindowStore } from "@store/window";
+import { v4 as uuidv4 } from "uuid";
 
 import MypageEdit from "./edit";
-import MypageView from "./view";
 
 export default function Mypage() {
+  const { appendWindow } = useWindowStore();
+
   const [tab, setTab] = useState<"view" | "edit">("view");
-  const [mypageInfo, setMypageInfo] = useState<any>();
+  const [img, setImg] = useState<any>(null);
+  const [mypageInfo, setMypageInfo] = useState<MypageInfoResponse>();
 
   const record = async () => {
     const res = await getMypageInfo();
@@ -20,6 +25,9 @@ export default function Mypage() {
     record();
   }, []);
 
+  if (!mypageInfo) return <></>;
+  const { email, userTypeName } = mypageInfo;
+
   return (
     <div.wrap>
       <div.top>
@@ -29,18 +37,28 @@ export default function Mypage() {
 
         <div>
           <Typography fontSize={20} fontWeight={600}>
-            MASTER
+            {userTypeName}
           </Typography>
         </div>
       </div.top>
 
-      <div.body>
-        {tab === "view" ? (
-          <MypageView setTab={setTab} />
-        ) : (
-          <MypageEdit setTab={setTab} />
-        )}
-      </div.body>
+      <Typography>{email}</Typography>
+
+      <div className="btn">
+        <Button
+          variant="contained"
+          onClick={() => {
+            appendWindow({
+              uuid: uuidv4(),
+              component: <MypageEdit setTab={setTab} mypageInfo={mypageInfo} />,
+              icon: <People />,
+              name: "마이 페이지 편집",
+            });
+          }}
+        >
+          정보수정
+        </Button>
+      </div>
     </div.wrap>
   );
 }

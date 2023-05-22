@@ -33,6 +33,7 @@ export default function Header() {
   const { i18n } = useTranslation();
 
   const [site, setSite] = useState<string>();
+  const [openMypage, setOpenMypage] = useState(false);
 
   const onSiteChange = (e: SelectChangeEvent) => {
     setSite(e.target.value as string);
@@ -58,13 +59,7 @@ export default function Header() {
           <div
             style={{ cursor: "pointer" }}
             onClick={() => {
-              appendWindow({
-                uuid: uuidv4(),
-                component: <Mypage />,
-                icon: <People />,
-                name: "마이 페이지",
-                w: 400,
-              });
+              setOpenMypage(true);
             }}
             aria-describedby={"test"}
             className="btn"
@@ -81,6 +76,13 @@ export default function Header() {
             <Typography color={"white"}>로그아웃</Typography>
           </div>
         </div>
+
+        {openMypage && (
+          <div.modal>
+            <div onClick={() => setOpenMypage(false)}>X</div>
+            <Mypage />
+          </div.modal>
+        )}
       </div.head>
 
       <div.switch>
@@ -129,6 +131,16 @@ const div = {
         align-items: center;
       }
     }
+  `,
+
+  modal: styled.div`
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 400px;
+
+    background-color: white;
+    z-index: 1;
   `,
 
   switch: styled.div`

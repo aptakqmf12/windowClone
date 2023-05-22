@@ -3,6 +3,7 @@ import NestedAccordion from "@components/layout/nestedAccordion";
 import RetireesManagement from "./retireesList/retireesList";
 import RetireesList from "./retireesList/retireesList";
 import MemoList from "./memo/memoList";
+import EmergencyContact from "./emergencyContact";
 
 export const Paths: Record<string, string[]> = {
   DASHBOARD: ["대시보드 관리"],
@@ -18,7 +19,7 @@ export const Paths: Record<string, string[]> = {
   SCHEDULER: ["스케쥴러"],
   MEMO: ["MEMO"],
   TO_DO_LIST_MANAGE: ["TO DO LIST 관리"],
-  EMERGENCY_CALL: ["비상연락망"],
+  EMERGENCY_CONTACT: ["비상연락망"],
   RISK_NOTIFICATION: ["위험알림"],
 };
 export const renderCompontntByPath = (path: string[]) => {
@@ -47,8 +48,8 @@ export const renderCompontntByPath = (path: string[]) => {
       return <MemoList />;
     case Paths.TO_DO_LIST_MANAGE:
       return <div>TO DO LIST 관리</div>;
-    case Paths.EMERGENCY_CALL:
-      return <div>비상연락망</div>;
+    case Paths.EMERGENCY_CONTACT:
+      return <EmergencyContact />;
     case Paths.RISK_NOTIFICATION:
       return <div>위험알림</div>;
 
