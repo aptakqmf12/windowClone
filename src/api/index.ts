@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { requestAccessToken } from "./sign";
-import { ResponseStatus, ResponseCode, ListResponse } from "../types";
+import { ResponseStatus, ResponseCode, ListResponse } from "../type";
+import { useWindowStore } from "@store/window";
 
 const Instance = () => {
   return axios.create({
@@ -9,48 +10,6 @@ const Instance = () => {
 };
 
 export const api = Instance();
-
-api.interceptors.request.use(
-  (request) => {
-    const parsedURL = request.url;
-
-    if (parsedURL?.includes("getAccessToken")) {
-      request.headers.Authorization = `Bearer ${localStorage.getItem(
-        "refresh_token"
-      )}`;
-      return request;
-    } else {
-      if (parsedURL?.startsWith("/api/auth")) {
-        return request;
-      }
-
-      request.headers.Authorization = `Bearer ${localStorage.getItem(
-        "access_token"
-      )}`;
-      return request;
-    }
-  },
-  (error) => {}
-);
-
-api.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async (err) => {
-    const { response, config } = err;
-
-    if (response.data.message === ResponseCode.TOKEN_EXPIRED) {
-      const res = await requestAccessToken();
-
-      return res.success === true
-        ? await api.request(config)
-        : Promise.reject(err);
-    } else if (response.data.message === ResponseCode.EXPIRED_REFRESH_TOKEN) {
-      window.location.href = "/signin";
-    }
-  }
-);
 
 // query params
 export const generateQueryParamUrl = (
