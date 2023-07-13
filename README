@@ -7,3 +7,19 @@
 - react & ts
 - zustand
 - react-query(tanstack query)
+
+## zIndex 정리
+50 : 화면하단의 윈도우창 정보
+
+30 : customAlert, customConfirm
+29 : customAlert, customConfirm의 dim
+
+20 : 스케줄러 popover, edit
+
+12 : 윈도우 창 (포커스 시)
+11 : 윈도우 창
+
+5 : 바탕화면 즐겨찾기 우클릭시뜨는 pop
+
+1 : 마이페이지 클릭시 뜨는 pop
+1 : 좌측 sideBar
